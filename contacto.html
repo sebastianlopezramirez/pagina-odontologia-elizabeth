@@ -37,8 +37,12 @@
       min-height: 38dvh;
       background-color: #0e0e10;
       display: grid;
-      align-items: end;
-      padding: 0 clamp(1rem, 5vw, 4rem) clamp(2rem, 4vw, 4rem);
+      /* align-items: start — el título arranca pegado al nav, no al fondo del hero.
+         Antes era 'end' lo que empujaba el contenido hacia abajo dejando
+         un gran espacio vacío entre el breadcrumb y el título. */
+      align-items: start;
+      /* padding-top mínimo (compensa header sticky) + laterales + bottom */
+      padding: clamp(1.5rem, 3vw, 2rem) clamp(1rem, 5vw, 4rem) clamp(2rem, 4vw, 4rem);
     }
   </style>
 
@@ -395,46 +399,6 @@
     </section>
   </section>
 
-
-  <!-- ============================================================
-       BLOQUE: Mapa de ubicación
-       PROPÓSITO: Ayudar visualmente a ubicar el consultorio
-       SEMÁNTICA: <figure> con <figcaption> para el iframe del mapa
-       ACCESIBILIDAD: title en iframe + link alternativo
-       ============================================================ -->
-  <section id="mapa-ubicacion" aria-labelledby="titulo-mapa">
-    <header class="seccion-header">
-      <p class="kicker">Ubicación</p>
-      <h2 id="titulo-mapa">Encuéntranos en Sabaneta</h2>
-    </header>
-
-    <!-- <figure> es el contenedor semántico correcto para un mapa con leyenda -->
-    <figure class="mapa-figura">
-      <!-- iframe de Google Maps embebido
-           title es obligatorio para accesibilidad (screen readers lo leen)
-           loading="lazy" porque está below the fold
-           NOTA: reemplazar src con URL real del consultorio en Google Maps -->
-      <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15885.123456789!2d-75.6167!3d6.1513!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sSabaneta%2C+Antioquia!5e0!3m2!1ses!2sco!4v0000000000000"
-        title="Mapa de ubicación del consultorio de la Dra. Elizabeth Guzmán en Sabaneta, Antioquia"
-        loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade"
-        allowfullscreen
-      ></iframe>
-
-      <!-- <figcaption> describe el mapa para SEO y accesibilidad -->
-      <figcaption>
-        Consultorio odontológico en Sabaneta, Antioquia —
-        <!-- <a> de respaldo: los usuarios pueden abrir en Google Maps directamente -->
-        <a
-          href="https://maps.google.com/?q=Sabaneta,Antioquia,Colombia"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Abrir ubicación en Google Maps (nueva pestaña)"
-        >Abrir en Google Maps ↗</a>
-      </figcaption>
-    </figure>
-  </section>
 
 </main>
 

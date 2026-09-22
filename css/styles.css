@@ -4411,10 +4411,14 @@ mark.highlight-plata {
   grid-template-columns: 1fr auto;
   /* border-bottom del fondo oscuro: reemplaza el gris claro del bloque base */
   border-bottom-color: rgba(255, 255, 255, 0.08);
-  /* gap entre texto y foto */
-  gap: clamp(2rem, 5vw, 4rem);
-  /* centra verticalmente texto y foto cuando tienen distinta altura */
-  align-items: center;
+  /* column-gap: espacio horizontal entre texto y foto */
+  column-gap: clamp(2rem, 5vw, 4rem);
+  /* row-gap pequeño: solo separa el breadcrumb del contenido — antes era
+     gap shorthand que creaba hasta 64px de espacio vertical indeseado */
+  row-gap: 1rem;
+  /* align-items: start — texto y foto arrancan en el mismo nivel vertical.
+     Antes era center, lo que bajaba el texto cuando la foto era más alta */
+  align-items: start;
   /* limita el ancho máximo y centra en pantallas grandes */
   max-width: var(--max-width, 1200px);
   margin-inline: auto;
