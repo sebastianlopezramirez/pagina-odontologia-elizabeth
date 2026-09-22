@@ -3070,7 +3070,7 @@ output#contador-mensaje.contador--advertencia {
 #sobre-hero {
   /* border-bottom separa visualmente el hero del contenido */
   border-bottom: 1px solid var(--c-gris-claro);
-  padding-top: clamp(5rem, 10vw, 8rem); /* espacio para el header sticky */
+  padding-top: clamp(1.5rem, 3vw, 2.5rem); /* padding mínimo: solo compensa el header sticky (~70px) */
 }
 
 /* Breadcrumb: migas de navegación */
