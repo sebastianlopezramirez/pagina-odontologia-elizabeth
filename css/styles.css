@@ -3348,7 +3348,16 @@ mark.highlight-plata {
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: var(--gap-m);
   list-style: none;
-  padding: 0;
+  /* padding-block: 0 elimina el padding vertical por defecto de <ul>
+     SIN tocar el padding lateral que necesita la grid para centrarse.
+     La regla general `main > section > *` ya le da:
+       padding-inline: var(--gap-l)  ← respiración lateral
+       max-width: var(--max-width)   ← limita a 1200px
+       margin-inline: auto           ← centra en pantalla
+     Si usáramos `padding: 0` (shorthand), mataríamos ese padding-inline
+     y las tarjetas arrancarían desde el borde izquierdo del viewport. */
+  padding-block: 0;
+  /* Elimina margin por defecto de <ul> en todos los navegadores */
   margin: 0;
 }
 
