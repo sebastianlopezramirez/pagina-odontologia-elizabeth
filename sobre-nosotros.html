@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="es" dir="ltr">
+<head>
+  <!-- ============================================================
+       META ESENCIALES
+       Charset primero para evitar ataques de encoding
+       ============================================================ -->
+  <meta charset="UTF-8">
+  <!-- viewport: width=device-width impide el zoom forzado en mobile -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Canonical: evita contenido duplicado si el sitio tiene www y sin www -->
+  <link rel="canonical" href="https://elizabethguzman.com/sobre-nosotros">
+
+  <title>Sobre Nosotros | Dra. Elizabeth Guzmán — Odontología Estética Sabaneta</title>
+  <meta name="description" content="Conoce a la Dra. Elizabeth Guzmán, odontóloga especializada en estética dental en Sabaneta, Antioquia. Más de 15 años de experiencia, formación universitaria y compromiso con tu sonrisa.">
+
+  <!-- Open Graph: para compartir en redes sociales con vista previa rica -->
+  <meta property="og:type" content="profile">
+  <meta property="og:title" content="Dra. Elizabeth Guzmán — Odontología Estética y Especializada">
+  <meta property="og:description" content="Conoce a la especialista detrás de tu sonrisa. Odontología estética y general en Sabaneta, Antioquia.">
+  <meta property="og:url" content="https://elizabethguzman.com/sobre-nosotros">
+  <meta property="og:image" content="https://elizabethguzman.com/img/og-sobre-nosotros.jpg">
+  <meta property="og:locale" content="es_CO">
+
+  <!-- Twitter Cards -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Dra. Elizabeth Guzmán — Odontología Estética Sabaneta">
+  <meta name="twitter:description" content="Conoce a la especialista detrás de tu sonrisa.">
+
+  <!-- CSS único externo — REGLA 2: sin estilos inline excepto crítico -->
+  <link rel="stylesheet" href="/css/styles.css">
+
+  <!-- Favicon en 3 formatos: SVG (moderno), WebP (compatibilidad), ICO (legado) -->
+  <link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/img/favicon.webp" type="image/webp">
+  <link rel="icon" href="/img/favicon.ico" sizes="any">
+
+  <!-- ============================================================
+       STYLE CRÍTICO INLINE — Above-The-Fold únicamente
+       Justificación: previene FOUC (flash of unstyled content)
+       antes de que styles.css cargue. Solo: bg del body, header sticky,
+       hero básico. TODO lo demás en /css/styles.css.
+       ============================================================ -->
+  <style>
+    /* Fondo base del body antes de que cargue el CSS externo */
+    body { margin: 0; background-color: #0e0e10; -webkit-font-smoothing: antialiased; }
+    /* Header sticky: necesario aquí para evitar salto visible al scroll */
+    body > header { position: sticky; top: 0; z-index: 100; }
+    /* Hero mínimo: altura y fondo para que no haya blanco momentáneo.
+       Solo propiedades críticas para evitar FOUC (flash de blanco).
+       Layout de 2 columnas y alineación se definen en /css/styles.css. */
+    #sobre-hero {
+      min-height: 40dvh;
+      background-color: #0e0e10;
+      /* padding-top para separar del header sticky (5rem mínimo) */
+      padding-top: clamp(5rem, 10vw, 8rem);
+    }
+  </style>
+
+  <!-- ============================================================
+       JSON-LD — Schema.org Person + ProfilePage
+       Ayuda a Google a entender quién es la doctora (knowledge panel)
+       ============================================================ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://elizabethguzman.com/#doctora",
+        "name": "Elizabeth Guzmán",
+        "jobTitle": "Odontóloga — Especialista en Estética Dental",
+        "description": "Odontóloga con más de 15 años de experiencia en Sabaneta, Antioquia, especializada en tratamientos de estética dental y odontología general.",
+        "image": "https://elizabethguzman.com/img/logo-fondo-oscuro.png",
+        "url": "https://elizabethguzman.com/sobre-nosotros",
+        "worksFor": {
+          "@type": "Dentist",
+          "@id": "https://elizabethguzman.com/#consultorio",
+          "name": "Dra. Elizabeth Guzmán Odontología Estética y Especializada"
+        },
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Universidad de Antioquia"
+        },
+        "knowsAbout": [
+          "Odontología Estética",
+          "Blanqueamiento Dental",
+          "Carillas de Porcelana",
+          "Diseño de Sonrisa",
+          "Implantes Dentales",
+          "Ortodoncia"
+        ]
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Inicio",
+            "item": "https://elizabethguzman.com/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Sobre Nosotros",
+            "item": "https://elizabethguzman.com/sobre-nosotros"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+
+<body>
+
+<!-- ============================================================
+     BLOQUE: Header principal
+     PROPÓSITO: Navegación global idéntica a index.html
+     SEMÁNTICA: <header> landmark de página, <nav> con aria-label
+     SEO: links internos ayudan a distribuir PageRank interno
+     ============================================================ -->
+<header role="banner">
+  <!-- <nav> con aria-label porque puede haber más de un <nav> en la página -->
+  <nav aria-label="Navegación principal">
+    <!-- Logo en <a> para que sea enlace al home — <strong> para semántica de marca -->
+    <a href="/" class="logo" aria-label="Ir al inicio — Dra. Elizabeth Guzmán Odontología">
+      <strong>Elizabeth Guzmán</strong>
+      <!-- <small> es semánticamente correcto para texto secundario/subtítulo -->
+      <small>Odontología Estética</small>
+    </a>
+
+    <!-- <ul> lista de enlaces: estructura semántica correcta para menús de navegación -->
+    <ul role="list">
+      <li><a href="/">Inicio</a></li>
+      <li><a href="/servicios.html">Servicios</a></li>
+      <!-- aria-current="page" indica al lector de pantalla la página activa -->
+      <li><a href="/sobre-nosotros.html" aria-current="page">Nosotros</a></li>
+      <li><a href="/contacto.html">Contacto</a></li>
+    </ul>
+
+    <!-- CTA principal en header — <a> actúa como botón de acción destacado -->
+    <a href="/agendar.html" class="cta-header">Agendar cita</a>
+  </nav>
+</header>
+
+
+<!-- ============================================================
+     ELEMENTO: <main>
+     PROPÓSITO: Contenido principal único de esta página
+     SEMÁNTICA: Solo debe haber un <main> por página — landmark ARIA
+     ACCESIBILIDAD: Screen readers saltan directo aquí con "skip to content"
+     ============================================================ -->
+<main id="contenido-principal">
+
+  <!-- ============================================================
+       BLOQUE: Hero de la página "Sobre nosotros"
+       PROPÓSITO: Cabecera interna con título + breadcrumb
+       SEMÁNTICA: <section> con heading propio, <nav> para breadcrumb
+       SEO: h1 con palabras clave "Odontóloga Sabaneta"
+       ============================================================ -->
+  <section id="sobre-hero" aria-labelledby="titulo-sobre">
+
+    <!-- Breadcrumb: <nav> con aria-label para diferenciarlo del nav principal -->
+    <nav aria-label="Ruta de navegación" class="breadcrumb">
+      <!-- <ol> porque el orden de las migas importa semánticamente -->
+      <ol role="list">
+        <li><a href="/">Inicio</a></li>
+        <!-- aria-hidden="true" en separadores decorativos → no los lee el screen reader -->
+        <li aria-hidden="true" class="breadcrumb-sep">›</li>
+        <!-- aria-current="page" en el último ítem: página actual -->
+        <li aria-current="page">Sobre Nosotros</li>
+      </ol>
+    </nav>
+
+    <!-- ============================================
+         LAYOUT 2 COLUMNAS: Texto izquierda / Foto derecha
+         PROPÓSITO: Aprovechar el espacio horizontal del hero.
+                    El texto corre a la izquierda y la foto ancla
+                    el lado derecho — equilibrio visual inmediato.
+         SEMÁNTICA: <article> para el bloque de texto de la doctora.
+                    <figure> + <picture> para la foto lateral.
+         ============================================ -->
+
+    <!-- Columna izquierda: texto del hero -->
+    <article class="hero-sobre-contenido">
+      <!-- Kicker: etiqueta pequeña sobre el h1 -->
+      <p class="kicker">Nuestra historia</p>
+
+      <!-- h1: único por página, con las palabras clave más importantes -->
+      <h1 id="titulo-sobre">
+        La odontóloga<br>
+        <mark class="highlight-plata">detrás de tu sonrisa</mark>
+      </h1>
+
+      <p class="hero-sobre-descripcion">
+        Más de <strong>15 años</strong> transformando sonrisas en Sabaneta, Antioquia,
+        con un enfoque que combina precisión clínica, estética avanzada y trato humano.
+      </p>
+    </article>
+
+    <!-- Columna derecha: foto de la doctora
+         loading="eager" porque está above-the-fold (el hero es lo primero que ve el usuario).
+         object-position: top center → muestra la cara de la Dra., no el torso. -->
+    <figure class="hero-sobre-foto">
+      <picture>
+        <!-- Fuente JPEG del perfil -->
+        <source srcset="/img/dra-elizabeth-sonrisa.jpeg" type="image/jpeg">
+        <!-- alt descriptivo: nombre + especialidad para accesibilidad y SEO -->
+        <img
+          src="/img/dra-elizabeth-sonrisa.jpeg"
+          alt="Dra. Elizabeth Guzmán — Odontóloga Estética y Especializada en Sabaneta, Antioquia"
+          width="560"
+          height="640"
+          loading="eager"
+        >
+      </picture>
+    </figure>
+
+  </section>
+
+
+  <!-- ============================================================
+       BLOQUE: Perfil de la Doctora
+       PROPÓSITO: Presentación principal — foto + bio + credenciales
+       SEMÁNTICA: <article> porque es contenido autocontenido sobre una persona
+       SEO: itemprop="description" para rich snippets de Person
+       ============================================================ -->
+  <section id="perfil-doctora" aria-labelledby="titulo-perfil">
+    <header class="seccion-header">
+      <p class="kicker">Quién soy</p>
+      <h2 id="titulo-perfil">Dra. Elizabeth Guzmán</h2>
+      <p class="seccion-descripcion">Odontóloga · Especialista en Estética Dental · Sabaneta, Antioquia</p>
+    </header>
+
+    <!-- <article> porque es contenido autocontenido sobre la doctora -->
+    <article class="perfil-doctora-grid" itemscope itemtype="https://schema.org/Person">
+
+      <!-- Fotografía de la doctora — <figure> es el contenedor semántico correcto para imágenes con leyenda -->
+      <figure class="perfil-foto">
+        <!-- loading="lazy" porque está debajo del fold (no es LCP) -->
+        <!-- width/height previenen CLS (Cumulative Layout Shift) -->
+        <img
+          src="/img/dra-elizabeth-perfil.jpeg"
+          alt="Dra. Elizabeth Guzmán, odontóloga especialista en estética dental en Sabaneta"
+          width="480"
+          height="600"
+          loading="lazy"
+          itemprop="image"
+        >
+        <!-- <figcaption> describe la imagen para accesibilidad y SEO -->
+        <figcaption>Dra. Elizabeth Guzmán · Consultorio Odontológico · Sabaneta</figcaption>
+      </figure>
+
+      <!-- Contenido biográfico y de credenciales -->
+      <section class="perfil-bio" aria-labelledby="titulo-bio">
+        <h3 id="titulo-bio" class="perfil-nombre" itemprop="name">Elizabeth Guzmán</h3>
+
+        <!-- <p> para párrafos de biografía — semántica correcta para texto corrido -->
+        <p itemprop="description">
+          Nací con la convicción de que una sonrisa bien cuidada transforma no solo la
+          apariencia, sino la confianza y la calidad de vida de las personas. Por eso elegí
+          la odontología — no como una profesión, sino como una vocación.
+        </p>
+        <p>
+          Después de graduarme con honores de la <strong>Universidad de Antioquia</strong>,
+          me especialicé en estética dental y he dedicado más de <strong>15 años</strong>
+          a perfeccionar técnicas que combinan funcionalidad, salud y belleza. Hoy atiendo
+          en mi consultorio en <strong>Sabaneta</strong>, donde cada paciente recibe un
+          plan personalizado, no un tratamiento genérico.
+        </p>
+        <p>
+          Mi filosofía: la boca es la puerta de la salud general. Trabajamos con precisión,
+          con materiales de última generación y con un enfoque preventivo que te ahorrará
+          tiempo y dinero a largo plazo.
+        </p>
+
+        <!-- ============================================================
+             CREDENCIALES EN <dl> — Definition List
+             PROPÓSITO: Estructurar pares etiqueta:valor (título:dato)
+             SEMÁNTICA: <dl> es el único elemento correcto para este patrón.
+             NO usar <table> porque no es datos tabulares comparables.
+             NO usar <ul> porque son pares clave-valor, no ítems independientes.
+             ============================================================ -->
+        <dl class="credenciales-lista">
+          <!-- <dt> = término/etiqueta; <dd> = definición/valor -->
+          <dt>Título</dt>
+          <dd itemprop="hasCredential">Odontóloga · Universidad de Antioquia</dd>
+
+          <dt>Especialización</dt>
+          <dd>Estética Dental y Rehabilitación Oral</dd>
+
+          <dt>Experiencia</dt>
+          <dd>Más de 15 años en práctica clínica</dd>
+
+          <dt>Registro</dt>
+          <dd>Inscrita en el <abbr title="Tribunal Ético de Odontología">TEO</abbr> de Antioquia</dd>
+
+          <dt>Idiomas</dt>
+          <dd>Español · Inglés básico</dd>
+
+          <dt>Ubicación</dt>
+          <dd itemprop="workLocation">Sabaneta, Antioquia, Colombia</dd>
+        </dl>
+      </section>
+    </article>
+  </section>
+
+
+  <!-- ============================================================
+       BLOQUE: Galería de imágenes adicionales
+       PROPÓSITO: Mostrar más facetas de la doctora y el consultorio
+       SEMÁNTICA: <section> con <figure> por cada imagen
+       ============================================================ -->
+  <section id="galeria-doctora" aria-labelledby="titulo-galeria">
+    <header class="seccion-header">
+      <p class="kicker">En el consultorio</p>
+      <h2 id="titulo-galeria">Momentos que nos definen</h2>
+    </header>
+
+    <!-- ============================================
+         CARRUSEL INFINITO — Técnica CSS pura, sin JS
+         PROPÓSITO: Desfile de fotos de izquierda a derecha, nunca para.
+         CÓMO FUNCIONA:
+           1. <figure class="galeria-ticker-track"> contiene 2 COPIAS de las fotos.
+           2. CSS mueve el track de translateX(0) a translateX(-50%) con @keyframes.
+           3. Al llegar al -50% empezamos de nuevo — la 2ª copia es idéntica
+              así el ojo no percibe el salto: efecto infinito suave.
+           4. Pausa en hover: prefers-reduced-motion lo respeta también.
+         SEMÁNTICA: <figure> = colección de imágenes relacionadas.
+                    aria-hidden en la copia duplicada: solo decorativa.
+         ============================================ -->
+
+    <!-- Contenedor del carrusel: oculta el overflow para que el scroll no se vea -->
+    <figure class="galeria-ticker" aria-label="Galería de fotos del consultorio">
+
+      <!-- Track que se mueve: contiene las fotos × 2 para el loop perfecto -->
+      <ul class="galeria-ticker-track" role="list">
+
+        <!-- ===== COPIA 1: las fotos reales (accesibles) ===== -->
+        <li>
+          <figure>
+            <!-- loading="eager" porque las primeras fotos están en viewport al cargar -->
+            <img
+              src="/img/dra-elizabeth-hero.jpeg"
+              alt="Dra. Elizabeth Guzmán durante una valoración en su consultorio de Sabaneta"
+              width="380"
+              height="480"
+              loading="eager"
+            >
+          </figure>
+        </li>
+        <li>
+          <figure>
+            <img
+              src="/img/dra-elizabeth-consultorio.jpeg"
+              alt="Consultorio de Dra. Elizabeth Guzmán — Odontología Estética y Especializada"
+              width="380"
+              height="480"
+              loading="eager"
+            >
+          </figure>
+        </li>
+        <li>
+          <figure>
+            <img
+              src="/img/dra-elizabeth-tratamiento.jpeg"
+              alt="Procedimiento de odontología estética realizado por Dra. Elizabeth Guzmán"
+              width="380"
+              height="480"
+              loading="eager"
+            >
+          </figure>
+        </li>
+        <li>
+          <figure>
+            <img
+              src="/img/dra-elizabeth-sonrisa.jpeg"
+              alt="Dra. Elizabeth Guzmán sonriendo — Odontóloga de confianza en Sabaneta"
+              width="380"
+              height="480"
+              loading="eager"
+            >
+          </figure>
+        </li>
+        <li>
+          <figure>
+            <img
+              src="/img/dra-elizabeth-perfil.jpeg"
+              alt="Retrato de la Dra. Elizabeth Guzmán, especialista en estética dental"
+              width="380"
+              height="480"
+              loading="eager"
+            >
+          </figure>
+        </li>
+        <li>
+          <figure>
+            <img
+              src="/img/dra-elizabeth-extra.jpeg"
+              alt="Dra. Elizabeth Guzmán con paciente — atención en Sabaneta, Antioquia"
+              width="380"
+              height="480"
+              loading="lazy"
+            >
+          </figure>
+        </li>
+
+        <!-- ===== COPIA 2: duplicado SOLO para el efecto infinito =====
+             aria-hidden="true" → los lectores de pantalla la ignoran
+             (ya leyeron las fotos reales arriba — no repetir) -->
+        <li aria-hidden="true">
+          <figure>
+            <img src="/img/dra-elizabeth-hero.jpeg" alt="" width="380" height="480" loading="lazy">
+          </figure>
+        </li>
+        <li aria-hidden="true">
+          <figure>
+            <img src="/img/dra-elizabeth-consultorio.jpeg" alt="" width="380" height="480" loading="lazy">
+          </figure>
+        </li>
+        <li aria-hidden="true">
+          <figure>
+            <img src="/img/dra-elizabeth-tratamiento.jpeg" alt="" width="380" height="480" loading="lazy">
+          </figure>
+        </li>
+        <li aria-hidden="true">
+          <figure>
+            <img src="/img/dra-elizabeth-sonrisa.jpeg" alt="" width="380" height="480" loading="lazy">
+          </figure>
+        </li>
+        <li aria-hidden="true">
+          <figure>
+            <img src="/img/dra-elizabeth-perfil.jpeg" alt="" width="380" height="480" loading="lazy">
+          </figure>
+        </li>
+        <li aria-hidden="true">
+          <figure>
+            <img src="/img/dra-elizabeth-extra.jpeg" alt="" width="380" height="480" loading="lazy">
+          </figure>
+        </li>
+
+      </ul>
+    </figure>
+  </section>
+
+
+  <!-- ============================================================
+       BLOQUE: Valores / Filosofía
+       PROPÓSITO: Comunicar los principios que diferencian el consultorio
+       SEMÁNTICA: <section> con <article> por cada valor
+       ============================================================ -->
+  <section id="valores" aria-labelledby="titulo-valores">
+    <header class="seccion-header">
+      <p class="kicker">Nuestra filosofía</p>
+      <h2 id="titulo-valores">Lo que nos guía</h2>
+      <p class="seccion-descripcion">
+        Tres principios que definen cada consulta, cada diagnóstico, cada tratamiento.
+      </p>
+    </header>
+
+    <!-- <ul> para lista de valores: no son ordenados, pero sí son una lista -->
+    <ul class="valores-grid" role="list">
+
+      <!-- <article> por cada valor porque cada uno es autocontenido y reutilizable -->
+      <li>
+        <article class="valor-card">
+          <!-- ::before en CSS pintará el ícono decorativo — sin HTML extra -->
+          <h3 class="valor-titulo" data-icon="🔬">Precisión clínica</h3>
+          <p>Cada diagnóstico parte de un análisis completo. Usamos tecnología actualizada
+          y protocolos basados en evidencia científica para garantizar resultados predecibles.</p>
+        </article>
+      </li>
+
+      <li>
+        <article class="valor-card">
+          <h3 class="valor-titulo" data-icon="🤝">Trato humano</h3>
+          <p>Sabemos que ir al dentista genera ansiedad. Por eso construimos un ambiente
+          de confianza donde cada paciente se siente escuchado, informado y tranquilo.</p>
+        </article>
+      </li>
+
+      <li>
+        <article class="valor-card">
+          <h3 class="valor-titulo" data-icon="✨">Estética con propósito</h3>
+          <p>La belleza dental no es vanidad — es salud y autoestima. Diseñamos sonrisas
+          que se ven naturales porque parten de la función y la armonía facial.</p>
+        </article>
+      </li>
+    </ul>
+  </section>
+
+
+  <!-- ============================================================
+       BLOQUE: CTA Final
+       PROPÓSITO: Convertir visitantes en pacientes
+       SEMÁNTICA: <section> con CTA — pattern estándar
+       ============================================================ -->
+  <section id="cta-sobre" aria-labelledby="titulo-cta-sobre" class="cta-section">
+    <article class="cta-contenido">
+      <p class="kicker">¿Lista para empezar?</p>
+      <h2 id="titulo-cta-sobre">Tu primera cita<br>es el primer paso</h2>
+      <p>Agenda una valoración sin compromiso. Te explicamos todo lo que necesitas saber antes de tomar cualquier decisión.</p>
+
+      <!-- Grupo de CTAs: <p> como contenedor de botones es válido en este contexto -->
+      <p class="cta-grupo">
+        <!-- <a> actúa como CTA primario — rol y semántica de enlace de acción -->
+        <a href="/agendar.html" class="cta-primario">Agendar valoración gratuita</a>
+        <!-- CTA secundario: WhatsApp como canal alternativo -->
+        <a
+          href="https://wa.me/573222614315?text=Hola%20Dra.%20Elizabeth%2C%20vi%20su%20perfil%20y%20quiero%20una%20consulta"
+          class="cta-secundario"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Contactar por WhatsApp (abre en nueva pestaña)"
+        >WhatsApp</a>
+      </p>
+    </article>
+  </section>
+
+</main><!-- /main -->
+
+
+<!-- ============================================================
+     BLOQUE: Footer global
+     PROPÓSITO: Información de contacto, links legales, redes sociales
+     SEMÁNTICA: <footer> landmark, <address> para datos de contacto
+     SEO: refuerza NAP (Nombre, Dirección, Teléfono) para SEO local
+     ============================================================ -->
+<footer>
+
+  <!-- Identidad del consultorio en el footer -->
+  <section aria-labelledby="footer-nombre" class="footer-identidad">
+    <h3 id="footer-nombre">Elizabeth Guzmán</h3>
+    <p class="footer-tagline">Odontología Estética y Especializada</p>
+    <!-- Frase de marca del PDF -->
+    <p class="footer-frase"><em>"Tu sonrisa, diseñada para ti."</em></p>
+
+    <!-- <address>: marcado semántico para los datos de contacto del negocio.
+         Google entiende que este bloque contiene la información NAP oficial.
+         IMPORTANTE: los datos deben ser IDÉNTICOS a los de Google Business Profile. -->
+    <address>
+      <!-- Enlace al Google Maps: mejora el SEO local y facilita la navegación. -->
+      <a href="https://share.google/rlaYavouMHnes4XAD"
+         target="_blank"
+         rel="noopener noreferrer"
+         aria-label="Abrir consultorio en Google Maps">
+        Sabaneta, Antioquia, Colombia
+      </a>
+      <!-- tel: protocolo que permite marcar directamente en móviles al hacer clic -->
+      <a href="tel:+573222614315" aria-label="Llamar al consultorio">+57 322 261 4315</a>
+      <a href="https://wa.me/573222614315"
+         target="_blank"
+         rel="noopener noreferrer"
+         aria-label="Escribir por WhatsApp">
+        WhatsApp
+      </a>
+    </address>
+  </section>
+
+  <!-- Navegación del footer: diferente al nav del header en contenido y aria-label -->
+  <nav aria-label="Navegación del pie de página" class="footer-nav">
+    <ul>
+      <li><a href="/">Inicio</a></li>
+      <li><a href="/sobre-nosotros.html">Sobre mí</a></li>
+      <li><a href="/servicios.html">Servicios</a></li>
+      <li><a href="/agendar.html">Agendar cita</a></li>
+      <li><a href="/contacto.html">Contacto</a></li>
+    </ul>
+  </nav>
+
+  <!-- <aside>: información tangencial al contenido principal (horarios).
+       Está en el footer porque es de consulta rápida, no el foco de la página. -->
+  <aside aria-label="Horarios de atención" class="footer-horarios">
+    <h4>Horarios</h4>
+    <!-- <dl>: lista de definición — el marcado más semántico para pares dato/valor
+         como "día: hora". <dt> = término, <dd> = descripción/valor. -->
+    <dl>
+      <dt>Lunes a Viernes</dt>
+      <!-- <time datetime="HH:MM"> permite a los motores de búsqueda parsear horarios
+           en formato ISO 8601, que es el estándar internacional. -->
+      <dd>
+        <time datetime="08:00">8:00 a.m.</time> —
+        <time datetime="17:00">5:00 p.m.</time>
+      </dd>
+      <dt>Sábados</dt>
+      <dd>
+        <time datetime="09:00">9:00 a.m.</time> —
+        <time datetime="13:00">1:00 p.m.</time>
+      </dd>
+    </dl>
+    <!-- TODO: reemplaza estos horarios con los reales del consultorio -->
+  </aside>
+
+
+  <!-- ============================================
+       BLOQUE: Footer — 4ª columna: Redes sociales + mapa
+       PROPÓSITO: Agrupar en una sola columna los íconos sociales y el
+                  mapa embebido pequeño. Ocupa el 4° slot del grid del footer.
+       SEMÁNTICA: <section> con heading, <ul> para iconos, <figure> para mapa.
+       ============================================ -->
+  <section aria-labelledby="footer-redes-titulo" class="footer-redes-mapa">
+
+    <!-- Título de columna: estilo coherente con "Horarios" y "Páginas" -->
+    <h4 id="footer-redes-titulo">Síguenos</h4>
+
+    <!-- <ul>: lista de enlaces a redes sociales con íconos SVG futuristas -->
+    <ul class="redes-sociales" aria-label="Redes sociales del consultorio">
+
+      <!-- Instagram: SVG oficial adaptado, contorno minimalista -->
+      <li>
+        <a href="https://www.instagram.com/draelizabethguzman/"
+           target="_blank"
+           rel="noopener noreferrer"
+           aria-label="Seguir a Elizabeth Guzmán en Instagram"
+           class="red-social red-instagram">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="22" height="22" fill="currentColor">
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+          </svg>
+        </a>
+      </li>
+
+      <!-- Facebook: SVG "f" en círculo, minimalista -->
+      <li>
+        <a href="https://www.facebook.com/profile.php?id=61558841361671"
+           target="_blank"
+           rel="noopener noreferrer"
+           aria-label="Seguir a Elizabeth Guzmán en Facebook"
+           class="red-social red-facebook">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="22" height="22" fill="currentColor">
+            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+          </svg>
+        </a>
+      </li>
+
+      <!-- Google Maps / Google Business Profile: pin de mapa -->
+      <li>
+        <a href="https://www.google.com/maps/place/Dra.+Elizabeth+Guzm%C3%A1n+Odontolog%C3%ADa+Est%C3%A9tica+y+Especializada/@6.1531438,-75.620117,799m/data=!3m2!1e3!4b1!4m6!3m5!1s0x8e4683d9082eecb1:0x6577608e1e0fae27!8m2!3d6.1531438!4d-75.620117!16s%2Fg%2F11s2ld_k6q"
+           target="_blank"
+           rel="noopener noreferrer"
+           aria-label="Ver el consultorio en Google Maps"
+           class="red-social red-gmb">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="22" height="22" fill="currentColor">
+            <path d="M12 0C7.802 0 4 3.403 4 7.602 4 11.8 7.469 16.812 12 24c4.531-7.188 8-12.2 8-16.398C20 3.403 16.199 0 12 0zm0 11c-1.657 0-3-1.343-3-3s1.343-3 3-3 3 1.343 3 3-1.343 3-3 3z"/>
+          </svg>
+        </a>
+      </li>
+
+    </ul>
+
+    <!-- <figure>: mapa embebido pequeño con leyenda accesible.
+         <figure> es el envoltorio semántico correcto para contenido
+         autocontenido como mapas, imágenes, gráficos. -->
+    <figure class="footer-mapa-figura">
+      <!-- <iframe> con loading="lazy" para no bloquear el render inicial.
+           referrerpolicy evita filtrar la URL de referencia a Google Maps. -->
+      <iframe
+        src="https://maps.google.com/maps?q=6.1531438,-75.620117&z=16&output=embed"
+        width="100%"
+        height="120"
+        loading="lazy"
+        allowfullscreen=""
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Ubicación del consultorio en Sabaneta, Antioquia">
+      </iframe>
+      <!-- <figcaption>: descripción textual del mapa, útil para accesibilidad y SEO -->
+      <figcaption>Sabaneta, Antioquia — Colombia</figcaption>
+    </figure>
+
+  </section>
+
+  <!-- Franja inferior de cierre: copyright y crédito del desarrollador.
+       Ocupa la fila completa del grid del footer gracias a grid-column: 1/-1 en CSS. -->
+  <section aria-label="Copyright y créditos" class="footer-bottom">
+
+    <!-- Copyright y crédito del desarrollador -->
+    <section aria-label="Copyright" class="footer-copy">
+      <p>
+        <small>
+          ©&nbsp;<time datetime="2026">2026</time>
+          Elizabeth Guzmán Odontología Estética y Especializada.
+          Todos los derechos reservados.
+        </small>
+      </p>
+      <p class="footer-credito">
+        <small>Diseñado y desarrollado por
+          <strong>Sebastián López Ramírez</strong> — Desarrollador Web
+        </small>
+      </p>
+    </section>
+
+  </section>
+</footer>
+
+<!-- AUDITORÍA: div=0, span=0, style_inline=0 (solo el <style> crítico ATF justificado arriba) -->
+
+
+<a href="https://wa.me/573222614315?text=Hola%2C%20quisiera%20agendar%20una%20valoraci%C3%B3n%20odontol%C3%B3gica%20con%20la%20Dra.%20Elizabeth"
+   class="whatsapp-flotante"
+   target="_blank"
+   rel="noopener noreferrer"
+   aria-label="Agendar cita por WhatsApp con la Dra. Elizabeth Guzmán">
+  <!-- El ícono de WhatsApp lo dibujamos puramente con CSS usando un SVG inline en content.
+       Esto evita cargar una imagen externa (HTTP request extra) y mantiene el botón
+       ligero. El texto "WA" es el fallback accesible si el CSS falla. -->
+  <abbr title="WhatsApp" aria-hidden="true">WA</abbr>
+</a>
+
+</body>
+</html>

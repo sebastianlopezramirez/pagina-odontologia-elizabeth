@@ -1,0 +1,32 @@
+# ROBOTS.TXT — Dra. Elizabeth Guzmán Odontología Estética y Especializada
+# PROPÓSITO: Controlar qué partes del sitio pueden rastrear los buscadores.
+# STANDARD: https://www.robotstxt.org/
+# NOTA: Este archivo DEBE estar en la raíz del dominio.
+
+# Reglas para todos los bots (User-agent: *)
+User-agent: *
+
+# Permitir todo el sitio público
+Allow: /
+
+# Bloquear páginas que no deben indexarse:
+# gracias.html: página de confirmación post-formulario — no aporta SEO
+Disallow: /gracias.html
+
+# Bloquear archivos de infraestructura — no son páginas de usuarios
+Disallow: /apps-script/
+Disallow: /js/
+
+# Bloquear el script de rediseño (archivo temporal que no debería estar aquí)
+Disallow: /rediseno.py
+
+# Bloquear cualquier archivo de configuración que pueda aparecer
+Disallow: /*.json$
+Disallow: /*.lock$
+
+# Sitemap: indica a los bots dónde está el mapa del sitio
+Sitemap: https://elizabethguzman.com/sitemap.xml
+
+# Crawl-delay: pausa entre requests (segundos) — previene sobrecarga del servidor
+# (GitHub Pages no necesita esto, pero es buena práctica)
+Crawl-delay: 1

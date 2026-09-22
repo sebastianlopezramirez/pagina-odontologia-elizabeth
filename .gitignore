@@ -1,0 +1,41 @@
+# ============================================
+# .gitignore — pagina-odontologia
+# Archivos que NO deben subirse al repositorio
+# ============================================
+
+# Fotos originales sin optimizar (las WebP/JPEG optimizadas están en /img/)
+/imagen-odontologa-ElizabethGuzman.jpeg
+/imagen-odontologa-ElizabethGuzman1.jpeg
+/imagen-odontologa-ElizabethGuzman2.jpeg
+/imagen-odontologa-ElizabethGuzman3.jpeg
+/imagen-odontologa-ElizabethGuzman4.jpeg
+/imagen-odontologa-ElizabethGuzman5.jpeg
+
+# Documentos de referencia del cliente (no son parte del sitio)
+Contenido_Pagina_Web_Elizabeth_Guzman.pdf
+
+# Script de desarrollo/rediseño (no se necesita en producción)
+rediseno.py
+
+# Sistema operativo
+.DS_Store
+.DS_Store?
+Thumbs.db
+desktop.ini
+ehthumbs.db
+
+# Editores de código
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Node (por si se añaden herramientas de build en el futuro)
+node_modules/
+npm-debug.log*
+
+# Variables de entorno (NUNCA subir a GitHub)
+.env
+.env.local
+.env.production

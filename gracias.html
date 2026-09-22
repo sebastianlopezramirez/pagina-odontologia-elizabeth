@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+<!--
+  ============================================
+  ARCHIVO: gracias.html
+  PROPÓSITO: Confirmación de solicitud de cita recibida.
+             Se muestra DESPUÉS de que el formulario de
+             agendar.html se envía exitosamente.
+  SEO: noindex,nofollow — no debe aparecer en Google
+       (es una página de conversión interna, no de contenido)
+  PERSONALIZACIÓN: agenda.js lee ?nombre=X&servicio=Y de la URL
+                   y personaliza el mensaje para cada paciente.
+  ============================================
+-->
+<head>
+  <!-- Codificación UTF-8: necesaria para tildes y ñ en español -->
+  <meta charset="UTF-8">
+
+  <!-- Viewport responsivo: escala correctamente en celulares -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- CRÍTICO: esta página NO debe indexarse en Google -->
+  <!-- Es una página de estado interna, sin valor SEO -->
+  <meta name="robots" content="noindex, nofollow">
+
+  <!-- Título descriptivo aunque no se indexe — aparece en la pestaña del navegador -->
+  <title>¡Solicitud Recibida! — Dra. Elizabeth Guzmán Odontología</title>
+
+  <!-- CSS externo: toda la estética está en styles.css (REGLA 2) -->
+  <link rel="stylesheet" href="/css/styles.css">
+
+  <!-- Favicon en 3 formatos: SVG (moderno), WebP (compatibilidad), ICO (legado) -->
+  <link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/img/favicon.webp" type="image/webp">
+  <link rel="icon" href="/img/favicon.ico" sizes="any">
+
+  <!-- Favicon: el ícono que aparece en la pestaña del navegador -->
+  <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
+
+  <!-- Open Graph: si alguien compartiera este link (poco probable pero correcto) -->
+  <meta property="og:title" content="Cita Solicitada — Dra. Elizabeth Guzmán">
+  <meta property="og:description" content="Tu solicitud de cita fue recibida. Nos comunicaremos contigo pronto.">
+  <meta property="og:locale" content="es_CO">
+
+</head>
+
+<body class="pagina-gracias">
+
+<!-- ============================================
+     BLOQUE: Header principal (reutilizado en todas las páginas)
+     PROPÓSITO: Navegación global consistente
+     SEMÁNTICA: <header> landmark, <nav> con aria-label
+     ============================================ -->
+<header>
+
+  <!-- Logo y nombre del consultorio con enlace al home -->
+  <!-- <a> envuelve logo + nombre: todo el bloque es clickeable -->
+  <a href="/" class="logo" aria-label="Dra. Elizabeth Guzmán — Ir al inicio">
+    <!-- <strong> para el nombre principal: importancia semántica -->
+    <strong>Dra. Elizabeth Guzmán</strong>
+    <!-- <small> para el subtítulo descriptivo -->
+    <small>Odontología Estética y Especializada</small>
+  </a>
+
+  <!-- Botón hamburguesa para móvil — JS nav.js maneja el toggle -->
+  <!-- aria-expanded: indica si el menú está abierto (lo actualiza JS) -->
+  <button
+    class="nav-toggle"
+    aria-expanded="false"
+    aria-controls="nav-principal"
+    aria-label="Abrir menú de navegación">
+    <!-- Las tres líneas del ícono hamburguesa se crean con CSS ::before/::after -->
+  </button>
+
+  <!-- Navegación principal del sitio -->
+  <!-- aria-label diferencia este <nav> del breadcrumb u otros navs secundarios -->
+  <nav id="nav-principal" aria-label="Navegación principal">
+    <!-- <ul> semántico para lista de enlaces de navegación -->
+    <ul>
+      <li><a href="/">Inicio</a></li>
+      <li><a href="/servicios.html">Servicios</a></li>
+      <li><a href="/sobre-nosotros.html">Nosotros</a></li>
+      <li><a href="/contacto.html">Contacto</a></li>
+      <!-- CTA principal destacado visualmente con clase especial -->
+      <li><a href="/agendar.html" class="nav-cta">Agendar Cita</a></li>
+    </ul>
+  </nav>
+
+</header>
+
+<!-- ============================================
+     BLOQUE: Contenido principal
+     PROPÓSITO: Confirmación de la solicitud recibida
+     SEMÁNTICA: <main> landmark único por página
+     ============================================ -->
+<main id="gracias-main">
+
+  <!-- ============================================
+       SECCIÓN: Confirmación
+       PROPÓSITO: Mensaje de éxito con detalles personalizados
+       SEMÁNTICA: <section> con heading propio
+       ============================================ -->
+  <section class="seccion-gracias" aria-labelledby="titulo-gracias">
+
+    <!-- Ícono de éxito (creado con CSS ::before en el figure) -->
+    <!-- <figure> semántico para contenido visual decorativo con significado -->
+    <figure class="icono-exito" aria-hidden="true">
+      <!-- aria-hidden: el SVG es decorativo — la información está en el texto -->
+      <!-- El checkmark se añade vía CSS ::before para mantener HTML limpio -->
+    </figure>
+
+    <!-- Título principal de la página de gracias -->
+    <!-- <h1>: único por página, el más importante jerárquicamente -->
+    <h1 id="titulo-gracias">¡Solicitud de cita recibida!</h1>
+
+    <!-- Mensaje personalizado — agenda.js rellena el <mark id="saludo-nombre"> -->
+    <p class="mensaje-principal">
+      Gracias,
+      <!-- <mark> para resaltar el nombre semánticamente (dato destacado) -->
+      <!-- agenda.js inserta el nombre real aquí vía textContent (no innerHTML) -->
+      <mark id="saludo-nombre">paciente</mark>.
+      Tu solicitud para
+      <!-- <strong> para énfasis en el servicio elegido -->
+      <strong id="servicio-confirmado">una consulta odontológica</strong>
+      fue recibida exitosamente.
+    </p>
+
+    <!-- ============================================
+         SUB-SECCIÓN: Próximos pasos
+         PROPÓSITO: Informar al paciente qué pasará después
+         ============================================ -->
+    <section class="proximos-pasos" aria-labelledby="titulo-pasos">
+      <h2 id="titulo-pasos">¿Qué sigue?</h2>
+
+      <!-- <ol> lista ordenada: los pasos tienen secuencia -->
+      <ol class="lista-pasos">
+        <li>
+          <!-- <strong> para el título del paso — énfasis semántico -->
+          <strong>Revisamos tu solicitud</strong>
+          Nuestro equipo revisará tu solicitud y la fecha/hora preferida.
+        </li>
+        <li>
+          <strong>Te contactamos</strong>
+          Recibirás una llamada o mensaje de WhatsApp para confirmar
+          tu cita en las próximas horas hábiles.
+        </li>
+        <li>
+          <strong>¡Nos vemos!</strong>
+          El día de tu cita llega 10 minutos antes para el proceso de admisión.
+        </li>
+      </ol>
+    </section>
+
+    <!-- ============================================
+         SUB-SECCIÓN: Datos de contacto para emergencias
+         PROPÓSITO: Dar alternativa de contacto directo
+         SEMÁNTICA: <aside> — información complementaria
+         ============================================ -->
+    <aside class="contacto-directo" aria-labelledby="titulo-contacto-directo">
+      <h2 id="titulo-contacto-directo">¿Necesitas atención urgente?</h2>
+      <p>Si es una urgencia, contáctanos directamente:</p>
+
+      <!-- <address> semántico para datos de contacto del negocio -->
+      <address>
+        <!-- Teléfono fijo -->
+        <a href="tel:+576042716000" class="contacto-tel">
+          <!-- aria-label explícito para lectores de pantalla -->
+          📞 604 2716000
+        </a>
+
+        <!-- WhatsApp — formato wa.me con código de país sin + -->
+        <a
+          href="https://wa.me/573222614315?text=Hola%2C%20necesito%20atenci%C3%B3n%20dental%20urgente."
+          class="contacto-whatsapp"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Contactar por WhatsApp (abre en nueva pestaña)">
+          💬 WhatsApp: 322 2614315
+        </a>
+
+        <!-- Horario de atención -->
+        <p class="horario-atencion">
+          <!-- <time> para datos de horario — semántica temporal -->
+          Lunes a Viernes: <time>7:00 am – 5:00 pm</time>
+          <br>
+          Sábados: <time>7:00 am – 1:00 pm</time>
+        </p>
+      </address>
+    </aside>
+
+    <!-- ============================================
+         FOTO DE LA DOCTORA — Toque humano en la confirmación
+         PROPÓSITO: Mostrar la cara de la Dra. en el momento de mayor
+                    satisfacción del usuario (confirmación de cita).
+                    Refuerza la relación paciente-doctora antes de la visita.
+         SEMÁNTICA: <figure> con <figcaption> descriptivo.
+                    loading="lazy": no es above-the-fold.
+         ============================================ -->
+    <!-- <figure> para la imagen de la doctora con leyenda descriptiva -->
+    <figure class="gracias-foto-doctora">
+      <!-- <picture> para imagen responsiva -->
+      <picture>
+        <!-- Foto de la doctora sonriendo — transmite calidez y profesionalismo -->
+        <source srcset="/img/dra-elizabeth-sonrisa.jpeg" type="image/jpeg">
+        <!-- alt: contexto clínico + emocional adecuado para este momento -->
+        <img
+          src="/img/dra-elizabeth-sonrisa.jpeg"
+          alt="Dra. Elizabeth Guzmán sonriendo, lista para atenderte en su consultorio de Sabaneta, Antioquia"
+          width="300"
+          height="300"
+          loading="lazy"
+        >
+      </picture>
+      <!-- <figcaption>: texto que acompaña la imagen — cálido y personal -->
+      <figcaption>¡Nos vemos muy pronto! — Dra. Elizabeth Guzmán</figcaption>
+    </figure>
+
+    <!-- ============================================
+         CTA DE RETORNO
+         PROPÓSITO: Dar al usuario opciones de navegación
+         ============================================ -->
+    <nav class="navegacion-gracias" aria-label="Navegación de retorno">
+      <ul>
+        <li>
+          <!-- Enlace principal: volver al inicio -->
+          <a href="/" class="btn btn-primario">Volver al inicio</a>
+        </li>
+        <li>
+          <!-- Enlace secundario: ver servicios -->
+          <a href="/servicios.html" class="btn btn-secundario">Ver nuestros servicios</a>
+        </li>
+      </ul>
+    </nav>
+
+  </section>
+
+</main>
+
+<!-- ============================================
+     BLOQUE: Footer
+     PROPÓSITO: Pie de página con datos NAP + links legales
+     SEMÁNTICA: <footer> landmark, <address> para NAP
+     ============================================ -->
+<footer>
+
+  <!-- Identidad del consultorio en el footer -->
+  <section aria-labelledby="footer-nombre" class="footer-identidad">
+    <h3 id="footer-nombre">Elizabeth Guzmán</h3>
+    <p class="footer-tagline">Odontología Estética y Especializada</p>
+    <!-- Frase de marca del PDF -->
+    <p class="footer-frase"><em>"Tu sonrisa, diseñada para ti."</em></p>
+
+    <!-- <address>: marcado semántico para los datos de contacto del negocio.
+         Google entiende que este bloque contiene la información NAP oficial.
+         IMPORTANTE: los datos deben ser IDÉNTICOS a los de Google Business Profile. -->
+    <address>
+      <!-- Enlace al Google Maps: mejora el SEO local y facilita la navegación. -->
+      <a href="https://share.google/rlaYavouMHnes4XAD"
+         target="_blank"
+         rel="noopener noreferrer"
+         aria-label="Abrir consultorio en Google Maps">
+        Sabaneta, Antioquia, Colombia
+      </a>
+      <!-- tel: protocolo que permite marcar directamente en móviles al hacer clic -->
+      <a href="tel:+573222614315" aria-label="Llamar al consultorio">+57 322 261 4315</a>
+      <a href="https://wa.me/573222614315"
+         target="_blank"
+         rel="noopener noreferrer"
+         aria-label="Escribir por WhatsApp">
+        WhatsApp
+      </a>
+    </address>
+  </section>
+
+  <!-- Navegación del footer: diferente al nav del header en contenido y aria-label -->
+  <nav aria-label="Navegación del pie de página" class="footer-nav">
+    <ul>
+      <li><a href="/">Inicio</a></li>
+      <li><a href="/sobre-nosotros.html">Sobre mí</a></li>
+      <li><a href="/servicios.html">Servicios</a></li>
+      <li><a href="/agendar.html">Agendar cita</a></li>
+      <li><a href="/contacto.html">Contacto</a></li>
+    </ul>
+  </nav>
+
+  <!-- <aside>: información tangencial al contenido principal (horarios).
+       Está en el footer porque es de consulta rápida, no el foco de la página. -->
+  <aside aria-label="Horarios de atención" class="footer-horarios">
+    <h4>Horarios</h4>
+    <!-- <dl>: lista de definición — el marcado más semántico para pares dato/valor
+         como "día: hora". <dt> = término, <dd> = descripción/valor. -->
+    <dl>
+      <dt>Lunes a Viernes</dt>
+      <!-- <time datetime="HH:MM"> permite a los motores de búsqueda parsear horarios
+           en formato ISO 8601, que es el estándar internacional. -->
+      <dd>
+        <time datetime="08:00">8:00 a.m.</time> —
+        <time datetime="17:00">5:00 p.m.</time>
+      </dd>
+      <dt>Sábados</dt>
+      <dd>
+        <time datetime="09:00">9:00 a.m.</time> —
+        <time datetime="13:00">1:00 p.m.</time>
+      </dd>
+    </dl>
+    <!-- TODO: reemplaza estos horarios con los reales del consultorio -->
+  </aside>
+
+
+  <!-- ============================================
+       BLOQUE: Footer — 4ª columna: Redes sociales + mapa
+       PROPÓSITO: Agrupar en una sola columna los íconos sociales y el
+                  mapa embebido pequeño. Ocupa el 4° slot del grid del footer.
+       SEMÁNTICA: <section> con heading, <ul> para iconos, <figure> para mapa.
+       ============================================ -->
+  <section aria-labelledby="footer-redes-titulo" class="footer-redes-mapa">
+
+    <!-- Título de columna: estilo coherente con "Horarios" y "Páginas" -->
+    <h4 id="footer-redes-titulo">Síguenos</h4>
+
+    <!-- <ul>: lista de enlaces a redes sociales con íconos SVG futuristas -->
+    <ul class="redes-sociales" aria-label="Redes sociales del consultorio">
+
+      <!-- Instagram: SVG oficial adaptado, contorno minimalista -->
+      <li>
+        <a href="https://www.instagram.com/draelizabethguzman/"
+           target="_blank"
+           rel="noopener noreferrer"
+           aria-label="Seguir a Elizabeth Guzmán en Instagram"
+           class="red-social red-instagram">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="22" height="22" fill="currentColor">
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+          </svg>
+        </a>
+      </li>
+
+      <!-- Facebook: SVG "f" en círculo, minimalista -->
+      <li>
+        <a href="https://www.facebook.com/profile.php?id=61558841361671"
+           target="_blank"
+           rel="noopener noreferrer"
+           aria-label="Seguir a Elizabeth Guzmán en Facebook"
+           class="red-social red-facebook">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="22" height="22" fill="currentColor">
+            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+          </svg>
+        </a>
+      </li>
+
+      <!-- Google Maps / Google Business Profile: pin de mapa -->
+      <li>
+        <a href="https://www.google.com/maps/place/Dra.+Elizabeth+Guzm%C3%A1n+Odontolog%C3%ADa+Est%C3%A9tica+y+Especializada/@6.1531438,-75.620117,799m/data=!3m2!1e3!4b1!4m6!3m5!1s0x8e4683d9082eecb1:0x6577608e1e0fae27!8m2!3d6.1531438!4d-75.620117!16s%2Fg%2F11s2ld_k6q"
+           target="_blank"
+           rel="noopener noreferrer"
+           aria-label="Ver el consultorio en Google Maps"
+           class="red-social red-gmb">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="22" height="22" fill="currentColor">
+            <path d="M12 0C7.802 0 4 3.403 4 7.602 4 11.8 7.469 16.812 12 24c4.531-7.188 8-12.2 8-16.398C20 3.403 16.199 0 12 0zm0 11c-1.657 0-3-1.343-3-3s1.343-3 3-3 3 1.343 3 3-1.343 3-3 3z"/>
+          </svg>
+        </a>
+      </li>
+
+    </ul>
+
+    <!-- <figure>: mapa embebido pequeño con leyenda accesible.
+         <figure> es el envoltorio semántico correcto para contenido
+         autocontenido como mapas, imágenes, gráficos. -->
+    <figure class="footer-mapa-figura">
+      <!-- <iframe> con loading="lazy" para no bloquear el render inicial.
+           referrerpolicy evita filtrar la URL de referencia a Google Maps. -->
+      <iframe
+        src="https://maps.google.com/maps?q=6.1531438,-75.620117&z=16&output=embed"
+        width="100%"
+        height="120"
+        loading="lazy"
+        allowfullscreen=""
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Ubicación del consultorio en Sabaneta, Antioquia">
+      </iframe>
+      <!-- <figcaption>: descripción textual del mapa, útil para accesibilidad y SEO -->
+      <figcaption>Sabaneta, Antioquia — Colombia</figcaption>
+    </figure>
+
+  </section>
+
+  <!-- Franja inferior de cierre: copyright y crédito del desarrollador.
+       Ocupa la fila completa del grid del footer gracias a grid-column: 1/-1 en CSS. -->
+  <section aria-label="Copyright y créditos" class="footer-bottom">
+
+    <!-- Copyright y crédito del desarrollador -->
+    <section aria-label="Copyright" class="footer-copy">
+      <p>
+        <small>
+          ©&nbsp;<time datetime="2026">2026</time>
+          Elizabeth Guzmán Odontología Estética y Especializada.
+          Todos los derechos reservados.
+        </small>
+      </p>
+      <p class="footer-credito">
+        <small>Diseñado y desarrollado por
+          <strong>Sebastián López Ramírez</strong> — Desarrollador Web
+        </small>
+      </p>
+    </section>
+
+  </section>
+</footer>
+
+<!-- Script de navegación móvil (menú hamburguesa) -->
+<!-- defer: se descarga en paralelo y se ejecuta cuando el DOM está listo -->
+<script src="/js/nav.js" defer></script>
+
+<!-- Script de agenda: personaliza el saludo en esta página -->
+<script src="/js/agenda.js" defer></script>
+
+<!-- AUDITORÍA: div=0, span=0, style_inline=0 -->
+
+
+<a href="https://wa.me/573222614315?text=Hola%2C%20quisiera%20agendar%20una%20valoraci%C3%B3n%20odontol%C3%B3gica%20con%20la%20Dra.%20Elizabeth"
+   class="whatsapp-flotante"
+   target="_blank"
+   rel="noopener noreferrer"
+   aria-label="Agendar cita por WhatsApp con la Dra. Elizabeth Guzmán">
+  <!-- El ícono de WhatsApp lo dibujamos puramente con CSS usando un SVG inline en content.
+       Esto evita cargar una imagen externa (HTTP request extra) y mantiene el botón
+       ligero. El texto "WA" es el fallback accesible si el CSS falla. -->
+  <abbr title="WhatsApp" aria-hidden="true">WA</abbr>
+</a>
+
+</body>
+</html>

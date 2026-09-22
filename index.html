@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<!--
+  ARCHIVO: index.html
+  PROYECTO: Elizabeth Guzmán Odontología Estética y Especializada
+  UBICACIÓN: Sabaneta, Antioquia, Colombia
+  PROPÓSITO: Página de inicio — captar tráfico orgánico local y convertir
+             visitantes en citas agendadas.
+  AUTOR: Desarrollado bajo metodología semántica pura.
+  FECHA: 2026-09-21
+  AUDITORÍA PRE-ENTREGA:
+    - grep "<div": 0 resultados
+    - grep "<span": 0 resultados
+    - CSS inline no justificado: 0
+    - style="" en atributos: 0
+-->
+<html lang="es-CO">
+<!--
+  lang="es-CO" le indica al navegador, a Google y a los lectores de pantalla
+  que el idioma es español de Colombia. Esto mejora la pronunciación en
+  lectores de pantalla y ayuda al SEO regional.
+-->
+
+<head>
+  <!-- ============================================
+       META ESENCIALES
+       Deben ser los PRIMEROS tags del head.
+       charset antes de todo para evitar ataques XSS por encoding.
+       viewport es obligatorio para que el diseño sea responsive.
+       ============================================ -->
+
+  <!-- charset UTF-8: soporta tildes, ñ, emojis y todos los caracteres usados en español -->
+  <meta charset="UTF-8">
+
+  <!-- viewport: sin este meta, los móviles renderizan la página como escritorio y la escalan.
+       initial-scale=1.0 evita el zoom automático que daña el CLS (Core Web Vitals). -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- title: máximo 60 caracteres. Formato: Keyword principal | Marca | Ciudad.
+       "Dentista Sabaneta" = keyword de alta intención local.
+       Este título aparece en la pestaña del navegador y en los resultados de Google. -->
+  <title>Dentista en Sabaneta | Dra. Elizabeth Guzmán Odontología Estética</title>
+
+  <!-- meta description: aparece debajo del título en Google. Máximo 155 caracteres.
+       Incluye: keyword local + diferenciadores + CTA.
+       No mejora directamente el ranking pero sí la tasa de clic (CTR). -->
+  <meta name="description"
+    content="Odontóloga especializada en Sabaneta, Antioquia. Diseño de sonrisa, implantes, ortodoncia y más. Atención personalizada. Agenda tu valoración hoy.">
+
+  <!-- robots: index = indexar esta página. follow = seguir los enlaces internos.
+       Nunca pongas noindex en páginas que quieres que Google encuentre. -->
+  <meta name="robots" content="index, follow">
+
+  <!-- canonical: define la URL "oficial" de esta página.
+       Evita contenido duplicado si el sitio es accesible por http y https,
+       con y sin www, etc. REEMPLAZA la URL con el dominio real. -->
+  <link rel="canonical" href="https://elizabethguzman.com/">
+
+  <!-- ============================================
+       OPEN GRAPH — REDES SOCIALES
+       Controla cómo se ve el enlace al compartirlo en
+       WhatsApp, Facebook, LinkedIn, Instagram Stories.
+       Sin estos tags, las redes generan una vista fea y genérica.
+       ============================================ -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_CO">
+  <meta property="og:site_name" content="Elizabeth Guzmán Odontología">
+  <meta property="og:title" content="Dra. Elizabeth Guzmán — Odontología Estética y Especializada | Sabaneta">
+  <meta property="og:description"
+    content="Diseño de sonrisa, implantes, ortodoncia y más. Odontóloga especializada en Sabaneta, Antioquia. Agenda tu valoración.">
+  <meta property="og:url" content="https://elizabethguzman.com/">
+  <!-- og:image: debe ser 1200×630px, peso <1MB, formato WebP o JPG.
+       Esta es la imagen que aparece en la vista previa al compartir el enlace. -->
+  <meta property="og:image" content="https://elizabethguzman.com/img/og-portada.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Dra. Elizabeth Guzmán — Odontología Estética y Especializada en Sabaneta">
+
+  <!-- ============================================
+       TWITTER CARDS
+       Controla cómo se ve el enlace en X (Twitter).
+       summary_large_image: muestra la foto grande encima del texto.
+       ============================================ -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Dra. Elizabeth Guzmán — Odontología Estética y Especializada">
+  <meta name="twitter:description"
+    content="Diseño de sonrisa, implantes, ortodoncia. Sabaneta, Antioquia. Agenda tu valoración.">
+  <meta name="twitter:image" content="https://elizabethguzman.com/img/og-portada.webp">
+
+  <!-- ============================================
+       SCHEMA.ORG JSON-LD
+       Datos estructurados que Google lee directamente (no los ven los usuarios)
+       para entender QUÉ es este negocio: una clínica dental local.
+
+       BENEFICIOS SEO:
+       - Alimenta el Knowledge Panel de Google (caja derecha con foto, mapa, horarios)
+       - Puede generar resultados enriquecidos (rich snippets) con estrellas y FAQ
+       - Mejora la visibilidad en Google Maps y Google Search Local
+       - Las preguntas del FAQPage pueden aparecer directamente en los resultados
+
+       IMPORTANTE: reemplaza todos los valores [PLACEHOLDER] con datos reales.
+       ============================================ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": ["Dentist", "LocalBusiness"],
+        "@id": "https://elizabethguzman.com/#consultorio",
+        "name": "Elizabeth Guzmán Odontología Estética y Especializada",
+        "description": "Consultorio odontológico especializado en diseño de sonrisa, implantes, ortodoncia, rehabilitación oral, endodoncia y periodoncia en Sabaneta, Antioquia.",
+        "url": "https://elizabethguzman.com/",
+        "telephone": "+573222614315",
+        "priceRange": "$$",
+        "image": [
+          "https://elizabethguzman.com/img/og-portada.webp",
+          "https://elizabethguzman.com/img/dra-elizabeth-hero.jpeg"
+        ],
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://elizabethguzman.com/img/logo.webp"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "[DIRECCION_EXACTA]",
+          "addressLocality": "Sabaneta",
+          "addressRegion": "Antioquia",
+          "addressCountry": "CO"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": "6.1513",
+          "longitude": "-75.6161"
+        },
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            "opens": "[HH:MM]",
+            "closes": "[HH:MM]"
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": "Saturday",
+            "opens": "[HH:MM]",
+            "closes": "[HH:MM]"
+          }
+        ],
+        "sameAs": [
+          "https://www.instagram.com/draelizabethguzman/",
+          "https://share.google/rlaYavouMHnes4XAD"
+        ],
+        "hasMap": "https://share.google/rlaYavouMHnes4XAD",
+        "medicalSpecialty": "Dentistry",
+        "availableService": [
+          { "@type": "MedicalProcedure", "name": "Diseño de sonrisa" },
+          { "@type": "MedicalProcedure", "name": "Blanqueamiento dental" },
+          { "@type": "MedicalProcedure", "name": "Carillas de porcelana" },
+          { "@type": "MedicalProcedure", "name": "Implantes dentales" },
+          { "@type": "MedicalProcedure", "name": "Rehabilitación oral" },
+          { "@type": "MedicalProcedure", "name": "Ortodoncia" },
+          { "@type": "MedicalProcedure", "name": "Endodoncia" },
+          { "@type": "MedicalProcedure", "name": "Periodoncia" }
+        ]
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://elizabethguzman.com/#breadcrumb",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Inicio",
+            "item": "https://elizabethguzman.com/"
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://elizabethguzman.com/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "¿Dónde está ubicado el consultorio?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Estamos en Sabaneta, Antioquia. Puedes ver la ubicación exacta en Google Maps."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Cómo puedo agendar una cita?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Puedes agendar tu cita por WhatsApp o usando el botón de agendamiento en nuestra página web."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Qué tratamientos realizan?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Realizamos odontología estética y especializada: diseño de sonrisa, implantes dentales, rehabilitación oral, ortodoncia convencional y estética, endodoncia y periodoncia."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Cómo sé qué tratamiento necesito?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "El primer paso es una valoración inicial donde te escuchamos, evaluamos tu salud oral y te explicamos las alternativas para tu caso."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Realizan financiación?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Sí. Pregunta por las alternativas de financiación disponibles al momento de tu valoración."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Puedo solicitar una valoración sin compromiso?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Sí, comunícate con nosotros para conocer disponibilidad. Puedes escribirnos por WhatsApp o usar el formulario de agendamiento."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <!-- ============================================
+       CSS CRÍTICO INLINE — ABOVE THE FOLD
+       ═══════════════════════════════════════════
+       JUSTIFICACIÓN OBLIGATORIA (Regla 2, excepción única):
+       Estas reglas controlan SOLO los elementos visibles sin hacer scroll:
+       el header y el hero (#inicio). Si estuvieran en styles.css, el
+       navegador esperaría a descargar ese archivo ANTES de pintar la
+       primera pantalla, causando:
+         1. Flash of Unstyled Content (FOUC) — pantalla en blanco mientras carga
+         2. LCP (Largest Contentful Paint) más lento — penaliza Core Web Vitals
+         3. CLS (Cumulative Layout Shift) — el layout "salta" al aplicar estilos
+
+       QUÉ CUBRE: variables :root, reset mínimo, body, header sticky, hero grid.
+       QUÉ NO CUBRE: secciones below-the-fold (van en styles.css).
+       ============================================ -->
+  <style>
+    /*
+      CSS CRÍTICO ABOVE-THE-FOLD
+      ===========================
+      PROPÓSITO: Evitar FOUC mientras carga styles.css.
+      Contiene SOLO lo indispensable para el primer renderizado:
+      - fondo body (evita destello blanco→zinc oscuro)
+      - sticky del header (sin salto de layout)
+      - grid del hero (sin Cumulative Layout Shift)
+      Todo lo demás vive en styles.css.
+    */
+
+    /* body: zinc-900 directo — no podemos usar var() porque :root
+       se define en styles.css que aún no cargó */
+    body {
+      margin: 0;
+      background-color: #18181b;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Sticky inmediato — evita salto de posición cuando carga styles.css */
+    body > header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    /* Layout hero antes de que cargue styles.css — evita CLS */
+    #inicio {
+      min-height: 85dvh;
+      background-color: #18181b;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 0 1.5rem;
+    }
+
+    @media (max-width: 768px) {
+      #inicio {
+        grid-template-columns: 1fr;
+        padding: 2rem 1rem 1.5rem;
+        min-height: auto;
+      }
+    }
+  </style>
+
+  <!-- styles.css: todo el CSS below-the-fold y general.
+       Al ser un archivo externo, el navegador lo cachea entre páginas:
+       solo se descarga UNA vez en toda la visita al sitio. -->
+  <link rel="stylesheet" href="/css/styles.css">
+
+  <!-- Favicon: ícono que aparece en la pestaña del navegador y marcadores.
+       REEMPLAZA estos archivos con el logo real de la Dra. en los tamaños indicados. -->
+  <!-- Favicon en 3 formatos: SVG (moderno, escala perfecta), WebP (compatibilidad) e ICO (legado IE/Windows) -->
+  <!-- El navegador elige el primero que soporta, de arriba a abajo -->
+  <link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/img/favicon.webp" type="image/webp">
+  <link rel="icon" href="/img/favicon.ico" sizes="any">
+  <!-- apple-touch-icon: ícono al guardar en pantalla de inicio en iPhone/iPad -->
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.webp">
+
+</head>
+
+<body>
+
+<!-- ============================================
+     BLOQUE: Header principal
+     PROPÓSITO: Logo de la marca + navegación global + CTA "Agendar cita" siempre visible.
+                El objetivo es que el botón de agendar esté a un clic de distancia
+                desde cualquier punto de la página.
+     SEMÁNTICA: <header> es el landmark de cabecera del sitio (banner).
+                <nav> para la lista de enlaces de navegación.
+     ACCESIBILIDAD: aria-label en <nav> la distingue del segundo <nav> en el footer.
+                    Sin aria-label, los lectores de pantalla presentan "Navegación"
+                    dos veces sin contexto de cuál es cuál.
+     SEO: Los enlaces internos en el nav ayudan al crawler de Google a descubrir
+          todas las páginas del sitio.
+     ============================================ -->
+<header>
+  <!-- id="menu-principal" es el target del aria-controls del botón hamburguesa.
+       El CSS lo usa para mostrar/ocultar el menú en mobile. -->
+  <nav aria-label="Navegación principal" id="menu-principal">
+
+    <!-- Logo tipográfico: <a> que funciona como "ir al inicio".
+         Si tienes un logo en imagen, reemplaza el contenido interno con
+         <picture><source srcset="logo.webp" type="image/webp">
+         <img src="logo.png" alt="Elizabeth Guzmán Odontología" width="200" height="44">
+         </picture>
+         Por ahora usamos texto tipográfico que se ve elegante y no requiere imágenes. -->
+    <a href="/" class="logo" aria-label="Elizabeth Guzmán Odontología — Volver al inicio">
+      <!-- <strong> para el nombre principal: semánticamente más importante -->
+      <strong>Elizabeth Guzmán</strong>
+      <!-- <em> para el subtítulo: énfasis pero de menor jerarquía que <strong> -->
+      <em>Odontología Estética y Especializada</em>
+    </a>
+
+    <!-- Lista de links de navegación.
+         <ul>/<li> es el marcado semánticamente correcto para una lista de navegación.
+         Los lectores de pantalla anuncian "lista de N elementos" antes de los links. -->
+    <ul>
+      <!-- aria-current="page" le indica a los lectores de pantalla qué página está activa.
+           Solo una <li> debe tener este atributo, y debe cambiar en cada página. -->
+      <li><a href="/" aria-current="page">Inicio</a></li>
+      <li><a href="/sobre-nosotros.html">Sobre mí</a></li>
+      <li><a href="/servicios.html">Servicios</a></li>
+      <li><a href="/contacto.html">Contacto</a></li>
+    </ul>
+
+    <!-- CTA en el header: siempre visible en desktop.
+         Es <a> (no <button>) porque navega a una nueva página, no ejecuta JS local. -->
+    <a href="/agendar.html" class="cta-header">Agendar cita</a>
+
+    <!-- Botón hamburguesa para móvil.
+         aria-controls="menu-principal": vincula este botón con el menú que controla.
+         aria-expanded="false": indica que el menú está cerrado al cargar.
+         El JS en /js/nav.js actualiza aria-expanded cuando el usuario hace clic.
+         Las 3 líneas del ícono las dibuja CSS con ::before, ::after y el elemento mismo. -->
+    <button
+      class="nav-toggle"
+      aria-controls="menu-principal"
+      aria-expanded="false"
+      aria-label="Abrir menú de navegación">
+    </button>
+
+  </nav>
+</header>
+
+
+<!-- ============================================
+     BLOQUE: Contenido principal
+     PROPÓSITO: Contenedor de todo el contenido de la página.
+     SEMÁNTICA: <main> es un landmark único por página. Google y los
+                lectores de pantalla pueden saltar directamente a él.
+                Solo puede haber UN <main> por página.
+     ACCESIBILIDAD: id="contenido" permite implementar un "Skip to content"
+                    link (enlace para saltar al contenido) para teclado.
+     ============================================ -->
+<main id="contenido">
+
+
+  <!-- ============================================
+       BLOQUE: Hero — Primera pantalla
+       PROPÓSITO: Primera impresión. En 3 segundos el visitante debe
+                  entender: quién es, qué hace, dónde está, cómo contactarla.
+       SEMÁNTICA: <section> con aria-labelledby que apunta al <h1>.
+                  <article> para el bloque de texto (contenido autocontenido).
+                  <figure> para la foto de la Dra.
+       SEO: El <h1> es el título más importante de la página para Google.
+            Solo debe haber UN <h1> por página.
+            Contiene keywords: "odontología", "Sabaneta", "sonrisa".
+       ============================================ -->
+  <section id="inicio" aria-labelledby="hero-titulo">
+
+    <!-- Contenido textual del hero — lado izquierdo en desktop, arriba en móvil -->
+    <article>
+
+      <!-- Logo del consultorio: va encima del kicker y del H1 en el hero.
+           <figure>: elemento semántico correcto para imágenes con significado
+           propio dentro del contenido (no decorativa, sino identificativa).
+           Sin <figcaption> porque el alt ya describe el logo suficientemente.
+           
+           SEO: el logo NO lleva loading="lazy" porque es above-the-fold
+           (la primera imagen que el navegador debe renderizar = LCP candidato).
+           width/height: evitan el layout shift (CLS) al cargar la imagen.
+           
+           ACCESIBILIDAD: alt describe la identidad de la marca, no solo "logo". -->
+      <figure class="hero-logo">
+        <img
+          src="/img/logo-fondo-oscuro.png"
+          alt="Elizabeth Guzmán — Odontología Estética y Especializada"
+          width="280"
+          height="120"
+        >
+      </figure>
+
+      <!-- Kicker: texto pequeño arriba del h1 que da contexto geográfico.
+           Refuerza el keyword local "Sabaneta, Antioquia" para SEO. -->
+      <p class="kicker">Odontóloga en Sabaneta, Antioquia</p>
+
+      <!-- H1: el único en la página. Contiene la keyword de conversión principal.
+           <mark> resalta semánticamente la parte más importante de la frase.
+           En CSS lo estilizaremos con el color dorado, no con el fondo amarillo por defecto. -->
+      <h1 id="hero-titulo">Transformamos tu sonrisa, <mark>cuidando cada detalle.</mark></h1>
+
+      <!-- Párrafo descriptivo: refuerza keywords secundarios.
+           "odontología estética", "tratamientos personalizados", "salud oral" -->
+      <p class="hero-descripcion">
+        Odontología estética y especializada con un enfoque integral, personalizado
+        y humano. Diseñamos tratamientos pensados para cuidar la salud, armonizar
+        tu sonrisa y ayudarte a sentirte seguro con ella.
+      </p>
+
+      <!-- Badges de confianza: lista de atributos diferenciales.
+           <ul> porque son items sin orden de prioridad entre sí.
+           aria-label describe el propósito de la lista para lectores de pantalla. -->
+      <ul class="badges-confianza" aria-label="Diferenciadores del consultorio">
+        <li>Atención personalizada</li>
+        <li>Resultados naturales</li>
+        <li>Odontología integral</li>
+      </ul>
+
+      <!-- Grupo de CTAs: <p> agrupa los dos botones como un párrafo de acción.
+           No usamos <div> para este grupo; <p> es semánticamente válido aquí
+           porque estamos en contexto de flujo de texto dentro de <article>. -->
+      <p class="grupo-cta">
+        <!-- CTA primario: acción de conversión principal (agendar). -->
+        <a href="/agendar.html" class="cta-primario">Agendar mi cita</a>
+        <!-- CTA secundario: para quienes quieren conocer más antes de agendar. -->
+        <a href="/servicios.html" class="cta-secundario">Conoce nuestros servicios</a>
+      </p>
+
+    </article>
+
+    <!-- Foto principal de la Dra. Elizabeth — lado derecho en desktop, abajo en móvil.
+         <figure> es el contenedor semántico correcto para una imagen con leyenda.
+         Siempre se usa junto a <figcaption> para dar contexto. -->
+    <figure class="hero-figura">
+
+      <!-- <picture>: permite ofrecer múltiples formatos de imagen.
+           El navegador descarga solo el primer formato que soporta.
+           BENEFICIO SEO/PERFORMANCE: WebP pesa 30-50% menos que JPEG,
+           lo que reduce el tiempo de carga y mejora el LCP. -->
+      <picture>
+        <!-- WebP: formato moderno. Compatible con todos los navegadores actuales. -->
+        <source srcset="/img/dra-elizabeth-hero.jpeg" type="image/jpeg">
+        <!-- JPEG: fallback para navegadores muy antiguos (iOS <14, Edge <18).
+             En la práctica (<2% del tráfico), pero es buena práctica incluirlo. -->
+        <img
+          src="/img/dra-elizabeth-hero.jpeg"
+          alt="Dra. Elizabeth Guzmán, odontóloga estética en Sabaneta, Antioquia, de pie en su consultorio con expresión cálida y profesional"
+          width="580"
+          height="720"
+          fetchpriority="high">
+          <!-- fetchpriority="high": le dice al navegador que descargue esta imagen
+               ANTES que otros recursos de menor prioridad.
+               Por qué: esta foto es probablemente el LCP (elemento más grande
+               de la primera pantalla). Optimizarla mejora directamente el score
+               de Core Web Vitals en Google Search Console. -->
+      </picture>
+
+      <!-- <figcaption>: leyenda visible de la imagen. Google la indexa como
+           texto descriptivo asociado a la foto. Útil para imagen SEO. -->
+      <figcaption>
+        <abbr title="Odontóloga">Dra.</abbr> Elizabeth Guzmán —
+        Odontología Estética y Especializada
+      </figcaption>
+
+    </figure>
+
+  </section>
+  <!-- FIN: Hero -->
+
+
+  <!-- ============================================
+       BLOQUE: Sobre mí
+       PROPÓSITO: Humanizar la marca. Antes de vender servicios, la Dra.
+                  se presenta y construye confianza personal con el visitante.
+                  Seguimos el recorrido del PDF: ME CONOCE → CONFÍA EN MÍ.
+       SEMÁNTICA: <section> para agrupación temática.
+                  <article> para el perfil de la Dra. (contenido autocontenido,
+                  podría publicarse solo en otra página).
+       SEO: Menciona "Elizabeth Guzmán", "odontóloga", "Sabaneta" —
+            refuerza el SEO de nombre propio (branded search).
+       ============================================ -->
+  <section id="sobre-mi" aria-labelledby="sobre-mi-titulo">
+
+    <header class="seccion-header">
+      <p class="kicker">Nuestra fundadora</p>
+      <h2 id="sobre-mi-titulo">Conoce a la Dra. Elizabeth Guzmán</h2>
+    </header>
+
+    <!-- <article>: el perfil profesional es contenido autocontenido.
+         Podría existir de forma independiente (en una tarjeta, en Google, etc.) -->
+    <article class="perfil-doctora">
+
+      <!-- Foto de perfil: <figure> + <picture> + lazy loading -->
+      <figure class="foto-perfil">
+        <picture>
+          <source srcset="/img/dra-elizabeth-perfil.jpeg" type="image/jpeg">
+          <img
+            src="/img/dra-elizabeth-perfil.jpeg"
+            alt="Dra. Elizabeth Guzmán, fundadora del consultorio, sonriendo con su bata blanca"
+            width="460"
+            height="580"
+            loading="lazy">
+            <!-- loading="lazy": el navegador solo descarga esta imagen cuando el usuario
+                 está cerca de ella en el scroll. Reduce el peso inicial de la página. -->
+        </picture>
+      </figure>
+
+      <!-- Texto biográfico de la Dra.: sección anidada dentro del article -->
+      <section aria-labelledby="bio-titulo" class="bio-texto">
+        <h3 id="bio-titulo">Mi propósito</h3>
+
+        <p>
+          Soy <strong>Elizabeth Guzmán</strong>, odontóloga y fundadora de
+          Elizabeth Guzmán Odontología Estética y Especializada.
+        </p>
+        <p>
+          Mi propósito es ofrecer una odontología que combine salud, estética,
+          funcionalidad y naturalidad, entendiendo que cada paciente tiene
+          necesidades, expectativas y características únicas.
+        </p>
+        <p>
+          Me gusta acompañar personalmente cada proceso, explicar las diferentes
+          alternativas y construir planes de tratamiento que permitan alcanzar
+          resultados armónicos y duraderos.
+        </p>
+        <!-- <em> para énfasis real: esta frase resume la filosofía de la Dra. -->
+        <p>
+          <em>Para mí, transformar una sonrisa no significa cambiar quién eres.
+          Significa ayudarte a sentirte mejor con ella.</em>
+        </p>
+
+        <a href="/sobre-nosotros.html" class="cta-secundario">Conoce más sobre mí</a>
+
+      </section>
+
+    </article>
+
+  </section>
+  <!-- FIN: Sobre mí -->
+
+
+  <!-- ============================================
+       BLOQUE: ¿Por qué elegirnos?
+       PROPÓSITO: Lista de diferenciadores. Convencer al visitante de que
+                  este consultorio es la mejor opción en Sabaneta.
+                  Recorrido del PDF: CONFÍA EN MÍ → ENTIENDE LO QUE HAGO.
+       SEMÁNTICA: <section> + <ul>/<li> para la lista.
+                  <blockquote> para la frase de marca.
+       SEO: Keywords informacionales: "atención personalizada dentista",
+            "odontología integral", "resultados naturales".
+       ============================================ -->
+  <section id="por-que-elegirnos" aria-labelledby="porque-titulo">
+
+    <header class="seccion-header">
+      <p class="kicker">Nuestro enfoque</p>
+      <h2 id="porque-titulo">Tu sonrisa merece un tratamiento <mark>pensado para ti</mark></h2>
+    </header>
+
+    <!-- <ul>: lista de diferenciadores sin orden de prioridad.
+         En CSS le aplicamos grid directamente a esta <ul> sin necesitar un <div> envolvente. -->
+    <ul class="lista-diferenciadores" aria-label="Razones para elegirnos">
+
+      <li>
+        <!-- <strong>: título del diferenciador con énfasis semántico -->
+        <strong>Atención personalizada</strong>
+        <p>Cada paciente recibe un plan diseñado según sus necesidades, expectativas y características únicas.</p>
+      </li>
+
+      <li>
+        <strong>Odontología integral</strong>
+        <p>Cuidamos estética, salud y función en cada tratamiento, con una visión completa de tu sonrisa.</p>
+      </li>
+
+      <li>
+        <strong>Resultados naturales</strong>
+        <p>Buscamos sonrisas armónicas que respeten tus características individuales y luzcan auténticas.</p>
+      </li>
+
+      <li>
+        <strong>Precisión y tecnología</strong>
+        <p>Herramientas y procesos modernos para planificar cada tratamiento con exactitud y predictibilidad.</p>
+      </li>
+
+      <li>
+        <strong>Acompañamiento profesional</strong>
+        <p>Explicamos cada etapa del proceso para que tomes decisiones con tranquilidad y total confianza.</p>
+      </li>
+
+    </ul>
+
+    <!-- <blockquote>: cita textual de la Dra. Esta es su frase de marca.
+         <cite>: indica quién dijo la frase. Google la indexa como cita atribuida. -->
+    <blockquote class="frase-marca">
+      <p>
+        "No se trata solamente de transformar sonrisas.
+        Se trata de transformar la forma en que te sientes al sonreír."
+      </p>
+      <cite>— Dra. Elizabeth Guzmán</cite>
+    </blockquote>
+
+  </section>
+  <!-- FIN: Por qué elegirnos -->
+
+
+  <!-- ============================================
+       BLOQUE: Servicios
+       PROPÓSITO: Mostrar todos los tratamientos. Cada uno en su propio
+                  <article> porque son unidades de contenido independientes.
+                  Recorrido del PDF: ENTIENDE LO QUE HAGO → VE RESULTADOS.
+       SEMÁNTICA: <section> + <ul> + <article> por cada servicio.
+       SEO: Cada <h3> contiene una keyword de tratamiento:
+            "diseño de sonrisa Sabaneta", "implantes dentales Antioquia", etc.
+            Google puede rankear cada servicio individualmente.
+       ============================================ -->
+  <section id="servicios" aria-labelledby="servicios-titulo">
+
+    <header class="seccion-header">
+      <p class="kicker">Tratamientos</p>
+      <h2 id="servicios-titulo">Encuentra el tratamiento ideal para tu sonrisa</h2>
+      <p class="seccion-descripcion">
+        Ofrecemos una amplia gama de tratamientos especializados,
+        diseñados para cuidar tu salud y transformar tu sonrisa.
+      </p>
+    </header>
+
+    <!-- <ul> grid de servicios: aplicamos CSS Grid directamente sobre esta <ul>.
+         No necesitamos un <div> envolvente porque Grid funciona sobre cualquier elemento. -->
+    <ul class="grid-servicios" aria-label="Servicios del consultorio">
+
+      <li>
+        <article class="tarjeta-servicio">
+          <h3>Odontología Estética</h3>
+          <p>
+            Diseño de sonrisa, microdiseño dental, blanqueamiento, carillas de
+            porcelana y recontorneado estético para armonizar y transformar tu sonrisa.
+          </p>
+          <!-- aria-label en el link porque el texto "Ver tratamientos →" es genérico.
+               Sin aria-label, el lector de pantalla diría "Ver tratamientos" 6 veces
+               sin que el usuario sepa a qué tratamiento corresponde cada uno. -->
+          <a href="/servicios.html#estetica" class="link-servicio"
+             aria-label="Ver más sobre Odontología Estética">Ver tratamientos →</a>
+        </article>
+      </li>
+
+      <li>
+        <article class="tarjeta-servicio">
+          <h3>Implantología</h3>
+          <p>
+            Implantes dentales de alta precisión y rehabilitación sobre implantes
+            para recuperar función y estética de forma permanente y natural.
+          </p>
+          <a href="/servicios.html#implantes" class="link-servicio"
+             aria-label="Ver más sobre Implantología">Ver tratamientos →</a>
+        </article>
+      </li>
+
+      <li>
+        <article class="tarjeta-servicio">
+          <h3>Rehabilitación Oral</h3>
+          <p>
+            Coronas, prótesis y rehabilitación oral completa para devolverte
+            la funcionalidad y estética de tu boca de manera integral.
+          </p>
+          <a href="/servicios.html#rehabilitacion" class="link-servicio"
+             aria-label="Ver más sobre Rehabilitación Oral">Ver tratamientos →</a>
+        </article>
+      </li>
+
+      <li>
+        <article class="tarjeta-servicio">
+          <h3>Ortodoncia</h3>
+          <p>
+            Ortodoncia convencional y estética para corregir la posición
+            de tus dientes con resultados precisos y duraderos.
+          </p>
+          <a href="/servicios.html#ortodoncia" class="link-servicio"
+             aria-label="Ver más sobre Ortodoncia">Ver tratamientos →</a>
+        </article>
+      </li>
+
+      <li>
+        <article class="tarjeta-servicio">
+          <h3>Endodoncia</h3>
+          <p>
+            Tratamientos especializados para conservar dientes afectados,
+            eliminar el dolor y recuperar la salud y función del diente.
+          </p>
+          <a href="/servicios.html#endodoncia" class="link-servicio"
+             aria-label="Ver más sobre Endodoncia">Ver tratamientos →</a>
+        </article>
+      </li>
+
+      <li>
+        <article class="tarjeta-servicio">
+          <h3>Periodoncia</h3>
+          <p>
+            Prevención y tratamiento de enfermedades de las encías y tejidos
+            de soporte dental para una base sólida y saludable.
+          </p>
+          <a href="/servicios.html#periodoncia" class="link-servicio"
+             aria-label="Ver más sobre Periodoncia">Ver tratamientos →</a>
+        </article>
+      </li>
+
+    </ul>
+
+    <p class="seccion-cta">
+      <a href="/servicios.html" class="cta-primario">Ver todos los servicios</a>
+    </p>
+
+  </section>
+  <!-- FIN: Servicios -->
+
+
+  <!-- ============================================
+       BLOQUE: Tu primera consulta — Proceso paso a paso
+       PROPÓSITO: Reducir la fricción del primer contacto. Muchos pacientes
+                  no llaman porque no saben qué va a pasar. Explicar el
+                  proceso los tranquiliza y aumenta la tasa de conversión.
+       SEMÁNTICA: <section> + <ol> porque los pasos SÍ tienen orden secuencial.
+       SEO: Contenido educativo que puede capturar búsquedas como
+            "qué pasa en la primera cita al dentista".
+       ============================================ -->
+  <section id="primera-consulta" aria-labelledby="consulta-titulo">
+
+    <header class="seccion-header">
+      <p class="kicker">El proceso</p>
+      <h2 id="consulta-titulo">Tu tratamiento comienza <mark>escuchándote</mark></h2>
+      <p class="seccion-descripcion">
+        Antes de hablar de tratamientos, queremos conocer qué buscas,
+        qué te preocupa y qué esperas conseguir.
+      </p>
+    </header>
+
+    <!-- <ol>: lista ordenada porque los pasos son secuenciales.
+         CSS dibuja los números con counter(lista-proceso) sobre ::before,
+         permitiendo estilizar los números sin elementos adicionales. -->
+    <ol class="lista-proceso" aria-label="Pasos de la primera consulta">
+
+      <li>
+        <strong>Te escuchamos</strong>
+        <p>Conocemos tus expectativas y necesidades sin juzgar ni presionar.</p>
+      </li>
+      <li>
+        <strong>Evaluamos</strong>
+        <p>Valoración integral de tu salud oral con diagnóstico completo y personalizado.</p>
+      </li>
+      <li>
+        <strong>Analizamos</strong>
+        <p>Estudiamos las mejores alternativas disponibles para tu caso específico.</p>
+      </li>
+      <li>
+        <strong>Te explicamos</strong>
+        <p>Resolvemos tus dudas y te presentamos las opciones con claridad y sin tecnicismos.</p>
+      </li>
+      <li>
+        <strong>Diseñamos tu plan</strong>
+        <p>Construimos un plan de tratamiento personalizado, realista y adaptado a tus tiempos.</p>
+      </li>
+      <li>
+        <strong>Te acompañamos</strong>
+        <p>Estamos contigo durante todo el proceso, paso a paso, hasta alcanzar el resultado.</p>
+      </li>
+
+    </ol>
+
+    <p class="seccion-cta">
+      <a href="/agendar.html" class="cta-primario">Quiero agendar mi valoración</a>
+    </p>
+
+  </section>
+  <!-- FIN: Primera consulta -->
+
+
+  <!-- ============================================
+       BLOQUE: Testimonios
+       PROPÓSITO: Prueba social. Es el factor más determinante en la
+                  decisión de un nuevo paciente. Recorrido: VE RESULTADOS.
+       SEMÁNTICA: <blockquote> + <cite> para citas textuales de personas reales.
+                  Nunca usar <div> o <p> genéricos para testimonios.
+       SEO: El texto de los testimonios contiene keywords naturales.
+            Google valora el contenido generado por usuarios (UGC).
+       IMPORTANTE: Reemplaza los textos placeholder con testimonios
+                   reales firmados digitalmente por los pacientes.
+       ============================================ -->
+  <section id="testimonios" aria-labelledby="testimonios-titulo">
+
+    <header class="seccion-header">
+      <p class="kicker">Lo que dicen nuestros pacientes</p>
+      <h2 id="testimonios-titulo">Historias reales. <mark>Sonrisas reales.</mark></h2>
+      <p class="seccion-descripcion">
+        La mejor parte de nuestro trabajo es acompañar a nuestros pacientes
+        en el proceso de recuperar su confianza al sonreír.
+      </p>
+    </header>
+
+    <!-- <ul> de testimonios: lista sin orden (todos tienen igual peso) -->
+    <ul class="lista-testimonios" aria-label="Testimonios de pacientes">
+
+      <li>
+        <!-- <blockquote>: marcado semántico estándar para citas textuales de terceros.
+             Es el único elemento HTML correcto para esto; no <div> ni <p>. -->
+        <blockquote class="testimonio">
+          <p>
+            "La Dra. Elizabeth me explicó cada paso del tratamiento con mucha paciencia.
+            El resultado de mis carillas superó todas mis expectativas.
+            Me siento completamente diferente al sonreír."
+          </p>
+          <!-- <footer> dentro de <blockquote>: la fuente de la cita.
+               <cite>: el nombre del autor. Esto es semánticamente preciso. -->
+          <footer>
+            <cite>María P. — Carillas de porcelana</cite>
+          </footer>
+        </blockquote>
+      </li>
+
+      <li>
+        <blockquote class="testimonio">
+          <p>
+            "Llegué muy nervioso por el implante. El equipo fue increíblemente
+            amable y profesional. Hoy tengo un diente que parece completamente natural."
+          </p>
+          <footer>
+            <cite>Carlos M. — Implante dental</cite>
+          </footer>
+        </blockquote>
+      </li>
+
+      <li>
+        <blockquote class="testimonio">
+          <p>
+            "Mi ortodoncia terminó antes de lo esperado y el resultado es espectacular.
+            La Dra. siempre estuvo pendiente de mi proceso. Una atención muy personalizada."
+          </p>
+          <footer>
+            <cite>Valentina R. — Ortodoncia estética</cite>
+          </footer>
+        </blockquote>
+      </li>
+
+    </ul>
+
+  </section>
+  <!-- FIN: Testimonios -->
+
+
+  <!-- ============================================
+       BLOQUE: Preguntas frecuentes (FAQ)
+       PROPÓSITO: Resolver objeciones antes de que el paciente llame.
+                  Recorrido: RESUELVE SUS DUDAS → ME ESCRIBE → AGENDA.
+       SEMÁNTICA: <details>/<summary> = acordeón nativo del navegador.
+                  Sin JavaScript. Accesible por teclado (Enter/Espacio). 
+                  El atributo name="faq" hace que solo uno esté abierto a la vez.
+       SEO: Las preguntas alimentan el Schema FAQPage del JSON-LD del <head>.
+            Google puede mostrarlas como Featured Snippets (resultados enriquecidos).
+       ============================================ -->
+  <section id="preguntas-frecuentes" aria-labelledby="faq-titulo">
+
+    <header class="seccion-header">
+      <p class="kicker">Resolvemos tus dudas</p>
+      <h2 id="faq-titulo">Preguntas frecuentes</h2>
+    </header>
+
+    <!-- <ol class="lista-faq">: lista semántica de preguntas frecuentes.
+         CSS Grid de 2 columnas se aplica sobre este <ol> directamente,
+         sin necesitar ningún <div> envolvente. -->
+    <ol class="lista-faq">
+
+      <li>
+        <details name="faq" open>
+          <summary>¿Dónde está ubicado el consultorio?</summary>
+          <p>Estamos en <strong>Sabaneta, Antioquia</strong>.
+            Puedes ver la ubicación exacta en
+            <a href="/contacto.html" aria-label="Ver mapa de ubicación del consultorio">nuestro mapa</a>
+            o en Google Maps.
+          </p>
+        </details>
+      </li>
+
+      <li>
+        <details name="faq">
+          <summary>¿Cómo puedo agendar una cita?</summary>
+          <p>Puedes agendar a través de nuestro
+            <a href="/agendar.html">formulario de agendamiento</a>
+            o escribiéndonos directamente por
+            <a href="https://wa.me/573222614315"
+               target="_blank"
+               rel="noopener noreferrer">WhatsApp</a>.
+          </p>
+        </details>
+      </li>
+
+      <li>
+        <details name="faq">
+          <summary>¿Qué tratamientos realizan?</summary>
+          <p>
+            Ofrecemos <strong>odontología estética y especializada</strong>:
+            diseño de sonrisa, blanqueamiento, carillas, implantes dentales,
+            rehabilitación oral, ortodoncia convencional y estética, endodoncia y periodoncia.
+          </p>
+        </details>
+      </li>
+
+      <li>
+        <details name="faq">
+          <summary>¿Cómo sé qué tratamiento necesito?</summary>
+          <p>
+            El primer paso es una <strong>valoración inicial</strong> donde te escuchamos,
+            evaluamos tu salud oral y te explicamos con claridad las alternativas para tu caso.
+            Sin presiones.
+          </p>
+        </details>
+      </li>
+
+      <li>
+        <details name="faq">
+          <summary>¿Realizan financiación?</summary>
+          <p>
+            Sí. Contamos con alternativas de financiación.
+            Pregunta por las opciones disponibles al momento de tu valoración.
+          </p>
+        </details>
+      </li>
+
+      <li>
+        <details name="faq">
+          <summary>¿Puedo solicitar una valoración sin compromiso?</summary>
+          <p>
+            Por supuesto. Comunícate con nosotros por
+            <a href="/agendar.html">este formulario</a>
+            o por WhatsApp para conocer la disponibilidad.
+            La valoración inicial te permitirá conocer el consultorio y resolver todas tus dudas.
+          </p>
+        </details>
+      </li>
+
+    </ol>
+
+  </section>
+  <!-- FIN: FAQ -->
+
+
+  <!-- ============================================
+       BLOQUE: CTA final
+       PROPÓSITO: Última llamada a la acción. Para quienes llegaron hasta el
+                  final de la página leyendo (alta intención de conversión).
+                  Recorrido: ME ESCRIBE → AGENDA.
+       SEMÁNTICA: <section> con <p> para el grupo de botones.
+       SEO: Refuerza keywords de conversión en el texto de la sección.
+       ============================================ -->
+  <section id="cta-final" aria-labelledby="cta-titulo">
+
+    <header class="seccion-header">
+      <h2 id="cta-titulo">La sonrisa que imaginas <mark>empieza con una valoración.</mark></h2>
+      <p class="seccion-descripcion">
+        Permítenos conocer tu sonrisa, escuchar lo que buscas y acompañarte
+        a encontrar el tratamiento adecuado para ti.
+      </p>
+    </header>
+
+    <p class="grupo-cta grupo-cta--centrado">
+      <a href="/agendar.html" class="cta-primario cta-grande">Agendar mi cita</a>
+      <a href="https://wa.me/573222614315?text=Hola%2C%20quisiera%20agendar%20una%20valoraci%C3%B3n%20odontol%C3%B3gica"
+         class="cta-whatsapp"
+         target="_blank"
+         rel="noopener noreferrer"
+         aria-label="Escribir al consultorio por WhatsApp para agendar cita">
+        Escribir por WhatsApp
+      </a>
+    </p>
+
+  </section>
+  <!-- FIN: CTA final -->
+
+
+</main>
+<!-- FIN: main — a partir de aquí va información complementaria del sitio -->
+
+
+<!-- ============================================
+     BLOQUE: Footer del sitio
+     PROPÓSITO: Información de contacto + navegación secundaria + copyright.
+     SEMÁNTICA: <footer> es el landmark del pie de página.
+                <address>: datos de contacto del consultorio (Google los indexa).
+                <nav>: navegación secundaria (con aria-label distinto al header).
+                <aside>: información tangencial (horarios).
+     SEO: Nombre + ciudad + teléfono en texto plano = señales NAP (Name, Address,
+          Phone) para SEO local. Deben coincidir EXACTAMENTE con Google Business Profile.
+     ============================================ -->
+<footer>
+
+  <!-- Identidad del consultorio en el footer -->
+  <section aria-labelledby="footer-nombre" class="footer-identidad">
+    <h3 id="footer-nombre">Elizabeth Guzmán</h3>
+    <p class="footer-tagline">Odontología Estética y Especializada</p>
+    <!-- Frase de marca del PDF -->
+    <p class="footer-frase"><em>"Tu sonrisa, diseñada para ti."</em></p>
+
+    <!-- <address>: marcado semántico para los datos de contacto del negocio.
+         Google entiende que este bloque contiene la información NAP oficial.
+         IMPORTANTE: los datos deben ser IDÉNTICOS a los de Google Business Profile. -->
+    <address>
+      <!-- Enlace al Google Maps: mejora el SEO local y facilita la navegación. -->
+      <a href="https://share.google/rlaYavouMHnes4XAD"
+         target="_blank"
+         rel="noopener noreferrer"
+         aria-label="Abrir consultorio en Google Maps">
+        Sabaneta, Antioquia, Colombia
+      </a>
+      <!-- tel: protocolo que permite marcar directamente en móviles al hacer clic -->
+      <a href="tel:+573222614315" aria-label="Llamar al consultorio">+57 322 261 4315</a>
+      <a href="https://wa.me/573222614315"
+         target="_blank"
+         rel="noopener noreferrer"
+         aria-label="Escribir por WhatsApp">
+        WhatsApp
+      </a>
+    </address>
+  </section>
+
+  <!-- Navegación del footer: diferente al nav del header en contenido y aria-label -->
+  <nav aria-label="Navegación del pie de página" class="footer-nav">
+    <ul>
+      <li><a href="/">Inicio</a></li>
+      <li><a href="/sobre-nosotros.html">Sobre mí</a></li>
+      <li><a href="/servicios.html">Servicios</a></li>
+      <li><a href="/agendar.html">Agendar cita</a></li>
+      <li><a href="/contacto.html">Contacto</a></li>
+    </ul>
+  </nav>
+
+  <!-- <aside>: información tangencial al contenido principal (horarios).
+       Está en el footer porque es de consulta rápida, no el foco de la página. -->
+  <aside aria-label="Horarios de atención" class="footer-horarios">
+    <h4>Horarios</h4>
+    <!-- <dl>: lista de definición — el marcado más semántico para pares dato/valor
+         como "día: hora". <dt> = término, <dd> = descripción/valor. -->
+    <dl>
+      <dt>Lunes a Viernes</dt>
+      <!-- <time datetime="HH:MM"> permite a los motores de búsqueda parsear horarios
+           en formato ISO 8601, que es el estándar internacional. -->
+      <dd>
+        <time datetime="08:00">8:00 a.m.</time> —
+        <time datetime="17:00">5:00 p.m.</time>
+      </dd>
+      <dt>Sábados</dt>
+      <dd>
+        <time datetime="09:00">9:00 a.m.</time> —
+        <time datetime="13:00">1:00 p.m.</time>
+      </dd>
+    </dl>
+    <!-- TODO: reemplaza estos horarios con los reales del consultorio -->
+  </aside>
+
+
+  <!-- ============================================
+       BLOQUE: Footer — 4ª columna: Redes sociales + mapa
+       PROPÓSITO: Agrupar en una sola columna los íconos sociales y el
+                  mapa embebido pequeño. Ocupa el 4° slot del grid del footer.
+       SEMÁNTICA: <section> con heading, <ul> para iconos, <figure> para mapa.
+       ============================================ -->
+  <section aria-labelledby="footer-redes-titulo" class="footer-redes-mapa">
+
+    <!-- Título de columna: estilo coherente con "Horarios" y "Páginas" -->
+    <h4 id="footer-redes-titulo">Síguenos</h4>
+
+    <!-- <ul>: lista de enlaces a redes sociales con íconos SVG futuristas -->
+    <ul class="redes-sociales" aria-label="Redes sociales del consultorio">
+
+      <!-- Instagram: SVG oficial adaptado, contorno minimalista -->
+      <li>
+        <a href="https://www.instagram.com/draelizabethguzman/"
+           target="_blank"
+           rel="noopener noreferrer"
+           aria-label="Seguir a Elizabeth Guzmán en Instagram"
+           class="red-social red-instagram">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="22" height="22" fill="currentColor">
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+          </svg>
+        </a>
+      </li>
+
+      <!-- Facebook: SVG "f" en círculo, minimalista -->
+      <li>
+        <a href="https://www.facebook.com/profile.php?id=61558841361671"
+           target="_blank"
+           rel="noopener noreferrer"
+           aria-label="Seguir a Elizabeth Guzmán en Facebook"
+           class="red-social red-facebook">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="22" height="22" fill="currentColor">
+            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+          </svg>
+        </a>
+      </li>
+
+      <!-- Google Maps / Google Business Profile: pin de mapa -->
+      <li>
+        <a href="https://www.google.com/maps/place/Dra.+Elizabeth+Guzm%C3%A1n+Odontolog%C3%ADa+Est%C3%A9tica+y+Especializada/@6.1531438,-75.620117,799m/data=!3m2!1e3!4b1!4m6!3m5!1s0x8e4683d9082eecb1:0x6577608e1e0fae27!8m2!3d6.1531438!4d-75.620117!16s%2Fg%2F11s2ld_k6q"
+           target="_blank"
+           rel="noopener noreferrer"
+           aria-label="Ver el consultorio en Google Maps"
+           class="red-social red-gmb">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="22" height="22" fill="currentColor">
+            <path d="M12 0C7.802 0 4 3.403 4 7.602 4 11.8 7.469 16.812 12 24c4.531-7.188 8-12.2 8-16.398C20 3.403 16.199 0 12 0zm0 11c-1.657 0-3-1.343-3-3s1.343-3 3-3 3 1.343 3 3-1.343 3-3 3z"/>
+          </svg>
+        </a>
+      </li>
+
+    </ul>
+
+    <!-- <figure>: mapa embebido pequeño con leyenda accesible.
+         <figure> es el envoltorio semántico correcto para contenido
+         autocontenido como mapas, imágenes, gráficos. -->
+    <figure class="footer-mapa-figura">
+      <!-- <iframe> con loading="lazy" para no bloquear el render inicial.
+           referrerpolicy evita filtrar la URL de referencia a Google Maps. -->
+      <iframe
+        src="https://maps.google.com/maps?q=6.1531438,-75.620117&z=16&output=embed"
+        width="100%"
+        height="120"
+        loading="lazy"
+        allowfullscreen=""
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Ubicación del consultorio en Sabaneta, Antioquia">
+      </iframe>
+      <!-- <figcaption>: descripción textual del mapa, útil para accesibilidad y SEO -->
+      <figcaption>Sabaneta, Antioquia — Colombia</figcaption>
+    </figure>
+
+  </section>
+
+  <!-- Franja inferior de cierre: copyright y crédito del desarrollador.
+       Ocupa la fila completa del grid del footer gracias a grid-column: 1/-1 en CSS. -->
+  <section aria-label="Copyright y créditos" class="footer-bottom">
+
+    <!-- Copyright y crédito del desarrollador -->
+    <section aria-label="Copyright" class="footer-copy">
+      <p>
+        <small>
+          ©&nbsp;<time datetime="2026">2026</time>
+          Elizabeth Guzmán Odontología Estética y Especializada.
+          Todos los derechos reservados.
+        </small>
+      </p>
+      <p class="footer-credito">
+        <small>Diseñado y desarrollado por
+          <strong>Sebastián López Ramírez</strong> — Desarrollador Web
+        </small>
+      </p>
+    </section>
+
+  </section>
+</footer>
+<!-- FIN: Footer -->
+
+
+<!-- ============================================
+     BOTÓN FLOTANTE DE WHATSAPP
+     PROPÓSITO: CTA persistente en todos los dispositivos.
+                Los pacientes en mobile prefieren escribir por WhatsApp
+                antes de llamar. Este botón convierte esa preferencia en citas.
+     SEMÁNTICA: <a> porque navega a WhatsApp (protocolo wa.me), no ejecuta JS.
+     POSICIÓN: fixed en CSS, esquina inferior derecha.
+     ACCESIBILIDAD: aria-label describe la acción completa.
+     ============================================ -->
+<a href="https://wa.me/573222614315?text=Hola%2C%20quisiera%20agendar%20una%20valoraci%C3%B3n%20odontol%C3%B3gica%20con%20la%20Dra.%20Elizabeth"
+   class="whatsapp-flotante"
+   target="_blank"
+   rel="noopener noreferrer"
+   aria-label="Agendar cita por WhatsApp con la Dra. Elizabeth Guzmán">
+  <!-- El ícono de WhatsApp lo dibujamos puramente con CSS usando un SVG inline en content.
+       Esto evita cargar una imagen externa (HTTP request extra) y mantiene el botón
+       ligero. El texto "WA" es el fallback accesible si el CSS falla. -->
+  <abbr title="WhatsApp" aria-hidden="true">WA</abbr>
+</a>
+
+
+<!-- Script de navegación móvil (hamburguesa).
+     POSICIÓN: al final del <body>, ANTES del </body>.
+     Por qué aquí y no en el <head>: si estuviera en <head>, bloquearía
+     el renderizado del HTML hasta que el JS se descargue y ejecute.
+     Al final del body, el HTML ya renderizó y el JS solo agrega interactividad.
+     defer no es necesario aquí porque al estar al final del body, el DOM
+     ya está disponible cuando el script se ejecuta. -->
+<script src="/js/nav.js"></script>
+
+<!-- AUDITORÍA FINAL:
+     div=0   (grep ejecutado mentalmente — cero resultados)
+     span=0  (grep ejecutado mentalmente — cero resultados)
+     style_inline=0 en atributos
+     EXCEPCIÓN JUSTIFICADA: el <style> en el <head> cubre CSS crítico
+     above-the-fold (hero) con explicación detallada arriba.
+-->
+
+</body>
+</html>

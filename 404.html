@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="es" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Página no encontrada (404) | Dra. Elizabeth Guzmán Odontología</title>
+  <meta name="description" content="La página que buscas no existe. Regresa al inicio o agenda tu cita con la Dra. Elizabeth Guzmán en Sabaneta.">
+
+  <!-- noindex: no queremos que Google indexe páginas de error -->
+  <meta name="robots" content="noindex, nofollow">
+
+  <link rel="stylesheet" href="/css/styles.css">
+
+  <!-- Favicon en 3 formatos: SVG (moderno), WebP (compatibilidad), ICO (legado) -->
+  <link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/img/favicon.webp" type="image/webp">
+  <link rel="icon" href="/img/favicon.ico" sizes="any">
+
+  <style>
+    body { margin: 0; background-color: #0e0e10; -webkit-font-smoothing: antialiased; }
+    body > header { position: sticky; top: 0; z-index: 100; }
+    /* Centrar verticalmente el contenido del 404 */
+    #error-404 {
+      min-height: 80dvh;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: clamp(2rem, 5vw, 4rem) clamp(1rem, 5vw, 4rem);
+    }
+  </style>
+</head>
+
+<body>
+
+<header role="banner">
+  <nav aria-label="Navegación principal">
+    <a href="/" class="logo" aria-label="Ir al inicio — Dra. Elizabeth Guzmán Odontología">
+      <strong>Elizabeth Guzmán</strong>
+      <small>Odontología Estética</small>
+    </a>
+    <ul role="list">
+      <li><a href="/">Inicio</a></li>
+      <li><a href="/servicios.html">Servicios</a></li>
+      <li><a href="/sobre-nosotros.html">Nosotros</a></li>
+      <li><a href="/contacto.html">Contacto</a></li>
+    </ul>
+    <a href="/agendar.html" class="cta-header">Agendar cita</a>
+  </nav>
+</header>
+
+<main id="contenido-principal">
+
+  <!-- ============================================================
+       BLOQUE: Página de error 404
+       SEMÁNTICA: <section> con <article> para el contenido central
+       UX: Mensaje claro + opciones de rescate para no perder al usuario
+       ============================================================ -->
+  <section id="error-404" aria-labelledby="titulo-404">
+    <article class="error-contenido">
+
+      <!-- Número de error: decorativo, en aria-hidden para no leerlo dos veces -->
+      <p class="error-codigo" aria-hidden="true">404</p>
+
+      <!-- h1 con mensaje amigable — más importante que el número técnico -->
+      <h1 id="titulo-404">Página no encontrada</h1>
+
+      <p class="error-descripcion">
+        Esta página no existe o fue movida. Pero tu sonrisa aún nos importa —
+        te llevamos de regreso.
+      </p>
+
+      <!-- ============================================
+           FOTO DE LA DOCTORA EN EL ERROR 404
+           PROPÓSITO: Humanizar la página de error — en lugar de una
+                      página fría de error, el paciente ve a la Dra.
+                      sonriendo. Reduce la fricción y la frustración.
+           SEMÁNTICA: <figure> para imagen con leyenda.
+                      aria-hidden="true": la foto es decorativa aquí.
+           ============================================ -->
+      <!-- <figure> con aria-hidden porque el texto ya explica la situación -->
+      <figure class="error-foto-doctora" aria-hidden="true">
+        <!-- <picture> para imagen responsiva -->
+        <picture>
+          <!-- Foto del perfil de la doctora — transmite cercanía -->
+          <source srcset="/img/dra-elizabeth-extra.jpeg" type="image/jpeg">
+          <!-- alt vacío: aria-hidden="true" en el figure hace que se ignore -->
+          <img
+            src="/img/dra-elizabeth-extra.jpeg"
+            alt=""
+            width="200"
+            height="200"
+            loading="lazy"
+          >
+        </picture>
+      </figure>
+
+      <!-- Opciones de recuperación: <nav> con links de rescate -->
+      <nav aria-label="Opciones de navegación de rescate" class="error-nav">
+        <ul role="list" class="error-links">
+          <li>
+            <a href="/" class="cta-primario">Volver al inicio</a>
+          </li>
+          <li>
+            <a href="/servicios.html" class="cta-secundario">Ver servicios</a>
+          </li>
+          <li>
+            <a href="/agendar.html" class="cta-secundario">Agendar cita</a>
+          </li>
+        </ul>
+      </nav>
+    </article>
+  </section>
+
+</main>
+
+<footer>
+
+  <!-- Identidad del consultorio en el footer -->
+  <section aria-labelledby="footer-nombre" class="footer-identidad">
+    <h3 id="footer-nombre">Elizabeth Guzmán</h3>
+    <p class="footer-tagline">Odontología Estética y Especializada</p>
+    <!-- Frase de marca del PDF -->
+    <p class="footer-frase"><em>"Tu sonrisa, diseñada para ti."</em></p>
+
+    <!-- <address>: marcado semántico para los datos de contacto del negocio.
+         Google entiende que este bloque contiene la información NAP oficial.
+         IMPORTANTE: los datos deben ser IDÉNTICOS a los de Google Business Profile. -->
+    <address>
+      <!-- Enlace al Google Maps: mejora el SEO local y facilita la navegación. -->
+      <a href="https://share.google/rlaYavouMHnes4XAD"
+         target="_blank"
+         rel="noopener noreferrer"
+         aria-label="Abrir consultorio en Google Maps">
+        Sabaneta, Antioquia, Colombia
+      </a>
+      <!-- tel: protocolo que permite marcar directamente en móviles al hacer clic -->
+      <a href="tel:+573222614315" aria-label="Llamar al consultorio">+57 322 261 4315</a>
+      <a href="https://wa.me/573222614315"
+         target="_blank"
+         rel="noopener noreferrer"
+         aria-label="Escribir por WhatsApp">
+        WhatsApp
+      </a>
+    </address>
+  </section>
+
+  <!-- Navegación del footer: diferente al nav del header en contenido y aria-label -->
+  <nav aria-label="Navegación del pie de página" class="footer-nav">
+    <ul>
+      <li><a href="/">Inicio</a></li>
+      <li><a href="/sobre-nosotros.html">Sobre mí</a></li>
+      <li><a href="/servicios.html">Servicios</a></li>
+      <li><a href="/agendar.html">Agendar cita</a></li>
+      <li><a href="/contacto.html">Contacto</a></li>
+    </ul>
+  </nav>
+
+  <!-- <aside>: información tangencial al contenido principal (horarios).
+       Está en el footer porque es de consulta rápida, no el foco de la página. -->
+  <aside aria-label="Horarios de atención" class="footer-horarios">
+    <h4>Horarios</h4>
+    <!-- <dl>: lista de definición — el marcado más semántico para pares dato/valor
+         como "día: hora". <dt> = término, <dd> = descripción/valor. -->
+    <dl>
+      <dt>Lunes a Viernes</dt>
+      <!-- <time datetime="HH:MM"> permite a los motores de búsqueda parsear horarios
+           en formato ISO 8601, que es el estándar internacional. -->
+      <dd>
+        <time datetime="08:00">8:00 a.m.</time> —
+        <time datetime="17:00">5:00 p.m.</time>
+      </dd>
+      <dt>Sábados</dt>
+      <dd>
+        <time datetime="09:00">9:00 a.m.</time> —
+        <time datetime="13:00">1:00 p.m.</time>
+      </dd>
+    </dl>
+    <!-- TODO: reemplaza estos horarios con los reales del consultorio -->
+  </aside>
+
+
+  <!-- ============================================
+       BLOQUE: Footer — 4ª columna: Redes sociales + mapa
+       PROPÓSITO: Agrupar en una sola columna los íconos sociales y el
+                  mapa embebido pequeño. Ocupa el 4° slot del grid del footer.
+       SEMÁNTICA: <section> con heading, <ul> para iconos, <figure> para mapa.
+       ============================================ -->
+  <section aria-labelledby="footer-redes-titulo" class="footer-redes-mapa">
+
+    <!-- Título de columna: estilo coherente con "Horarios" y "Páginas" -->
+    <h4 id="footer-redes-titulo">Síguenos</h4>
+
+    <!-- <ul>: lista de enlaces a redes sociales con íconos SVG futuristas -->
+    <ul class="redes-sociales" aria-label="Redes sociales del consultorio">
+
+      <!-- Instagram: SVG oficial adaptado, contorno minimalista -->
+      <li>
+        <a href="https://www.instagram.com/draelizabethguzman/"
+           target="_blank"
+           rel="noopener noreferrer"
+           aria-label="Seguir a Elizabeth Guzmán en Instagram"
+           class="red-social red-instagram">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="22" height="22" fill="currentColor">
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+          </svg>
+        </a>
+      </li>
+
+      <!-- Facebook: SVG "f" en círculo, minimalista -->
+      <li>
+        <a href="https://www.facebook.com/profile.php?id=61558841361671"
+           target="_blank"
+           rel="noopener noreferrer"
+           aria-label="Seguir a Elizabeth Guzmán en Facebook"
+           class="red-social red-facebook">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="22" height="22" fill="currentColor">
+            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+          </svg>
+        </a>
+      </li>
+
+      <!-- Google Maps / Google Business Profile: pin de mapa -->
+      <li>
+        <a href="https://www.google.com/maps/place/Dra.+Elizabeth+Guzm%C3%A1n+Odontolog%C3%ADa+Est%C3%A9tica+y+Especializada/@6.1531438,-75.620117,799m/data=!3m2!1e3!4b1!4m6!3m5!1s0x8e4683d9082eecb1:0x6577608e1e0fae27!8m2!3d6.1531438!4d-75.620117!16s%2Fg%2F11s2ld_k6q"
+           target="_blank"
+           rel="noopener noreferrer"
+           aria-label="Ver el consultorio en Google Maps"
+           class="red-social red-gmb">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="22" height="22" fill="currentColor">
+            <path d="M12 0C7.802 0 4 3.403 4 7.602 4 11.8 7.469 16.812 12 24c4.531-7.188 8-12.2 8-16.398C20 3.403 16.199 0 12 0zm0 11c-1.657 0-3-1.343-3-3s1.343-3 3-3 3 1.343 3 3-1.343 3-3 3z"/>
+          </svg>
+        </a>
+      </li>
+
+    </ul>
+
+    <!-- <figure>: mapa embebido pequeño con leyenda accesible.
+         <figure> es el envoltorio semántico correcto para contenido
+         autocontenido como mapas, imágenes, gráficos. -->
+    <figure class="footer-mapa-figura">
+      <!-- <iframe> con loading="lazy" para no bloquear el render inicial.
+           referrerpolicy evita filtrar la URL de referencia a Google Maps. -->
+      <iframe
+        src="https://maps.google.com/maps?q=6.1531438,-75.620117&z=16&output=embed"
+        width="100%"
+        height="120"
+        loading="lazy"
+        allowfullscreen=""
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Ubicación del consultorio en Sabaneta, Antioquia">
+      </iframe>
+      <!-- <figcaption>: descripción textual del mapa, útil para accesibilidad y SEO -->
+      <figcaption>Sabaneta, Antioquia — Colombia</figcaption>
+    </figure>
+
+  </section>
+
+  <!-- Franja inferior de cierre: copyright y crédito del desarrollador.
+       Ocupa la fila completa del grid del footer gracias a grid-column: 1/-1 en CSS. -->
+  <section aria-label="Copyright y créditos" class="footer-bottom">
+
+    <!-- Copyright y crédito del desarrollador -->
+    <section aria-label="Copyright" class="footer-copy">
+      <p>
+        <small>
+          ©&nbsp;<time datetime="2026">2026</time>
+          Elizabeth Guzmán Odontología Estética y Especializada.
+          Todos los derechos reservados.
+        </small>
+      </p>
+      <p class="footer-credito">
+        <small>Diseñado y desarrollado por
+          <strong>Sebastián López Ramírez</strong> — Desarrollador Web
+        </small>
+      </p>
+    </section>
+
+  </section>
+</footer>
+
+<!-- AUDITORÍA: div=0, span=0, style_inline=0 -->
+
+
+<a href="https://wa.me/573222614315?text=Hola%2C%20quisiera%20agendar%20una%20valoraci%C3%B3n%20odontol%C3%B3gica%20con%20la%20Dra.%20Elizabeth"
+   class="whatsapp-flotante"
+   target="_blank"
+   rel="noopener noreferrer"
+   aria-label="Agendar cita por WhatsApp con la Dra. Elizabeth Guzmán">
+  <!-- El ícono de WhatsApp lo dibujamos puramente con CSS usando un SVG inline en content.
+       Esto evita cargar una imagen externa (HTTP request extra) y mantiene el botón
+       ligero. El texto "WA" es el fallback accesible si el CSS falla. -->
+  <abbr title="WhatsApp" aria-hidden="true">WA</abbr>
+</a>
+
+</body>
+</html>

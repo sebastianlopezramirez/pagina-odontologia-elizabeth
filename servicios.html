@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<!-- lang="es-CO": idioma español de Colombia — crítico para SEO local y accesibilidad -->
+<html lang="es-CO">
+
+<head>
+  <!-- charset UTF-8: soporte completo de caracteres especiales (tildes, ñ, etc.) -->
+  <meta charset="UTF-8">
+
+  <!-- viewport: configuración estándar para diseño responsivo.
+       initial-scale=1.0 evita zoom automático en iOS al enfocar inputs. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- title: palabra clave principal primero, luego marca.
+       Formato: [Servicio] | [Ciudad] | [Marca] — máximo 60 caracteres.
+       Google muestra los primeros 55-60 caracteres del title en resultados. -->
+  <title>Servicios de Odontología en Sabaneta | Dra. Elizabeth Guzmán</title>
+
+  <!-- meta description: texto que Google muestra bajo el title en SERPs.
+       Incluye CTA implícito y ciudad para reforzar la búsqueda local.
+       Óptimo: 150-160 caracteres. -->
+  <meta name="description" content="Ortodoncia, blanqueamiento dental, implantes, carillas y más en Sabaneta, Antioquia. Dra. Elizabeth Guzmán — odontología estética y especializada con experiencia de +15 años.">
+
+  <!-- robots: index,follow es el valor por defecto, pero explicitarlo
+       deja claro la intención y evita herencia de directivas incorrectas. -->
+  <meta name="robots" content="index, follow">
+
+  <!-- canonical: URL definitiva de esta página.
+       Evita contenido duplicado si la página es accesible por múltiples URLs. -->
+  <link rel="canonical" href="https://elizabethguzman.com/servicios.html">
+
+  <!-- ============================================
+       OPEN GRAPH — Metadatos para redes sociales
+       Cuando alguien comparte este link en WhatsApp, Facebook, LinkedIn,
+       estas etiquetas determinan la imagen, título y descripción que aparecen.
+       ============================================ -->
+
+  <!-- og:type "website" para páginas normales (no artículos de blog) -->
+  <meta property="og:type" content="website">
+
+  <!-- og:url: URL canónica de la página compartida -->
+  <meta property="og:url" content="https://elizabethguzman.com/servicios.html">
+
+  <!-- og:title: puede ser diferente al <title> — aquí más descriptivo para redes -->
+  <meta property="og:title" content="Servicios Odontológicos | Dra. Elizabeth Guzmán — Sabaneta">
+
+  <!-- og:description: resumen para la tarjeta de preview en redes sociales -->
+  <meta property="og:description" content="Ortodoncia, blanqueamiento, implantes, carillas y más. Agenda tu cita hoy con la Dra. Elizabeth Guzmán en Sabaneta, Antioquia.">
+
+  <!-- og:image: imagen de preview — debe ser al menos 1200x630px para calidad óptima -->
+  <meta property="og:image" content="https://elizabethguzman.com/img/og-servicios.webp">
+
+  <!-- og:locale: idioma y región del contenido -->
+  <meta property="og:locale" content="es_CO">
+
+  <!-- ============================================
+       TWITTER CARDS — Metadatos para Twitter/X
+       summary_large_image: muestra imagen grande + texto debajo (mejor engagement)
+       ============================================ -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Servicios Odontológicos | Dra. Elizabeth Guzmán">
+  <meta name="twitter:description" content="Ortodoncia, blanqueamiento, implantes y carillas en Sabaneta, Antioquia. ¡Agenda tu cita!">
+  <meta name="twitter:image" content="https://elizabethguzman.com/img/og-servicios.webp">
+
+  <!-- ============================================
+       SCHEMA.ORG JSON-LD — Datos estructurados
+       Google usa esto para rich snippets en los resultados de búsqueda.
+       JSON-LD es el formato preferido por Google (vs microdata/RDFa)
+       porque no afecta el HTML visible y es fácil de mantener.
+       ============================================ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+
+      {
+        "@type": ["Dentist", "LocalBusiness"],
+        "@id": "https://elizabethguzman.com/#consultorio",
+        "name": "Dra. Elizabeth Guzmán Odontología Estética y Especializada",
+        "url": "https://elizabethguzman.com",
+        "telephone": "[TELEFONO_CON_CODIGO_PAIS]",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "[DIRECCION_EXACTA]",
+          "addressLocality": "Sabaneta",
+          "addressRegion": "Antioquia",
+          "postalCode": "055450",
+          "addressCountry": "CO"
+        },
+        "hasMap": "https://share.google/rlaYavouMHnes4XAD"
+      },
+
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://elizabethguzman.com/servicios.html#breadcrumb",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Inicio",
+            "item": "https://elizabethguzman.com/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Servicios",
+            "item": "https://elizabethguzman.com/servicios.html"
+          }
+        ]
+      },
+
+      {
+        "@type": "Service",
+        "provider": { "@id": "https://elizabethguzman.com/#consultorio" },
+        "name": "Ortodoncia con Brackets y Alineadores",
+        "description": "Corrección de la posición dental con brackets metálicos, estéticos o alineadores transparentes. Ideal para maloclusiones, apiñamiento y espacios entre dientes.",
+        "url": "https://elizabethguzman.com/servicios.html#ortodoncia",
+        "serviceType": "Orthodontic Treatment"
+      },
+
+      {
+        "@type": "Service",
+        "provider": { "@id": "https://elizabethguzman.com/#consultorio" },
+        "name": "Blanqueamiento Dental Profesional",
+        "description": "Aclaramiento del esmalte dental con técnicas clínicas supervisadas. Resultados visibles desde la primera sesión, sin dañar el esmalte.",
+        "url": "https://elizabethguzman.com/servicios.html#blanqueamiento",
+        "serviceType": "Teeth Whitening"
+      },
+
+      {
+        "@type": "Service",
+        "provider": { "@id": "https://elizabethguzman.com/#consultorio" },
+        "name": "Implantes Dentales",
+        "description": "Reemplazo permanente de dientes perdidos con implantes de titanio. La solución más natural y duradera para recuperar tu sonrisa y función masticatoria.",
+        "url": "https://elizabethguzman.com/servicios.html#implantes",
+        "serviceType": "Dental Implants"
+      },
+
+      {
+        "@type": "Service",
+        "provider": { "@id": "https://elizabethguzman.com/#consultorio" },
+        "name": "Carillas de Porcelana y Resina",
+        "description": "Láminas ultrafinas que se adhieren a la superficie dental para corregir color, forma y tamaño. Transformación estética con mínima intervención.",
+        "url": "https://elizabethguzman.com/servicios.html#carillas",
+        "serviceType": "Dental Veneers"
+      },
+
+      {
+        "@type": "Service",
+        "provider": { "@id": "https://elizabethguzman.com/#consultorio" },
+        "name": "Odontopediatría",
+        "description": "Cuidado dental integral para niños desde los primeros dientes. Prevención, sellantes, fluorización y educación en hábitos saludables.",
+        "url": "https://elizabethguzman.com/servicios.html#odontopediatria",
+        "serviceType": "Pediatric Dentistry"
+      },
+
+      {
+        "@type": "Service",
+        "provider": { "@id": "https://elizabethguzman.com/#consultorio" },
+        "name": "Periodoncia — Tratamiento de Encías",
+        "description": "Diagnóstico y tratamiento de enfermedades de las encías: gingivitis, periodontitis y mantenimiento periodontal para una base sana que soporte tus dientes.",
+        "url": "https://elizabethguzman.com/servicios.html#periodoncia",
+        "serviceType": "Periodontal Treatment"
+      }
+
+    ]
+  }
+  </script>
+
+  <!-- favicon: ícono que aparece en la pestaña del navegador y bookmarks -->
+  <link rel="icon" href="/img/favicon.ico" sizes="any">
+  <link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+
+  <!-- preload del logo: recurso crítico que aparece en el header → pre-cargarlo
+       mejora LCP y evita flash de contenido sin logo al inicio. -->
+  <link rel="preload" href="/img/logo.webp" as="image" type="image/webp">
+
+  <!-- CSS externo: toda la presentación visual va aquí, nunca inline
+       (excepto CSS crítico above-the-fold que aquí no aplica porque
+       el hero interior es pequeño y no es el LCP principal de la página). -->
+  <link rel="stylesheet" href="/css/styles.css">
+
+</head>
+
+<body>
+
+  <!-- ============================================
+       BLOQUE: Header principal (compartido con index.html)
+       PROPÓSITO: Navegación global + logo + CTA agendar
+       SEMÁNTICA: <header> como landmark ARIA, <nav> con aria-label único
+       NOTA: El CSS ya maneja el estado sticky y el toggle móvil via nav.js
+       ============================================ -->
+
+  <!-- <header> es el landmark de encabezado del sitio.
+       role="banner" es implícito en <header> fuera de <article>/<section>,
+       pero lo añadimos por compatibilidad con lectores de pantalla antiguos. -->
+  <header role="banner">
+
+    <!-- <nav> con aria-label porque puede haber múltiples <nav> en la página.
+         El aria-label diferencia "Navegación principal" de "Navegación del pie de página".
+         id="menu-principal" referenciado por aria-controls del botón hamburguesa. -->
+    <nav aria-label="Navegación principal" id="menu-principal">
+
+      <!-- Logo como enlace a home: <a> semánticamente correcto para navegación.
+           aria-label describe el destino completo porque el texto visible
+           podría no ser suficiente para usuarios de lector de pantalla. -->
+      <a href="/" class="logo" aria-label="Ir al inicio — Dra. Elizabeth Guzmán Odontología Estética y Especializada">
+        <!-- <strong> para el nombre principal: semánticamente importante -->
+        <strong>Elizabeth Guzmán</strong>
+        <!-- <em> para el subtítulo: énfasis de apoyo, no tan importante como el nombre -->
+        <em>Odontología Estética y Especializada</em>
+      </a>
+
+      <!-- <ul> para la lista de enlaces de navegación: semánticamente una lista de opciones.
+           Los lectores de pantalla anuncian "lista de N elementos" al navegar aquí. -->
+      <ul>
+        <!-- aria-current="page" en la página activa: lectores anuncian "página actual"
+             al usuario, orientándolo dentro del sitio. -->
+        <li><a href="/">Inicio</a></li>
+
+        <!-- aria-current="page" aquí porque ESTAMOS en la página de servicios -->
+        <li><a href="/servicios.html" aria-current="page">Servicios</a></li>
+
+        <li><a href="/sobre-nosotros.html">Sobre mí</a></li>
+        <li><a href="/contacto.html">Contacto</a></li>
+      </ul>
+
+      <!-- CTA de agendar en el header: visible en desktop siempre,
+           posicionado estratégicamente para máxima conversión. -->
+      <a href="/agendar.html" class="cta-header">Agendar cita</a>
+
+      <!-- Botón hamburguesa para menú móvil.
+           aria-controls="menu-principal": indica qué elemento controla.
+           aria-expanded="false": estado inicial (menú cerrado).
+           aria-label: describe la acción porque el botón no tiene texto visible.
+           nav.js actualiza aria-expanded dinámicamente al hacer clic. -->
+      <button
+        class="nav-toggle"
+        aria-controls="menu-principal"
+        aria-expanded="false"
+        aria-label="Abrir menú de navegación"
+      >
+        <!-- Las tres líneas del ícono hamburguesa se crean con ::before, ::after
+             y el propio elemento mediante CSS — sin imágenes, sin SVG extra. -->
+      </button>
+
+    </nav>
+  </header>
+
+  <!-- ============================================
+       BLOQUE: Contenido principal
+       SEMÁNTICA: <main> es el landmark principal de la página.
+                  Solo debe haber UN <main> por página.
+       ACCESIBILIDAD: id="contenido" permite "saltar al contenido" 
+                      con el link oculto de skip-navigation.
+       ============================================ -->
+  <main id="contenido">
+
+    <!-- ============================================
+         BLOQUE: Hero interior de servicios
+         PROPÓSITO: Titular + breadcrumb para orientar al usuario.
+                    Más compacto que el hero de home — aquí no es el LCP.
+         SEMÁNTICA: <section> agrupación temática con su propio heading
+         SEO: Breadcrumb visible refuerza la estructura del sitio para Google
+         ============================================ -->
+
+    <!-- <section> para el hero de página interior.
+         aria-labelledby apunta al h1 de esta sección para que los
+         lectores de pantalla anuncien el nombre de la región. -->
+    <section id="servicios-hero" aria-labelledby="servicios-titulo-hero">
+
+      <!-- ============================================
+           BLOQUE: Breadcrumb — Ruta de navegación
+           PROPÓSITO: Indica al usuario dónde está dentro del sitio.
+                      También es una señal SEO de estructura jerárquica.
+           SEMÁNTICA: <nav aria-label="Ruta de navegación"> con <ol>
+                      porque el breadcrumb es una lista ORDENADA (jerarquía).
+           ============================================ -->
+
+      <!-- <nav> para el breadcrumb: es navegación secundaria.
+           aria-label lo diferencia del menú principal. -->
+      <nav aria-label="Ruta de navegación">
+        <!-- <ol> (lista ordenada) porque el breadcrumb tiene jerarquía:
+             Inicio → Servicios. El orden importa. -->
+        <ol class="breadcrumb">
+          <!-- Cada paso es un <li> con un enlace, excepto la página actual -->
+          <li>
+            <!-- Enlace al inicio — no es la página actual -->
+            <a href="/">Inicio</a>
+          </li>
+          <li>
+            <!-- aria-current="page" en el último elemento: página actual, sin enlace.
+                 Los lectores anuncian "página actual: Servicios" -->
+            <a href="/servicios.html" aria-current="page">Servicios</a>
+          </li>
+        </ol>
+      </nav>
+
+      <!-- <header> dentro de <section>: encabezado de esta sección específica.
+           Diferente del <header> global — este es el titular del bloque hero. -->
+      <header class="seccion-header">
+
+        <!-- Kicker / etiqueta sobre el h1: texto pequeño que contextualiza.
+             <p> con clase para estilizado — no hay etiqueta semántica más
+             específica para un kicker que <p>. -->
+        <p class="kicker">Lo que hacemos por tu sonrisa</p>
+
+        <!-- h1 de la página interior: solo hay uno por página.
+             En servicios.html el h1 describe la página, no el negocio
+             (el h1 del negocio está en index.html). -->
+        <h1 id="servicios-titulo-hero">Nuestros Servicios<br><mark>Odontológicos</mark></h1>
+
+        <!-- <p> para descripción introductoria.
+             max-width aplicado en CSS para legibilidad óptima (52ch). -->
+        <p class="hero-descripcion">Tratamientos dentales con tecnología de vanguardia y el cuidado personalizado que mereces. Cada procedimiento es diseñado a la medida de tu sonrisa.</p>
+
+      </header>
+
+      <!-- ============================================
+           FOTO DEL HERO DE SERVICIOS
+           PROPÓSITO: Imagen visual de la Dra. en tratamiento — genera confianza
+                      y muestra el entorno profesional antes de ver los servicios.
+           SEMÁNTICA: <picture> para formatos responsivos.
+                      loading="eager" porque está above-the-fold en desktop.
+           ============================================ -->
+
+      <!-- <picture> es el contenedor semántico para imágenes responsivas.
+           Permite definir múltiples fuentes por formato/tamaño. -->
+      <picture class="hero-foto-servicios">
+        <!-- Fuente JPEG — imagen real de la doctora en tratamiento -->
+        <source srcset="/img/dra-elizabeth-tratamiento.jpeg" type="image/jpeg">
+        <!-- <img> de respaldo obligatorio — atributos alt, width, height para CLS -->
+        <!-- alt descriptivo: describe qué muestra la imagen + contexto de negocio -->
+        <img
+          src="/img/dra-elizabeth-tratamiento.jpeg"
+          alt="Dra. Elizabeth Guzmán realizando un tratamiento odontológico especializado en su consultorio de Sabaneta, Antioquia"
+          width="600"
+          height="450"
+          loading="eager"
+        >
+      </picture>
+
+    </section>
+
+    <!-- ============================================
+         BLOQUE: Grid de servicios
+         PROPÓSITO: Mostrar los 6 servicios principales con descripción
+                    detallada, beneficios y CTA individual para agendar.
+         SEMÁNTICA: <section> contenedora > <ul> de tarjetas de servicio.
+                    Cada servicio es un <article> porque es contenido
+                    autocontenido que podría existir por sí solo.
+         SEO: IDs en cada <article> permiten enlaces directos (#ortodoncia)
+              y coinciden con las URLs del Schema.org JSON-LD del <head>.
+         ============================================ -->
+
+    <!-- <section> principal de servicios con aria-labelledby al h2 -->
+    <section id="todos-los-servicios" aria-labelledby="servicios-titulo-grid">
+
+      <!-- <header> de esta sección: título y subtítulo del bloque completo -->
+      <header class="seccion-header">
+        <h2 id="servicios-titulo-grid">Tratamientos disponibles</h2>
+        <p>Selecciona el servicio que necesitas para conocer más detalles, beneficios y el proceso de atención.</p>
+      </header>
+
+      <!-- <ul> para la lista de servicios: semánticamente una lista de ítems relacionados.
+           CSS Grid se aplica directamente sobre <ul> sin necesitar un wrapper <div>.
+           El grid colapsa a 1 columna en mobile automáticamente con auto-fill. -->
+      <ul class="grid-servicios-detalle">
+
+        <!-- ============================================
+             SERVICIO 1: Ortodoncia
+             SEMÁNTICA: <article> porque cada servicio es autocontenido.
+                        id="ortodoncia" para anclas y Schema.org URL.
+             ============================================ -->
+        <li>
+          <!-- <article> para contenido autocontenido: cada tarjeta de servicio
+               podría extraerse del contexto y seguir teniendo sentido.
+               Esto también mejora la señal semántica para Google. -->
+          <article class="tarjeta-servicio" id="ortodoncia">
+
+            <!-- <header> del article: ícono + título del servicio -->
+            <header class="tarjeta-servicio__header">
+              <!-- <figure> para el ícono del servicio: imagen con significado.
+                   No usamos un <img> solo porque necesitamos el <figcaption>.
+                   El role="img" y aria-label en <figure> dan contexto a lectores. -->
+              <figure role="img" aria-label="Ícono de ortodoncia" class="servicio-icono">
+                <!-- Ícono SVG inline para mejor performance (sin petición HTTP extra)
+                     y para que sea estilizable con CSS.
+                     aria-hidden="true" porque el <figure> ya tiene aria-label. -->
+                <svg aria-hidden="true" focusable="false" viewBox="0 0 48 48" width="48" height="48">
+                  <path d="M8 16 C8 10 13 6 24 6 C35 6 40 10 40 16 L40 34 C40 40 35 44 24 44 C13 44 8 40 8 34 Z" fill="none" stroke="currentColor" stroke-width="2.5"/>
+                  <line x1="16" y1="20" x2="32" y2="20" stroke="currentColor" stroke-width="2"/>
+                  <line x1="16" y1="26" x2="32" y2="26" stroke="currentColor" stroke-width="2"/>
+                  <circle cx="20" cy="20" r="2" fill="currentColor"/>
+                  <circle cx="28" cy="20" r="2" fill="currentColor"/>
+                  <circle cx="20" cy="26" r="2" fill="currentColor"/>
+                  <circle cx="28" cy="26" r="2" fill="currentColor"/>
+                </svg>
+              </figure>
+              <!-- h3 porque esta sección está dentro de <section> con h2.
+                   Jerarquía de headings: h1 (hero) → h2 (sección) → h3 (ítem) -->
+              <h3>Ortodoncia</h3>
+            </header>
+
+            <!-- <p> para descripción principal del servicio -->
+            <p>Corregimos la posición de tus dientes y la mordida con brackets metálicos, estéticos o alineadores transparentes. Cada plan de tratamiento es personalizado según tu caso.</p>
+
+            <!-- <details>/<summary> para expandir información adicional sin JS.
+                 El atributo name="" agrupa todos los details del mismo nombre
+                 para que solo uno esté abierto a la vez — comportamiento de acordeón nativo. -->
+            <details class="servicio-detalle" name="servicios-detalle">
+              <!-- <summary> es el encabezado clickeable del <details>.
+                   Es el único hijo directo que funciona como botón de toggle. -->
+              <summary>Ver beneficios y proceso</summary>
+
+              <!-- Contenido que se muestra cuando <details> está abierto -->
+
+              <!-- <h4> para el subtítulo dentro del detalle: mantiene jerarquía
+                   h1 → h2 → h3 → h4 sin saltarse niveles. -->
+              <h4>Beneficios principales</h4>
+
+              <!-- <ul> para lista de beneficios: no tienen orden específico -->
+              <ul class="lista-beneficios">
+                <li>Mejora la mordida y la masticación</li>
+                <li>Previene desgaste dental prematuro</li>
+                <li>Facilita la higiene oral correcta</li>
+                <li>Opciones discretas con alineadores transparentes</li>
+                <li>Resultados que duran toda la vida con retención adecuada</li>
+              </ul>
+
+              <h4>¿Cómo es el proceso?</h4>
+
+              <!-- <ol> para pasos del proceso: tienen orden lógico -->
+              <ol class="lista-proceso-mini">
+                <li>Consulta de diagnóstico + radiografías panorámicas</li>
+                <li>Plan de tratamiento personalizado con simulación de resultado</li>
+                <li>Colocación de brackets o entrega de alineadores</li>
+                <li>Controles mensuales de seguimiento</li>
+                <li>Retiro de brackets + fase de retención con retenedores</li>
+              </ol>
+
+              <!-- <p> con la duración estimada — dato relevante para el paciente -->
+              <p class="servicio-duracion">
+                <!-- <strong> para resaltar semánticamente la duración: dato importante -->
+                <strong>Duración estimada:</strong> 12 a 24 meses según la complejidad del caso.
+              </p>
+
+            </details>
+
+            <!-- CTA individual por servicio: enlace a agendar con parámetro UTM
+                 para rastrear qué servicio generó la conversión en Google Analytics.
+                 rel="noopener" si fuera target="_blank", aquí no aplica. -->
+            <a href="/agendar.html?servicio=ortodoncia" class="cta-servicio">
+              Agendar consulta de ortodoncia
+            </a>
+
+          </article>
+        </li>
+
+        <!-- ============================================
+             SERVICIO 2: Blanqueamiento Dental
+             ============================================ -->
+        <li>
+          <article class="tarjeta-servicio" id="blanqueamiento">
+
+            <header class="tarjeta-servicio__header">
+              <figure role="img" aria-label="Ícono de blanqueamiento dental" class="servicio-icono">
+                <svg aria-hidden="true" focusable="false" viewBox="0 0 48 48" width="48" height="48">
+                  <path d="M10 14 C10 9 16 6 24 6 C32 6 38 9 38 14 L38 22 C38 32 30 42 24 44 C18 42 10 32 10 22 Z" fill="none" stroke="currentColor" stroke-width="2.5"/>
+                  <line x1="24" y1="12" x2="24" y2="12" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                  <path d="M20 18 Q24 15 28 18" fill="none" stroke="currentColor" stroke-width="2"/>
+                  <path d="M18 24 Q24 20 30 24" fill="none" stroke="currentColor" stroke-width="2"/>
+                  <line x1="36" y1="6" x2="42" y2="2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <line x1="40" y1="10" x2="46" y2="8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <line x1="38" y1="14" x2="46" y2="14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </figure>
+              <h3>Blanqueamiento Dental</h3>
+            </header>
+
+            <p>Recupera la blancura natural de tu sonrisa con técnicas profesionales supervisadas. Nuestros protocolos clínicos garantizan resultados visibles desde la primera sesión, cuidando siempre la salud del esmalte.</p>
+
+            <details class="servicio-detalle" name="servicios-detalle">
+              <summary>Ver beneficios y proceso</summary>
+
+              <h4>Beneficios principales</h4>
+              <ul class="lista-beneficios">
+                <li>Resultados visibles desde la primera sesión</li>
+                <li>Hasta 8 tonos más claros de forma segura</li>
+                <li>Sin daño al esmalte con técnica correcta</li>
+                <li>Autoestima y seguridad al sonreír</li>
+                <li>Tratamiento de mantenimiento en casa disponible</li>
+              </ul>
+
+              <h4>¿Cómo es el proceso?</h4>
+              <ol class="lista-proceso-mini">
+                <li>Evaluación del estado del esmalte y la sensibilidad</li>
+                <li>Limpieza y profilaxis dental previa</li>
+                <li>Aplicación del gel blanqueador con luz LED activadora</li>
+                <li>Entrega de cubetas personalizadas para mantenimiento en casa</li>
+              </ol>
+
+              <p class="servicio-duracion">
+                <strong>Duración estimada:</strong> 1 a 3 sesiones de 60 minutos en clínica.
+              </p>
+
+            </details>
+
+            <a href="/agendar.html?servicio=blanqueamiento" class="cta-servicio">
+              Agendar sesión de blanqueamiento
+            </a>
+
+          </article>
+        </li>
+
+        <!-- ============================================
+             SERVICIO 3: Implantes Dentales
+             ============================================ -->
+        <li>
+          <article class="tarjeta-servicio" id="implantes">
+
+            <header class="tarjeta-servicio__header">
+              <figure role="img" aria-label="Ícono de implante dental" class="servicio-icono">
+                <svg aria-hidden="true" focusable="false" viewBox="0 0 48 48" width="48" height="48">
+                  <rect x="20" y="2" width="8" height="16" rx="4" fill="none" stroke="currentColor" stroke-width="2.5"/>
+                  <rect x="18" y="16" width="12" height="6" rx="2" fill="none" stroke="currentColor" stroke-width="2"/>
+                  <path d="M14 26 L34 26 L36 44 L12 44 Z" fill="none" stroke="currentColor" stroke-width="2.5"/>
+                  <line x1="22" y1="22" x2="22" y2="26" stroke="currentColor" stroke-width="2"/>
+                  <line x1="26" y1="22" x2="26" y2="26" stroke="currentColor" stroke-width="2"/>
+                </svg>
+              </figure>
+              <h3>Implantes Dentales</h3>
+            </header>
+
+            <p>El implante dental es la solución más natural y duradera para reemplazar un diente perdido. Una raíz de titanio que se integra al hueso y soporta una corona que luce y funciona exactamente como un diente natural.</p>
+
+            <details class="servicio-detalle" name="servicios-detalle">
+              <summary>Ver beneficios y proceso</summary>
+
+              <h4>Beneficios principales</h4>
+              <ul class="lista-beneficios">
+                <li>Duración de por vida con cuidado adecuado</li>
+                <li>Apariencia y función idéntica a un diente natural</li>
+                <li>Preserva el hueso maxilar (evita reabsorción)</li>
+                <li>No afecta los dientes vecinos (a diferencia del puente)</li>
+                <li>Comodidad total — sin removibles ni adhesivos</li>
+              </ul>
+
+              <h4>¿Cómo es el proceso?</h4>
+              <ol class="lista-proceso-mini">
+                <li>Evaluación con radiografía y tomografía 3D del hueso</li>
+                <li>Cirugía de colocación del implante de titanio</li>
+                <li>Período de oseointegración: 3 a 6 meses</li>
+                <li>Colocación del pilar (abutment) conector</li>
+                <li>Toma de impresión y fabricación de la corona definitiva</li>
+                <li>Instalación de la corona — resultado final</li>
+              </ol>
+
+              <p class="servicio-duracion">
+                <strong>Duración total:</strong> 4 a 8 meses incluyendo el período de integración.
+              </p>
+
+            </details>
+
+            <a href="/agendar.html?servicio=implantes" class="cta-servicio">
+              Consultar sobre implantes
+            </a>
+
+          </article>
+        </li>
+
+        <!-- ============================================
+             SERVICIO 4: Carillas de Porcelana y Resina
+             ============================================ -->
+        <li>
+          <article class="tarjeta-servicio" id="carillas">
+
+            <header class="tarjeta-servicio__header">
+              <figure role="img" aria-label="Ícono de carillas dentales" class="servicio-icono">
+                <svg aria-hidden="true" focusable="false" viewBox="0 0 48 48" width="48" height="48">
+                  <path d="M8 10 C8 7 11 5 14 5 L34 5 C37 5 40 7 40 10 L40 38 C40 41 37 43 34 43 L14 43 C11 43 8 41 8 38 Z" fill="none" stroke="currentColor" stroke-width="2.5"/>
+                  <path d="M14 5 L14 43" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3"/>
+                  <path d="M24 5 L24 43" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3"/>
+                  <path d="M34 5 L34 43" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3"/>
+                  <path d="M8 18 L40 18" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3"/>
+                  <rect x="6" y="8" width="4" height="34" rx="2" fill="currentColor" opacity="0.3"/>
+                </svg>
+              </figure>
+              <h3>Carillas Dentales</h3>
+            </header>
+
+            <p>Las carillas son láminas ultrafinas de porcelana o resina que se adhieren a la superficie frontal de los dientes. Transforman el color, la forma y el tamaño con un procedimiento mínimamente invasivo y resultados inmediatos.</p>
+
+            <details class="servicio-detalle" name="servicios-detalle">
+              <summary>Ver beneficios y proceso</summary>
+
+              <h4>Beneficios principales</h4>
+              <ul class="lista-beneficios">
+                <li>Cambio estético radical en pocas sesiones</li>
+                <li>Porcelana: durabilidad de 10 a 15 años</li>
+                <li>Resina: económica y reversible, sin desgaste del diente</li>
+                <li>Color personalizado que combina con tu piel y ojos</li>
+                <li>Resistentes a manchas de café, vino y tabaco (porcelana)</li>
+              </ul>
+
+              <h4>¿Cómo es el proceso?</h4>
+              <ol class="lista-proceso-mini">
+                <li>Diseño de sonrisa digital — vista previa del resultado</li>
+                <li>Desgaste mínimo del esmalte (solo porcelana) o ninguno (resina)</li>
+                <li>Toma de impresión o escaneo 3D</li>
+                <li>Fabricación en laboratorio dental (porcelana: 2 semanas)</li>
+                <li>Prueba y adhesión definitiva de las carillas</li>
+              </ol>
+
+              <p class="servicio-duracion">
+                <strong>Duración:</strong> 2 a 3 citas para porcelana · 1 cita para resina.
+              </p>
+
+            </details>
+
+            <a href="/agendar.html?servicio=carillas" class="cta-servicio">
+              Diseñar mi sonrisa con carillas
+            </a>
+
+          </article>
+        </li>
+
+        <!-- ============================================
+             SERVICIO 5: Odontopediatría
+             ============================================ -->
+        <li>
+          <article class="tarjeta-servicio" id="odontopediatria">
+
+            <header class="tarjeta-servicio__header">
+              <figure role="img" aria-label="Ícono de odontopediatría" class="servicio-icono">
+                <svg aria-hidden="true" focusable="false" viewBox="0 0 48 48" width="48" height="48">
+                  <circle cx="24" cy="14" r="8" fill="none" stroke="currentColor" stroke-width="2.5"/>
+                  <path d="M12 42 C12 34 16 30 24 30 C32 30 36 34 36 42" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                  <path d="M28 10 Q32 4 38 6 Q40 12 36 14" fill="none" stroke="currentColor" stroke-width="2"/>
+                  <circle cx="36" cy="14" r="3" fill="currentColor" opacity="0.4"/>
+                </svg>
+              </figure>
+              <h3>Odontopediatría</h3>
+            </header>
+
+            <p>El cuidado dental desde la infancia es la base de una boca sana para toda la vida. Nuestro ambiente amigable y nuestras técnicas adaptadas a niños hacen que cada visita sea una experiencia positiva, sin miedo al dentista.</p>
+
+            <details class="servicio-detalle" name="servicios-detalle">
+              <summary>Ver beneficios y proceso</summary>
+
+              <h4>Servicios para niños</h4>
+              <ul class="lista-beneficios">
+                <li>Primera visita desde la erupción del primer diente</li>
+                <li>Sellantes de fosas y fisuras para prevenir caries</li>
+                <li>Aplicación de flúor tópico profesional</li>
+                <li>Tratamientos de caries con técnicas indoloras</li>
+                <li>Educación en higiene oral para niños y padres</li>
+                <li>Mantenedores de espacio para dientes temporales</li>
+              </ul>
+
+              <h4>Edades de atención</h4>
+              <p>Desde los 6 meses (erupción del primer diente) hasta los 14 años, con técnicas adaptadas a cada etapa del desarrollo.</p>
+
+              <p class="servicio-duracion">
+                <strong>Frecuencia recomendada:</strong> Control preventivo cada 6 meses.
+              </p>
+
+            </details>
+
+            <a href="/agendar.html?servicio=odontopediatria" class="cta-servicio">
+              Agendar cita para mi hijo/a
+            </a>
+
+          </article>
+        </li>
+
+        <!-- ============================================
+             SERVICIO 6: Periodoncia
+             ============================================ -->
+        <li>
+          <article class="tarjeta-servicio" id="periodoncia">
+
+            <header class="tarjeta-servicio__header">
+              <figure role="img" aria-label="Ícono de periodoncia" class="servicio-icono">
+                <svg aria-hidden="true" focusable="false" viewBox="0 0 48 48" width="48" height="48">
+                  <path d="M16 28 C16 20 20 14 24 14 C28 14 32 20 32 28 L32 38 C32 42 28 44 24 44 C20 44 16 42 16 38 Z" fill="none" stroke="currentColor" stroke-width="2.5"/>
+                  <path d="M8 22 C8 14 15 8 24 8 C33 8 40 14 40 22" fill="none" stroke="currentColor" stroke-width="2"/>
+                  <path d="M12 30 C10 26 10 20 12 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                  <path d="M36 30 C38 26 38 20 36 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                  <line x1="16" y1="26" x2="32" y2="26" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 2"/>
+                </svg>
+              </figure>
+              <h3>Periodoncia</h3>
+            </header>
+
+            <p>Las encías son la base que sostiene tus dientes. La enfermedad periodontal es la principal causa de pérdida dental en adultos. Diagnosticamos y tratamos la gingivitis y periodontitis para recuperar la salud de tus encías.</p>
+
+            <details class="servicio-detalle" name="servicios-detalle">
+              <summary>Ver beneficios y proceso</summary>
+
+              <h4>Señales de alerta</h4>
+              <ul class="lista-beneficios">
+                <li>Encías que sangran al cepillarte</li>
+                <li>Encías inflamadas, rojas o sensibles</li>
+                <li>Mal aliento persistente (halitosis)</li>
+                <li>Dientes que se sienten flojos o que se han separado</li>
+                <li>Recesión de encías (dientes que "se ven más largos")</li>
+              </ul>
+
+              <h4>Tratamientos disponibles</h4>
+              <ol class="lista-proceso-mini">
+                <li>Diagnóstico periodontal completo con sondaje</li>
+                <li>Limpieza profunda: raspaje y alisado radicular</li>
+                <li>Antibioticoterapia local si es necesaria</li>
+                <li>Cirugía periodontal en casos avanzados</li>
+                <li>Mantenimiento periodontal cada 3 a 4 meses</li>
+              </ol>
+
+              <p class="servicio-duracion">
+                <strong>Urgencia:</strong> Si tienes síntomas, agenda cuanto antes — la periodontitis avanza sin dolor hasta estadíos severos.
+              </p>
+
+            </details>
+
+            <a href="/agendar.html?servicio=periodoncia" class="cta-servicio">
+              Evaluar mis encías
+            </a>
+
+          </article>
+        </li>
+
+      </ul>
+      <!-- Fin de la lista de servicios -->
+
+    </section>
+    <!-- Fin de la sección de servicios -->
+
+    <!-- ============================================
+         BLOQUE: CTA de cierre
+         PROPÓSITO: Capturar intención de agendar al final de la página.
+                    Los usuarios que leen hasta aquí tienen alta intención de conversión.
+         SEMÁNTICA: <section> con su propio titular
+         ============================================ -->
+    <section id="cta-servicios-final" aria-labelledby="cta-servicios-titulo">
+
+      <header class="seccion-header">
+        <h2 id="cta-servicios-titulo">¿No encuentras lo que buscas?</h2>
+        <p>Contamos con más especialidades. En tu primera consulta evaluamos tu caso y te recomendamos el tratamiento más adecuado.</p>
+      </header>
+
+      <!-- <p> para el grupo de CTAs: válido semánticamente para un párrafo de acciones -->
+      <p class="grupo-cta grupo-cta--centrado">
+
+        <!-- CTA principal: agendar cita -->
+        <a href="/agendar.html" class="cta-primario">
+          Agendar primera consulta
+        </a>
+
+        <!-- CTA secundario: WhatsApp con mensaje pre-escrito para consultas rápidas.
+             target="_blank": abre en nueva pestaña (WhatsApp Web en desktop).
+             rel="noopener noreferrer": seguridad — evita que la nueva pestaña
+             acceda a window.opener y prevenemos fuga de referrer a WhatsApp. -->
+        <a
+          href="https://wa.me/573222614315?text=Hola%2C%20vi%20sus%20servicios%20en%20la%20p%C3%A1gina%20web%20y%20tengo%20una%20consulta."
+          class="cta-whatsapp"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Consultar por WhatsApp — abre en nueva ventana"
+        >
+          Preguntar por WhatsApp
+        </a>
+
+      </p>
+
+    </section>
+
+  </main>
+  <!-- Fin del <main> -->
+
+  <!-- ============================================
+       BLOQUE: Footer
+       PROPÓSITO: Información de contacto, navegación secundaria, horarios, legal.
+       SEMÁNTICA: <footer> como landmark, <address> para NAP, <nav> para links,
+                  <aside> para horarios, <small> para copyright.
+       SEO: El NAP (Name, Address, Phone) en el footer debe coincidir EXACTAMENTE
+            con Google Business Profile y Schema.org JSON-LD.
+       ============================================ -->
+
+  <!-- <footer> es el landmark de pie de página.
+       role="contentinfo" es el rol implícito de <footer> fuera de article/section. -->
+  <footer>
+
+  <!-- Identidad del consultorio en el footer -->
+  <section aria-labelledby="footer-nombre" class="footer-identidad">
+    <h3 id="footer-nombre">Elizabeth Guzmán</h3>
+    <p class="footer-tagline">Odontología Estética y Especializada</p>
+    <!-- Frase de marca del PDF -->
+    <p class="footer-frase"><em>"Tu sonrisa, diseñada para ti."</em></p>
+
+    <!-- <address>: marcado semántico para los datos de contacto del negocio.
+         Google entiende que este bloque contiene la información NAP oficial.
+         IMPORTANTE: los datos deben ser IDÉNTICOS a los de Google Business Profile. -->
+    <address>
+      <!-- Enlace al Google Maps: mejora el SEO local y facilita la navegación. -->
+      <a href="https://share.google/rlaYavouMHnes4XAD"
+         target="_blank"
+         rel="noopener noreferrer"
+         aria-label="Abrir consultorio en Google Maps">
+        Sabaneta, Antioquia, Colombia
+      </a>
+      <!-- tel: protocolo que permite marcar directamente en móviles al hacer clic -->
+      <a href="tel:+573222614315" aria-label="Llamar al consultorio">+57 322 261 4315</a>
+      <a href="https://wa.me/573222614315"
+         target="_blank"
+         rel="noopener noreferrer"
+         aria-label="Escribir por WhatsApp">
+        WhatsApp
+      </a>
+    </address>
+  </section>
+
+  <!-- Navegación del footer: diferente al nav del header en contenido y aria-label -->
+  <nav aria-label="Navegación del pie de página" class="footer-nav">
+    <ul>
+      <li><a href="/">Inicio</a></li>
+      <li><a href="/sobre-nosotros.html">Sobre mí</a></li>
+      <li><a href="/servicios.html">Servicios</a></li>
+      <li><a href="/agendar.html">Agendar cita</a></li>
+      <li><a href="/contacto.html">Contacto</a></li>
+    </ul>
+  </nav>
+
+  <!-- <aside>: información tangencial al contenido principal (horarios).
+       Está en el footer porque es de consulta rápida, no el foco de la página. -->
+  <aside aria-label="Horarios de atención" class="footer-horarios">
+    <h4>Horarios</h4>
+    <!-- <dl>: lista de definición — el marcado más semántico para pares dato/valor
+         como "día: hora". <dt> = término, <dd> = descripción/valor. -->
+    <dl>
+      <dt>Lunes a Viernes</dt>
+      <!-- <time datetime="HH:MM"> permite a los motores de búsqueda parsear horarios
+           en formato ISO 8601, que es el estándar internacional. -->
+      <dd>
+        <time datetime="08:00">8:00 a.m.</time> —
+        <time datetime="17:00">5:00 p.m.</time>
+      </dd>
+      <dt>Sábados</dt>
+      <dd>
+        <time datetime="09:00">9:00 a.m.</time> —
+        <time datetime="13:00">1:00 p.m.</time>
+      </dd>
+    </dl>
+    <!-- TODO: reemplaza estos horarios con los reales del consultorio -->
+  </aside>
+
+
+  <!-- ============================================
+       BLOQUE: Footer — 4ª columna: Redes sociales + mapa
+       PROPÓSITO: Agrupar en una sola columna los íconos sociales y el
+                  mapa embebido pequeño. Ocupa el 4° slot del grid del footer.
+       SEMÁNTICA: <section> con heading, <ul> para iconos, <figure> para mapa.
+       ============================================ -->
+  <section aria-labelledby="footer-redes-titulo" class="footer-redes-mapa">
+
+    <!-- Título de columna: estilo coherente con "Horarios" y "Páginas" -->
+    <h4 id="footer-redes-titulo">Síguenos</h4>
+
+    <!-- <ul>: lista de enlaces a redes sociales con íconos SVG futuristas -->
+    <ul class="redes-sociales" aria-label="Redes sociales del consultorio">
+
+      <!-- Instagram: SVG oficial adaptado, contorno minimalista -->
+      <li>
+        <a href="https://www.instagram.com/draelizabethguzman/"
+           target="_blank"
+           rel="noopener noreferrer"
+           aria-label="Seguir a Elizabeth Guzmán en Instagram"
+           class="red-social red-instagram">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="22" height="22" fill="currentColor">
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+          </svg>
+        </a>
+      </li>
+
+      <!-- Facebook: SVG "f" en círculo, minimalista -->
+      <li>
+        <a href="https://www.facebook.com/profile.php?id=61558841361671"
+           target="_blank"
+           rel="noopener noreferrer"
+           aria-label="Seguir a Elizabeth Guzmán en Facebook"
+           class="red-social red-facebook">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="22" height="22" fill="currentColor">
+            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+          </svg>
+        </a>
+      </li>
+
+      <!-- Google Maps / Google Business Profile: pin de mapa -->
+      <li>
+        <a href="https://www.google.com/maps/place/Dra.+Elizabeth+Guzm%C3%A1n+Odontolog%C3%ADa+Est%C3%A9tica+y+Especializada/@6.1531438,-75.620117,799m/data=!3m2!1e3!4b1!4m6!3m5!1s0x8e4683d9082eecb1:0x6577608e1e0fae27!8m2!3d6.1531438!4d-75.620117!16s%2Fg%2F11s2ld_k6q"
+           target="_blank"
+           rel="noopener noreferrer"
+           aria-label="Ver el consultorio en Google Maps"
+           class="red-social red-gmb">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="22" height="22" fill="currentColor">
+            <path d="M12 0C7.802 0 4 3.403 4 7.602 4 11.8 7.469 16.812 12 24c4.531-7.188 8-12.2 8-16.398C20 3.403 16.199 0 12 0zm0 11c-1.657 0-3-1.343-3-3s1.343-3 3-3 3 1.343 3 3-1.343 3-3 3z"/>
+          </svg>
+        </a>
+      </li>
+
+    </ul>
+
+    <!-- <figure>: mapa embebido pequeño con leyenda accesible.
+         <figure> es el envoltorio semántico correcto para contenido
+         autocontenido como mapas, imágenes, gráficos. -->
+    <figure class="footer-mapa-figura">
+      <!-- <iframe> con loading="lazy" para no bloquear el render inicial.
+           referrerpolicy evita filtrar la URL de referencia a Google Maps. -->
+      <iframe
+        src="https://maps.google.com/maps?q=6.1531438,-75.620117&z=16&output=embed"
+        width="100%"
+        height="120"
+        loading="lazy"
+        allowfullscreen=""
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Ubicación del consultorio en Sabaneta, Antioquia">
+      </iframe>
+      <!-- <figcaption>: descripción textual del mapa, útil para accesibilidad y SEO -->
+      <figcaption>Sabaneta, Antioquia — Colombia</figcaption>
+    </figure>
+
+  </section>
+
+  <!-- Franja inferior de cierre: copyright y crédito del desarrollador.
+       Ocupa la fila completa del grid del footer gracias a grid-column: 1/-1 en CSS. -->
+  <section aria-label="Copyright y créditos" class="footer-bottom">
+
+    <!-- Copyright y crédito del desarrollador -->
+    <section aria-label="Copyright" class="footer-copy">
+      <p>
+        <small>
+          ©&nbsp;<time datetime="2026">2026</time>
+          Elizabeth Guzmán Odontología Estética y Especializada.
+          Todos los derechos reservados.
+        </small>
+      </p>
+      <p class="footer-credito">
+        <small>Diseñado y desarrollado por
+          <strong>Sebastián López Ramírez</strong> — Desarrollador Web
+        </small>
+      </p>
+    </section>
+
+  </section>
+</footer>
+  <!-- Fin <footer> -->
+
+  <!-- ============================================
+       Botón flotante de WhatsApp
+       PROPÓSITO: CTA siempre visible — el canal de contacto más usado en Colombia.
+       SEMÁNTICA: <a> para navegación (enlace externo a WhatsApp).
+       POSICIÓN: fixed bottom-right, sobre todo el contenido (z-index alto en CSS).
+       ============================================ -->
+
+  <!-- <a> flotante: posicionado con CSS fixed en la esquina inferior derecha.
+       aria-label describe la acción completa para lectores de pantalla. -->
+  <a
+    href="https://wa.me/573222614315?text=Hola%2C%20vi%20la%20p%C3%A1gina%20de%20servicios%20y%20quiero%20m%C3%A1s%20informaci%C3%B3n."
+    class="whatsapp-flotante"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Contactar por WhatsApp — abre en nueva ventana"
+  >
+    <!-- SVG de WhatsApp inline para cero peticiones HTTP extra.
+         aria-hidden porque el aria-label del enlace padre ya lo describe. -->
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="28" height="28">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" fill="currentColor"/>
+    </svg>
+
+    <!-- <span> estaría prohibido aquí — usamos texto oculto con clase .sr-only.
+         Pero en este caso el aria-label en <a> es suficiente, así que omitimos texto visible
+         y dejamos solo el SVG. El botón funciona sin texto visible (solo ícono). -->
+
+  </a>
+
+  <!-- nav.js: maneja el toggle del menú móvil.
+       Al final del body para no bloquear el rendering del HTML.
+       defer no es necesario aquí porque DOMContentLoaded se usa en el script. -->
+  <script src="/js/nav.js"></script>
+
+  <!-- AUDITORÍA: div=0, span=0, style_inline=0 -->
+
+</body>
+</html>

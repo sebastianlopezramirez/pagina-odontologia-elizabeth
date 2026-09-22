@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- title: sin indexar — no queremos que Google muestre el formulario vacío en resultados.
+       La conversión ocurre aquí, pero el tráfico debe entrar por index.html o servicios.html. -->
+  <title>Agendar Cita | Dra. Elizabeth Guzmán Odontología</title>
+
+  <meta name="description" content="Agenda tu cita con la Dra. Elizabeth Guzmán en Sabaneta. Formulario rápido y seguro — te confirmamos en menos de 24 horas.">
+
+  <!-- noindex: evitamos que Google indexe el formulario en sí.
+       La página de confirmación (gracias.html) tampoco debe indexarse.
+       Así el crédito de conversión queda en las páginas de destino. -->
+  <meta name="robots" content="noindex, nofollow">
+
+  <link rel="canonical" href="https://elizabethguzman.com/agendar.html">
+
+  <!-- Open Graph para compartir el link de agendar en redes -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://elizabethguzman.com/agendar.html">
+  <meta property="og:title" content="Agendar Cita — Dra. Elizabeth Guzmán">
+  <meta property="og:description" content="Reserva tu cita en línea. Rápido, fácil y sin llamadas.">
+  <meta property="og:image" content="https://elizabethguzman.com/img/og-portada.webp">
+
+  <!-- Schema.org: acción de reserva — le dice a Google que esta página permite reservar citas -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ReserveAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "https://elizabethguzman.com/agendar.html",
+      "inLanguage": "es-CO",
+      "actionPlatform": [
+        "http://schema.org/DesktopWebPlatform",
+        "http://schema.org/MobileWebPlatform"
+      ]
+    },
+    "result": {
+      "@type": "Reservation",
+      "name": "Cita odontológica con Dra. Elizabeth Guzmán"
+    }
+  }
+  </script>
+
+  <link rel="icon" href="/img/favicon.ico" sizes="any">
+  <link rel="stylesheet" href="/css/styles.css">
+
+  <!-- Favicon en 3 formatos: SVG (moderno), WebP (compatibilidad), ICO (legado) -->
+  <link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/img/favicon.webp" type="image/webp">
+  <link rel="icon" href="/img/favicon.ico" sizes="any">
+
+</head>
+
+<body>
+
+  <!-- ============================================
+       BLOQUE: Header (mismo que todas las páginas)
+       ============================================ -->
+  <header role="banner">
+    <nav aria-label="Navegación principal" id="menu-principal">
+      <a href="/" class="logo" aria-label="Ir al inicio — Dra. Elizabeth Guzmán">
+        <strong>Elizabeth Guzmán</strong>
+        <em>Odontología Estética y Especializada</em>
+      </a>
+      <ul>
+        <li><a href="/">Inicio</a></li>
+        <li><a href="/servicios.html">Servicios</a></li>
+        <li><a href="/sobre-nosotros.html">Sobre mí</a></li>
+        <li><a href="/contacto.html">Contacto</a></li>
+      </ul>
+      <!-- Sin CTA "Agendar" en el header porque YA ESTAMOS en la página de agendar -->
+      <button
+        class="nav-toggle"
+        aria-controls="menu-principal"
+        aria-expanded="false"
+        aria-label="Abrir menú de navegación"
+      ></button>
+    </nav>
+  </header>
+
+  <main id="contenido">
+
+    <!-- ============================================
+         BLOQUE: Hero de la página de agendar
+         PROPÓSITO: Orientar al usuario — confirmar que está en el lugar correcto.
+                    Reducir fricción con un mensaje cálido antes del formulario.
+         ============================================ -->
+    <section id="agendar-hero" aria-labelledby="agendar-titulo">
+
+      <!-- Breadcrumb para orientación y SEO de estructura -->
+      <nav aria-label="Ruta de navegación">
+        <ol class="breadcrumb">
+          <li><a href="/">Inicio</a></li>
+          <li><a href="/agendar.html" aria-current="page">Agendar cita</a></li>
+        </ol>
+      </nav>
+
+      <header class="seccion-header">
+        <p class="kicker">Sin llamadas. Sin esperas.</p>
+        <h1 id="agendar-titulo">Agenda tu cita<br><mark>en línea</mark></h1>
+        <p class="hero-descripcion">Completa el formulario y te confirmamos tu cita en menos de 24 horas. Para urgencias, escríbenos directamente por WhatsApp.</p>
+      </header>
+      <!-- ============================================
+           FOTO DE LA DOCTORA EN EL HERO
+           PROPÓSITO: Mostrar a la Dra. en el espacio vacío al lado del título.
+                      2 columnas: izquierda = texto, derecha = foto.
+                      Genera confianza visual antes de que el usuario llene el formulario.
+           SEMÁNTICA: <figure> + <picture> para imagen responsiva con leyenda.
+           ============================================ -->
+      <!-- <figure>: contenedor semántico para imagen con leyenda -->
+      <figure class="agendar-hero-foto">
+        <!-- <picture>: imagen responsiva con múltiples fuentes -->
+        <picture>
+          <!-- Fuente JPEG del perfil de la doctora -->
+          <source srcset="/img/dra-elizabeth-perfil.jpeg" type="image/jpeg">
+          <!-- alt descriptivo: nombre + especialidad para SEO y accesibilidad -->
+          <img
+            src="/img/dra-elizabeth-perfil.jpeg"
+            alt="Dra. Elizabeth Guzmán — Odontóloga Estética y Especializada, Sabaneta Antioquia"
+            width="420"
+            height="480"
+            loading="eager"
+          >
+        </picture>
+        <figcaption>Dra. Elizabeth Guzmán · Odontóloga Estética</figcaption>
+      </figure>
+
+    </section>
+
+    <!-- ============================================
+         BLOQUE: Formulario de agendamiento
+         PROPÓSITO: Capturar los datos necesarios para reservar una cita.
+         SEMÁNTICA: <form> con <fieldset> por cada grupo lógico de campos.
+                    <fieldset> agrupa campos relacionados; <legend> los nombra.
+                    Esto es crítico para accesibilidad: lectores de pantalla
+                    anuncian la legend antes de cada campo del grupo.
+         TÉCNICA: action="#" porque el envío lo maneja agenda.js via fetch().
+                  method="post" es la intención — pero JS intercepta el submit.
+         ============================================ -->
+    <section id="seccion-formulario" aria-labelledby="form-titulo">
+
+      <section class="formulario-layout">
+
+        <!-- ============================================
+             Columna izquierda: El formulario en sí
+             ============================================ -->
+
+        <!-- <form>: el contenedor de todos los campos.
+             novalidate: desactivamos la validación nativa del navegador
+             porque la manejamos nosotros en agenda.js para tener
+             mensajes de error en español y mejor UX. -->
+        <form
+          id="form-cita"
+          novalidate
+          aria-labelledby="form-titulo"
+        >
+
+          <!-- Título del formulario: h2 porque estamos dentro de <main> con h1 -->
+          <h2 id="form-titulo" class="sr-only">Formulario de agendamiento de cita</h2>
+
+          <!-- ============================================
+               FIELDSET 1: Datos personales del paciente
+               SEMÁNTICA: <fieldset> agrupa campos relacionados.
+                          <legend> es el nombre del grupo — obligatorio en <fieldset>.
+               ============================================ -->
+          <fieldset class="campo-grupo">
+
+            <!-- <legend>: etiqueta del grupo de campos.
+                 NUNCA omitir — los lectores de pantalla la necesitan. -->
+            <legend>Tus datos de contacto</legend>
+
+            <!-- Campo: Nombre completo -->
+            <section class="campo-fila">
+
+              <!-- <label for="nombre">: conecta visualmente y semánticamente
+                   con el input. El for debe coincidir exactamente con el id del input.
+                   Al hacer clic en el label, el input recibe foco — mejor UX. -->
+              <label for="nombre">
+                Nombre completo
+                <!-- <abbr> para marcar el asterisco de campo requerido.
+                     title explica el significado para lectores de pantalla. -->
+                <abbr title="Campo requerido" aria-label="requerido">*</abbr>
+              </label>
+
+              <!-- <input>: campo de texto.
+                   type="text": tipo semántico para nombre — activa teclado correcto en móvil.
+                   autocomplete="name": el navegador puede autocompletar con el nombre guardado.
+                   required: validación HTML5 (aunque novalidate la desactiva en el form,
+                             la marcamos para accesibilidad y como señal de intención).
+                   aria-required="true": versión ARIA del required para lectores de pantalla.
+                   aria-describedby: enlaza con el mensaje de error para que
+                   el lector lo anuncie cuando el campo tiene error. -->
+              <input
+                type="text"
+                id="nombre"
+                name="nombre"
+                placeholder="Ej: María Fernanda López"
+                autocomplete="name"
+                required
+                aria-required="true"
+                aria-describedby="error-nombre"
+              >
+
+              <!-- Contenedor del mensaje de error: vacío por defecto.
+                   agenda.js lo llena con texto cuando hay error.
+                   role="alert": el lector de pantalla lo anuncia automáticamente
+                   cuando su contenido cambia (sin necesidad de mover el foco). -->
+              <output id="error-nombre" class="campo-error" role="alert" aria-live="polite"></output>
+
+            </section>
+
+            <!-- Campo: Teléfono -->
+            <section class="campo-fila">
+              <label for="telefono">
+                Teléfono / WhatsApp
+                <abbr title="Campo requerido" aria-label="requerido">*</abbr>
+              </label>
+
+              <!-- type="tel": activa el teclado numérico en móvil.
+                   pattern: expresión regular que valida el formato colombiano.
+                   autocomplete="tel": autocompletado del teléfono. -->
+              <input
+                type="tel"
+                id="telefono"
+                name="telefono"
+                placeholder="Ej: 300 123 4567"
+                autocomplete="tel"
+                pattern="[0-9\s\+\-]{7,15}"
+                required
+                aria-required="true"
+                aria-describedby="error-telefono"
+              >
+              <output id="error-telefono" class="campo-error" role="alert" aria-live="polite"></output>
+            </section>
+
+            <!-- Campo: Email (opcional) -->
+            <section class="campo-fila">
+              <label for="email">
+                Correo electrónico
+                <!-- Sin asterisco: este campo es opcional -->
+                <small class="campo-opcional">(opcional — para enviarte la confirmación)</small>
+              </label>
+
+              <!-- type="email": valida formato email y activa teclado con @ en móvil.
+                   autocomplete="email": autocompletado del email guardado. -->
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Ej: maria@correo.com"
+                autocomplete="email"
+                aria-describedby="error-email"
+              >
+              <output id="error-email" class="campo-error" role="alert" aria-live="polite"></output>
+            </section>
+
+          </fieldset>
+
+          <!-- ============================================
+               FIELDSET 2: Información de la cita
+               ============================================ -->
+          <fieldset class="campo-grupo">
+            <legend>Detalles de tu cita</legend>
+
+            <!-- Campo: Servicio deseado -->
+            <section class="campo-fila">
+              <label for="servicio">
+                Servicio de interés
+                <abbr title="Campo requerido" aria-label="requerido">*</abbr>
+              </label>
+
+              <!-- <select>: lista desplegable de opciones.
+                   Semánticamente correcto para selección de una opción de una lista.
+                   El valor vacío del primer <option> actúa como placeholder. -->
+              <select
+                id="servicio"
+                name="servicio"
+                required
+                aria-required="true"
+                aria-describedby="error-servicio"
+              >
+                <!-- Primera opción vacía: indica al usuario que debe seleccionar.
+                     value="" hace que la validación falle si no seleccionan nada. -->
+                <option value="">— Selecciona el servicio —</option>
+                <option value="valoracion-general">Valoración general / Primera consulta</option>
+                <option value="ortodoncia">Ortodoncia (brackets o alineadores)</option>
+                <option value="blanqueamiento">Blanqueamiento dental</option>
+                <option value="implantes">Implantes dentales</option>
+                <option value="carillas">Carillas de porcelana o resina</option>
+                <option value="odontopediatria">Odontopediatría (niños)</option>
+                <option value="periodoncia">Periodoncia (encías)</option>
+                <option value="limpieza">Limpieza y profilaxis</option>
+                <option value="urgencia">Urgencia odontológica</option>
+                <option value="otro">Otro / No sé cuál necesito</option>
+              </select>
+              <output id="error-servicio" class="campo-error" role="alert" aria-live="polite"></output>
+            </section>
+
+            <!-- Campos: Fecha y hora preferida en fila -->
+            <section class="campo-fila campo-fila--doble">
+
+              <!-- Subfila: Fecha -->
+              <section class="campo-subfila">
+                <label for="fecha-preferida">
+                  Fecha preferida
+                  <abbr title="Campo requerido" aria-label="requerido">*</abbr>
+                </label>
+
+                <!-- type="date": selector de fecha nativo del navegador.
+                     min: no se puede seleccionar fechas pasadas.
+                     El valor de min lo establece agenda.js al cargar la página
+                     con la fecha de hoy dinámica. -->
+                <input
+                  type="date"
+                  id="fecha-preferida"
+                  name="fecha-preferida"
+                  required
+                  aria-required="true"
+                  aria-describedby="error-fecha"
+                >
+                <output id="error-fecha" class="campo-error" role="alert" aria-live="polite"></output>
+              </section>
+
+              <!-- Subfila: Hora preferida -->
+              <section class="campo-subfila">
+                <label for="hora-preferida">
+                  Hora preferida
+                  <abbr title="Campo requerido" aria-label="requerido">*</abbr>
+                </label>
+
+                <!-- <select> para hora: más controlable que type="time".
+                     Solo mostramos las horas disponibles del consultorio. -->
+                <select
+                  id="hora-preferida"
+                  name="hora-preferida"
+                  required
+                  aria-required="true"
+                  aria-describedby="error-hora"
+                >
+                  <option value="">— Hora —</option>
+                  <option value="08:00">8:00 a.m.</option>
+                  <option value="08:30">8:30 a.m.</option>
+                  <option value="09:00">9:00 a.m.</option>
+                  <option value="09:30">9:30 a.m.</option>
+                  <option value="10:00">10:00 a.m.</option>
+                  <option value="10:30">10:30 a.m.</option>
+                  <option value="11:00">11:00 a.m.</option>
+                  <option value="11:30">11:30 a.m.</option>
+                  <option value="14:00">2:00 p.m.</option>
+                  <option value="14:30">2:30 p.m.</option>
+                  <option value="15:00">3:00 p.m.</option>
+                  <option value="15:30">3:30 p.m.</option>
+                  <option value="16:00">4:00 p.m.</option>
+                  <option value="16:30">4:30 p.m.</option>
+                  <option value="17:00">5:00 p.m.</option>
+                  <option value="17:30">5:30 p.m.</option>
+                </select>
+                <output id="error-hora" class="campo-error" role="alert" aria-live="polite"></output>
+              </section>
+
+            </section>
+
+            <!-- Campo: Motivo / Mensaje adicional -->
+            <section class="campo-fila">
+              <label for="mensaje">
+                ¿Tienes algún síntoma o comentario adicional?
+                <small class="campo-opcional">(opcional)</small>
+              </label>
+
+              <!-- <textarea>: área de texto multilínea para mensajes largos.
+                   rows: altura inicial visible en líneas.
+                   No usar resize:none en CSS — el usuario puede necesitar expandirlo. -->
+              <textarea
+                id="mensaje"
+                name="mensaje"
+                rows="4"
+                placeholder="Ej: Tengo sensibilidad en un molar desde hace una semana..."
+                aria-describedby="contador-mensaje"
+                maxlength="500"
+              ></textarea>
+
+              <!-- Contador de caracteres: <output> porque es resultado dinámico
+                   calculado por agenda.js. aria-live para anunciarlo al escribir. -->
+              <output
+                id="contador-mensaje"
+                class="campo-contador"
+                aria-live="polite"
+                aria-label="Caracteres restantes"
+              >500 caracteres restantes</output>
+            </section>
+
+          </fieldset>
+
+          <!-- ============================================
+               FIELDSET 3: Consentimiento
+               SEMÁNTICA: Los checkboxes de consentimiento van en su propio fieldset.
+               LEGAL: En Colombia, la Ley 1581 de 2012 (Habeas Data) requiere
+                      consentimiento explícito para tratar datos personales.
+               ============================================ -->
+          <fieldset class="campo-grupo campo-grupo--consentimiento">
+            <legend>Autorización de datos</legend>
+
+            <section class="campo-fila campo-fila--checkbox">
+
+              <!-- <input type="checkbox"> + <label>: pareja semántica correcta.
+                   El <label> debe estar junto al <input> y referenciarlo con for/id. -->
+              <input
+                type="checkbox"
+                id="consentimiento"
+                name="consentimiento"
+                required
+                aria-required="true"
+                aria-describedby="error-consentimiento"
+              >
+
+              <!-- <label> después del checkbox: estándar para checkboxes (texto a la derecha). -->
+              <label for="consentimiento">
+                Autorizo el tratamiento de mis datos personales conforme a la
+                <!-- Enlace a la política de privacidad — página futura -->
+                <a href="/privacidad.html" target="_blank" rel="noopener noreferrer">
+                  Política de Privacidad
+                </a>
+                de la Dra. Elizabeth Guzmán, de acuerdo con la Ley 1581 de 2012.
+                <abbr title="Campo requerido" aria-label="requerido">*</abbr>
+              </label>
+
+            </section>
+            <output id="error-consentimiento" class="campo-error" role="alert" aria-live="polite"></output>
+
+          </fieldset>
+
+          <!-- ============================================
+               Botón de envío
+               SEMÁNTICA: <button type="submit"> es la forma correcta de enviar un form.
+                          NO usar <input type="submit"> — menos flexible para estilos.
+                          NO usar <a> ni <div> como botón de envío.
+               ============================================ -->
+
+          <!-- <button>: elemento semántico de acción.
+               type="submit": envía el formulario al hacer clic.
+               aria-describedby apunta al mensaje de estado del envío. -->
+          <button
+            type="submit"
+            id="btn-enviar"
+            class="btn-enviar"
+            aria-describedby="estado-envio"
+          >
+            Solicitar mi cita
+          </button>
+
+          <!-- Estado del envío: muestra "Enviando...", "¡Cita solicitada!" o error.
+               role="status": el lector lo anuncia sin interrumpir al usuario.
+               aria-live="polite": espera a que el usuario termine de leer antes de anunciar. -->
+          <output
+            id="estado-envio"
+            class="estado-envio"
+            role="status"
+            aria-live="polite"
+          ></output>
+
+        </form>
+
+        <!-- ============================================
+             Columna derecha: Información de apoyo
+             SEMÁNTICA: <aside> porque es información complementaria al formulario.
+             ============================================ -->
+        <aside class="agendar-info" aria-label="Información del consultorio">
+
+
+          <section class="info-bloque info-bloque--garantia">
+            <h3>Lo que puedes esperar</h3>
+            <ul class="lista-garantias">
+              <li>Confirmación en menos de 24 horas</li>
+              <li>Recordatorio el día anterior a tu cita</li>
+              <li>Primera consulta de valoración sin costo</li>
+              <li>Tus datos están protegidos — Ley 1581</li>
+            </ul>
+          </section>
+
+        </aside>
+
+      </section>
+
+    </section>
+
+  </main>
+
+  <!-- Footer idéntico al de las otras páginas -->
+  <footer>
+
+  <!-- Identidad del consultorio en el footer -->
+  <section aria-labelledby="footer-nombre" class="footer-identidad">
+    <h3 id="footer-nombre">Elizabeth Guzmán</h3>
+    <p class="footer-tagline">Odontología Estética y Especializada</p>
+    <!-- Frase de marca del PDF -->
+    <p class="footer-frase"><em>"Tu sonrisa, diseñada para ti."</em></p>
+
+    <!-- <address>: marcado semántico para los datos de contacto del negocio.
+         Google entiende que este bloque contiene la información NAP oficial.
+         IMPORTANTE: los datos deben ser IDÉNTICOS a los de Google Business Profile. -->
+    <address>
+      <!-- Enlace al Google Maps: mejora el SEO local y facilita la navegación. -->
+      <a href="https://share.google/rlaYavouMHnes4XAD"
+         target="_blank"
+         rel="noopener noreferrer"
+         aria-label="Abrir consultorio en Google Maps">
+        Sabaneta, Antioquia, Colombia
+      </a>
+      <!-- tel: protocolo que permite marcar directamente en móviles al hacer clic -->
+      <a href="tel:+573222614315" aria-label="Llamar al consultorio">+57 322 261 4315</a>
+      <a href="https://wa.me/573222614315"
+         target="_blank"
+         rel="noopener noreferrer"
+         aria-label="Escribir por WhatsApp">
+        WhatsApp
+      </a>
+    </address>
+  </section>
+
+  <!-- Navegación del footer: diferente al nav del header en contenido y aria-label -->
+  <nav aria-label="Navegación del pie de página" class="footer-nav">
+    <ul>
+      <li><a href="/">Inicio</a></li>
+      <li><a href="/sobre-nosotros.html">Sobre mí</a></li>
+      <li><a href="/servicios.html">Servicios</a></li>
+      <li><a href="/agendar.html">Agendar cita</a></li>
+      <li><a href="/contacto.html">Contacto</a></li>
+    </ul>
+  </nav>
+
+  <!-- <aside>: información tangencial al contenido principal (horarios).
+       Está en el footer porque es de consulta rápida, no el foco de la página. -->
+  <aside aria-label="Horarios de atención" class="footer-horarios">
+    <h4>Horarios</h4>
+    <!-- <dl>: lista de definición — el marcado más semántico para pares dato/valor
+         como "día: hora". <dt> = término, <dd> = descripción/valor. -->
+    <dl>
+      <dt>Lunes a Viernes</dt>
+      <!-- <time datetime="HH:MM"> permite a los motores de búsqueda parsear horarios
+           en formato ISO 8601, que es el estándar internacional. -->
+      <dd>
+        <time datetime="08:00">8:00 a.m.</time> —
+        <time datetime="17:00">5:00 p.m.</time>
+      </dd>
+      <dt>Sábados</dt>
+      <dd>
+        <time datetime="09:00">9:00 a.m.</time> —
+        <time datetime="13:00">1:00 p.m.</time>
+      </dd>
+    </dl>
+    <!-- TODO: reemplaza estos horarios con los reales del consultorio -->
+  </aside>
+
+
+  <!-- ============================================
+       BLOQUE: Footer — 4ª columna: Redes sociales + mapa
+       PROPÓSITO: Agrupar en una sola columna los íconos sociales y el
+                  mapa embebido pequeño. Ocupa el 4° slot del grid del footer.
+       SEMÁNTICA: <section> con heading, <ul> para iconos, <figure> para mapa.
+       ============================================ -->
+  <section aria-labelledby="footer-redes-titulo" class="footer-redes-mapa">
+
+    <!-- Título de columna: estilo coherente con "Horarios" y "Páginas" -->
+    <h4 id="footer-redes-titulo">Síguenos</h4>
+
+    <!-- <ul>: lista de enlaces a redes sociales con íconos SVG futuristas -->
+    <ul class="redes-sociales" aria-label="Redes sociales del consultorio">
+
+      <!-- Instagram: SVG oficial adaptado, contorno minimalista -->
+      <li>
+        <a href="https://www.instagram.com/draelizabethguzman/"
+           target="_blank"
+           rel="noopener noreferrer"
+           aria-label="Seguir a Elizabeth Guzmán en Instagram"
+           class="red-social red-instagram">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="22" height="22" fill="currentColor">
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+          </svg>
+        </a>
+      </li>
+
+      <!-- Facebook: SVG "f" en círculo, minimalista -->
+      <li>
+        <a href="https://www.facebook.com/profile.php?id=61558841361671"
+           target="_blank"
+           rel="noopener noreferrer"
+           aria-label="Seguir a Elizabeth Guzmán en Facebook"
+           class="red-social red-facebook">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="22" height="22" fill="currentColor">
+            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+          </svg>
+        </a>
+      </li>
+
+      <!-- Google Maps / Google Business Profile: pin de mapa -->
+      <li>
+        <a href="https://www.google.com/maps/place/Dra.+Elizabeth+Guzm%C3%A1n+Odontolog%C3%ADa+Est%C3%A9tica+y+Especializada/@6.1531438,-75.620117,799m/data=!3m2!1e3!4b1!4m6!3m5!1s0x8e4683d9082eecb1:0x6577608e1e0fae27!8m2!3d6.1531438!4d-75.620117!16s%2Fg%2F11s2ld_k6q"
+           target="_blank"
+           rel="noopener noreferrer"
+           aria-label="Ver el consultorio en Google Maps"
+           class="red-social red-gmb">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="22" height="22" fill="currentColor">
+            <path d="M12 0C7.802 0 4 3.403 4 7.602 4 11.8 7.469 16.812 12 24c4.531-7.188 8-12.2 8-16.398C20 3.403 16.199 0 12 0zm0 11c-1.657 0-3-1.343-3-3s1.343-3 3-3 3 1.343 3 3-1.343 3-3 3z"/>
+          </svg>
+        </a>
+      </li>
+
+    </ul>
+
+    <!-- <figure>: mapa embebido pequeño con leyenda accesible.
+         <figure> es el envoltorio semántico correcto para contenido
+         autocontenido como mapas, imágenes, gráficos. -->
+    <figure class="footer-mapa-figura">
+      <!-- <iframe> con loading="lazy" para no bloquear el render inicial.
+           referrerpolicy evita filtrar la URL de referencia a Google Maps. -->
+      <iframe
+        src="https://maps.google.com/maps?q=6.1531438,-75.620117&z=16&output=embed"
+        width="100%"
+        height="120"
+        loading="lazy"
+        allowfullscreen=""
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Ubicación del consultorio en Sabaneta, Antioquia">
+      </iframe>
+      <!-- <figcaption>: descripción textual del mapa, útil para accesibilidad y SEO -->
+      <figcaption>Sabaneta, Antioquia — Colombia</figcaption>
+    </figure>
+
+  </section>
+
+  <!-- Franja inferior de cierre: copyright y crédito del desarrollador.
+       Ocupa la fila completa del grid del footer gracias a grid-column: 1/-1 en CSS. -->
+  <section aria-label="Copyright y créditos" class="footer-bottom">
+
+    <!-- Copyright y crédito del desarrollador -->
+    <section aria-label="Copyright" class="footer-copy">
+      <p>
+        <small>
+          ©&nbsp;<time datetime="2026">2026</time>
+          Elizabeth Guzmán Odontología Estética y Especializada.
+          Todos los derechos reservados.
+        </small>
+      </p>
+      <p class="footer-credito">
+        <small>Diseñado y desarrollado por
+          <strong>Sebastián López Ramírez</strong> — Desarrollador Web
+        </small>
+      </p>
+    </section>
+
+  </section>
+</footer>
+
+  <!-- Botón flotante WhatsApp -->
+  <a
+    href="https://wa.me/573222614315?text=Hola%2C%20quiero%20agendar%20una%20cita"
+    class="whatsapp-flotante"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Contactar por WhatsApp"
+  >
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="28" height="28">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" fill="currentColor"/>
+    </svg>
+  </a>
+
+  <script src="/js/nav.js"></script>
+  <!-- agenda.js: maneja validación y envío del formulario a Google Apps Script -->
+  <script src="/js/agenda.js"></script>
+
+  <!-- AUDITORÍA: div=0, span=0, style_inline=0 -->
+</body>
+</html>

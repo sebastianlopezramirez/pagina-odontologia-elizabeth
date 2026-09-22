@@ -1,0 +1,4502 @@
+/*
+ * ARCHIVO: /css/styles.css
+ * PROYECTO: Elizabeth Guzmán Odontología Estética y Especializada
+ * PROPÓSITO: Hoja de estilos principal del sitio web.
+ *            Organizada en bloques semánticos que reflejan la estructura del HTML.
+ *            El CSS crítico above-the-fold está en el <style> inline del <head>.
+ * METODOLOGÍA:
+ *   - CSS Grid y Flexbox directo sobre etiquetas semánticas (sin wrappers div)
+ *   - Variables CSS en :root para consistencia (Design Tokens)
+ *   - Tipografía fluida con clamp() (sin media queries para escalado)
+ *   - Container queries donde aplica, media queries solo como respaldo
+ *   - Cero dependencias externas: sin Google Fonts, sin frameworks
+ * FECHA: 2026-09-21
+ */
+
+
+/* ============================================
+   BLOQUE 1: Reset y Base
+   PROPÓSITO: Eliminar inconsistencias entre navegadores.
+   Por qué no usar un reset completo: un reset agresivo (como normalize.css)
+   añade peso. Solo reseteamos lo que realmente varía entre navegadores.
+   ============================================ */
+
+/* Elementos de bloque que en HTML tienen margin/padding por defecto.
+   Los reseteamos para tener control total desde cero. */
+/* html: overflow-x hidden previene el scroll horizontal causado por elementos
+   que exceden el ancho del viewport (grids con gaps, imágenes, etc.) */
+html {
+  /* Previene scroll horizontal en todos los navegadores */
+  overflow-x: hidden;
+}
+
+/* box-sizing: border-box en todos los elementos.
+   Hace que padding y border se incluyan DENTRO del width declarado.
+   Sin esto, padding-inline en elementos full-width causa overflow. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5, h6,
+p, blockquote, figure, figcaption,
+ul, ol, li, dl, dt, dd,
+address, details, summary {
+  margin: 0;
+  padding: 0;
+}
+
+/* <ul> y <ol> en navegación no deben mostrar bullets.
+   Solo los reseteamos cuando están en <nav>; las listas de contenido
+   sí mantienen sus estilos por defecto y los personalizamos más abajo. */
+nav ul, nav ol {
+  list-style: none;
+}
+
+/* Imágenes: max-width 100% evita que desborden su contenedor.
+   display block elimina el espacio vacío debajo (herencia inline). */
+img, picture, figure {
+  max-width: 100%;
+  display: block;
+}
+
+/* <a>: hereda el color del padre para que podamos controlarlo por contexto,
+   no por selector universal de links. */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* <button>: reseteamos apariencia del sistema operativo.
+   appearance none elimina el estilo nativo (borde biselado, etc.) */
+button {
+  appearance: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+}
+
+/* <summary>: elimina el marcador nativo del acordeón en todos los navegadores.
+   En Firefox usa list-style. En Chrome/Safari usa ::webkit-details-marker. */
+summary {
+  list-style: none;
+  cursor: pointer;
+}
+summary::-webkit-details-marker {
+  display: none;
+}
+
+/* <mark>: por defecto tiene fondo amarillo. Lo reseteamos para que
+   cada sección pueda estilizarlo como necesite. */
+mark {
+  background: none;
+  color: inherit;
+}
+
+
+/* ============================================
+   BLOQUE 2: Variables de diseño (Design Tokens)
+   PROPÓSITO: Sistema de diseño centralizado — ÚNICA FUENTE DE VERDAD.
+   TODAS las variables están aquí (no en el inline del HTML) para que
+   TODOS los archivos HTML las hereden al cargar styles.css.
+   
+   NUEVA PALETA 2024: de negro/blanco puro a zinc-900/zinc-50.
+   Más moderna, menos agresiva, ojos más descansados.
+   ============================================ */
+
+:root {
+  /* ====================================================
+     PALETA 2025: NEGRO / PLATA / BLANCO
+     Clínica dental premium — limpieza, precisión, confianza.
+     Referencia: Apple, Porsche, clínicas estéticas de lujo.
+     
+     NEGRO puro para fondos oscuros (hero, CTA, footer).
+     PLATA/PLATINO como acento — reemplaza el dorado.
+       Plata = frialdad clínica, precisión quirúrgica, modernidad.
+     BLANCO para secciones de contenido — limpieza visual total.
+  ==================================================== */
+
+  /* Negro profundo: ligeramente más cálido que #000 puro.
+     Evita el contraste agresivo y se ve más sofisticado. */
+  --c-negro:       #0e0e10;
+
+  /* Blanco clínico: zinc-50 — no deslumbra, muy levemente grisáceo */
+  --c-blanco:      #f8f9fa;
+
+  /* Superficie de sección: un grado más frío que el blanco — separa visualmente */
+  --c-azul-marino: #10192A;      /* azul marino oscuro — secciones alternas */
+  --c-beige:       #10192A;      /* alias → apunta al azul marino */
+
+  /* Borde y separador claro: zinc-200 con tinte frío */
+  --c-gris-claro:  #dee2e6;
+
+  /* Texto secundario: gris medio con tinte azul-frío — profesional */
+  --c-gris-texto:  #6c757d;
+
+  /* Borde de inputs: zinc-400 */
+  --c-gris-borde:  #adb5bd;
+
+  /* ---- PLATINO / PLATA ----
+     Reemplaza el dorado. Plata = clínica dental moderna, precisión.
+     --c-plata:       acento principal (textos destacados, bordes activos)
+     --c-plata-claro: para bordes sutiles, separadores
+     --c-plata-brillo: para highlights, iconos, numeración decorativa */
+  --c-plata:       #94a3b8; /* slate-400 — plata fría y sofisticada */
+  --c-plata-hover: #64748b; /* slate-500 — más oscuro para hover */
+  --c-plata-claro: #cbd5e1; /* slate-300 — bordes y separadores */
+  --c-plata-brillo:#e2e8f0; /* slate-200 — superficies muy sutiles */
+
+  /* Borde oscuro: para separar secciones en fondos oscuros */
+  --c-borde-oscuro: #1e1e22;
+
+  /* ---- ALIASES DE COMPATIBILIDAD ----
+     El CSS antiguo usaba --c-dorado / --dorado / --negro / etc.
+     Los alias garantizan que todo el código anterior siga funcionando
+     sin reescribir cada línea. Estrategia de migración gradual. */
+  --c-dorado:       var(--c-plata);       /* reemplazado por plata */
+  --c-dorado-hover: var(--c-plata-hover); /* reemplazado por plata hover */
+  --negro:          var(--c-negro);
+  --blanco:         var(--c-blanco);
+  --dorado:         var(--c-plata);       /* alias antiguo → plata */
+  --gris-claro:     var(--c-gris-claro);
+  --azul-marino:    var(--c-azul-marino);
+  --gris-oscuro:    var(--c-gris-texto);
+  --dorado-oscuro:  var(--c-plata-hover);
+
+  /* ---- ALIASES DE ESPACIO ---- */
+  --espacio-xs: var(--gap-xs);
+  --espacio-sm: var(--gap-s);
+  --espacio-md: var(--gap-m);
+  --espacio-lg: var(--gap-l);
+  --espacio-xl: var(--gap-xl);
+
+  /* ---- TIPOGRAFÍA ----
+     System UI — cero descarga, velocidad máxima.
+     Cada SO usa su mejor fuente nativa. */
+  --font-base: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  /* ---- ESPACIADO ---- */
+  --gap-xs:  clamp(0.25rem, 0.8vw,  0.5rem);
+  --gap-s:   clamp(0.5rem,  1.2vw,  0.75rem);
+  --gap-m:   clamp(0.75rem, 2vw,    1.25rem);
+  --gap-l:   clamp(1.25rem, 3vw,    2rem);
+  --gap-xl:  clamp(2rem,    4.5vw,  3.5rem);
+  --gap-2xl: clamp(2.5rem,  5.5vw,  4.5rem);
+
+  /* ---- LAYOUT ---- */
+  --max-width: 1200px;
+
+  /* Radios más pequeños = más arquitectónico/limpio */
+  --radius-s: 4px;
+  --radius-m: 8px;
+  --radius-l: 14px;
+
+  --trans-base: 0.2s ease;
+
+  /* Sombras: más frías (tinte azul-negro) para look platinum */
+  --shadow-s: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-m: 0 4px 16px rgba(0, 0, 0, 0.1);
+  --shadow-l: 0 8px 32px rgba(0, 0, 0, 0.14);
+  --shadow-plata: 0 4px 20px rgba(148, 163, 184, 0.2); /* brillo platino */
+}
+
+
+/* ============================================
+   BLOQUE 3: Tipografía y jerarquía visual
+   PROPÓSITO: Definir la escala tipográfica global del sitio.
+   Usamos clamp() para tipografía fluida:
+   clamp(min, escala-viewport, max)
+   Beneficio: la tipografía crece y achica suavemente SIN media queries.
+   Esto reduce el CSS y mejora el mantenimiento.
+   ============================================ */
+
+/* Escala tipográfica fluida:
+   Los valores de font-size crecen linealmente entre móvil y desktop.
+   La fórmula "Xvw" es el valor que hace la transición suave. */
+h1 {
+  /* H1: el más grande. En mobile ~28px, en desktop ~52px */
+  font-size: clamp(1.75rem, 4vw + 1rem, 3.25rem);
+  font-weight: 700;
+  line-height: 1.15; /* line-height reducido para headings grandes: mejora lectura */
+  letter-spacing: -0.02em; /* tracking negativo sutil en headings grandes = tipografía editorial */
+}
+
+h2 {
+  /* H2: jerarquía de sección. Mobile ~22px, desktop ~40px */
+  font-size: clamp(1.375rem, 3vw + 0.5rem, 2.5rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+}
+
+h3 {
+  /* H3: jerarquía de subsección. Mobile ~18px, desktop ~24px */
+  font-size: clamp(1.125rem, 1.5vw + 0.5rem, 1.5rem);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+h4 {
+  font-size: clamp(1rem, 1vw + 0.5rem, 1.25rem);
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+/* <p>: párrafos. Mobile ~15px, desktop ~17px */
+p {
+  font-size: clamp(0.9375rem, 0.5vw + 0.75rem, 1.0625rem);
+  line-height: 1.7; /* line-height generoso para párrafos de lectura */
+  color: var(--c-gris-texto);
+}
+
+/* Texto pequeño: para kickers, labels, metadatos */
+small, .kicker, figcaption, cite {
+  font-size: clamp(0.75rem, 0.5vw + 0.5rem, 0.875rem);
+}
+
+
+/* ============================================
+   BLOQUE 4: Layout global
+   PROPÓSITO: Estructura base de todas las secciones del sitio.
+   Todas las <section> usan el mismo contenedor centrado para consistencia.
+   ============================================ */
+
+/* ============================================================
+   LAYOUT BASE DE SECCIONES — PATRÓN CLÍNICA PREMIUM
+   
+   Cada <section> es una "habitación" del sitio.
+   Separación: borde superior plateado + fondo alternado.
+   Todas las secciones de contenido son CLARAS (blanco/gris).
+   Solo hero, CTA final y footer son OSCUROS.
+   
+   Esta consistencia da la sensación de limpieza y organización
+   que busca una clínica dental de alto nivel.
+============================================================ */
+
+/* ============================================================
+   SECCIONES — Full-width backgrounds dramáticos
+   Cada sección ocupa el 100% del viewport en anchura.
+   El contenido se centra dentro con un wrapper implícito.
+   Padding generoso = efecto "habitación" separada.
+   ============================================================ */
+main > section {
+  /* Full-width: el fondo de color cubre toda la pantalla */
+  width: 100%;
+  max-width: 100%;
+  margin-inline: 0;
+  /* Padding vertical AMPLIO — las secciones son "habitaciones" distintas */
+  padding-block: clamp(5rem, 10vw, 8rem);
+  /* Sin padding horizontal — lo maneja cada elemento hijo */
+  padding-inline: 0;
+  /* Posición relativa para el pseudo-elemento divisor */
+  position: relative;
+}
+
+/* Todo hijo directo de section se centra y tiene padding lateral */
+main > section > *:not(style):not(script) {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-inline: var(--gap-l);
+  box-sizing: border-box;
+}
+
+/* ============================================================
+   SECCIONES PARES — Azul marino #10192A
+   Contraste dramático con las secciones impares (#0e0e10 negro).
+   El cambio de color completo a lo ancho de la pantalla es lo que
+   crea la sensación de "nueva habitación" sin necesidad de líneas.
+   ============================================================ */
+main > section:nth-child(even) {
+  /* Azul marino oscuro: diferente del negro pero igual de serio */
+  background-color: var(--c-azul-marino);
+  /* Texto blanco: todo el contenido de secciones pares es claro */
+  color: var(--c-blanco);
+}
+
+/* Divisor superior de secciones pares: línea plateada con gradiente
+   que aparece y desaparece — efecto sofisticado sin HTML extra */
+main > section:nth-child(even)::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  /* Gradiente: invisible → plata → invisible (efecto halo) */
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--c-plata) 30%,
+    var(--c-blanco) 50%,
+    var(--c-plata) 70%,
+    transparent 100%
+  );
+  opacity: 0.4;
+}
+
+/* Divisor inferior de secciones pares (mismo efecto) */
+main > section:nth-child(even)::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--c-plata) 30%,
+    var(--c-blanco) 50%,
+    var(--c-plata) 70%,
+    transparent 100%
+  );
+  opacity: 0.4;
+}
+
+/* Heredar los estilos de centrado del bloque main > section > * (ya definido arriba) */
+
+/* ============================================================
+   SECCIONES IMPARES — Negro profundo #0e0e10
+   El fondo por defecto de body ya es negro.
+   Solo necesitamos declararlo explícitamente para asegurar la
+   alternancia y añadir el divisor superior.
+   ============================================================ */
+/* Secciones impares con fondo negro.
+   EXCLUIDAS: #inicio (hero), #cta-final (CTA), #primera-consulta y #preguntas-frecuentes
+   (estas dos son impares por posición pero tienen fondo blanco por diseño) */
+main > section:nth-child(odd):not(#inicio):not(#cta-final) {
+  background-color: var(--c-negro);
+  color: var(--c-blanco);
+}
+
+/* Divisor superior de secciones impares (mismo gradiente plata) */
+/* Divisor superior: solo en secciones impares oscuras (no en las blancas) */
+main > section:nth-child(odd):not(#inicio):not(#cta-final)::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--c-plata-claro) 30%,
+    var(--c-plata) 50%,
+    var(--c-plata-claro) 70%,
+    transparent 100%
+  );
+  opacity: 0.25;
+}
+
+/* ---- NUMERACIÓN DECORATIVA DE SECCIONES ----
+   Cada sección de contenido (no hero, no CTA) muestra un número
+   en el .seccion-header::before: 01 / 02 / 03 / 04 / 05
+   Esto es el "futurismo" que diferencia de un diseño básico.
+   Se hace con CSS counters — cero cambios en el HTML. */
+main {
+  counter-reset: seccion-idx;
+}
+
+/* Incrementar solo en secciones de contenido (no hero ni CTA) */
+main > section:not(#inicio):not(#cta-final) {
+  counter-increment: seccion-idx;
+}
+
+/* .seccion-header: el encabezado de sección ya tiene .kicker + h2.
+   Añadimos ::before para la numeración: 01, 02, 03...
+   position relative en .seccion-header para poder anclar el número. */
+main > section:not(#inicio):not(#cta-final) .seccion-header {
+  position: relative;
+}
+
+main > section:not(#inicio):not(#cta-final) .seccion-header::before {
+  /* Número decorativo: "01", "02", "03"... en platino muy tenue */
+  content: "0" counter(seccion-idx);
+  display: block;
+  font-size: 0.6875rem;         /* pequeño pero legible */
+  font-weight: 600;
+  letter-spacing: 0.2em;        /* spacing amplio = look premium */
+  text-transform: uppercase;
+  color: var(--c-plata-claro);  /* platino muy claro — sutil, no protagonista */
+  margin-bottom: 0.375rem;      /* separación del kicker */
+  font-variant-numeric: tabular-nums; /* números de ancho fijo */
+}
+
+
+/* ============================================
+   BLOQUE 5: Header y Navegación
+   PROPÓSITO: Estilar la barra de navegación superior (sticky, glass effect).
+              El CSS crítico inline ya define sticky + z-index para evitar CLS.
+              Aquí añadimos el glass effect, colores y layout interno.
+   ============================================ */
+
+/* body > header: la barra de navegación principal del sitio.
+   Se escopa a `body > header` para que NO afecte a los <header class="seccion-header">
+   que están dentro de cada <section> — esos deben heredar el fondo de su sección.
+   backdrop-filter: blur() crea el efecto "vidrio esmerilado" de Linear/Vercel/Notion. */
+body > header {
+  /* Glass effect: zinc-900 al 88% — deja ver el contenido que pasa debajo */
+  background-color: rgba(24, 24, 27, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px); /* Safari necesita prefijo webkit */
+
+  /* Borde inferior sutil: apenas visible, separa sin cortar bruscamente */
+  border-bottom: 1px solid rgba(148, 163, 184, 0.18);
+}
+
+/* <nav>: layout Flexbox con logo a la izquierda, links al centro, CTA a la derecha.
+   align-items center: alinea verticalmente todos los elementos. */
+body > header > nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap-m);
+  padding-block: var(--gap-s);
+  padding-inline: var(--gap-l);
+  max-width: var(--max-width);
+  margin-inline: auto;
+}
+
+/* Logo tipográfico: Flexbox vertical para apilar nombre y subtítulo.
+   El <a> actúa como contenedor del logo. */
+.logo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  line-height: 1.2;
+  flex-shrink: 0; /* evita que el logo se comprima cuando el nav se estrecha */
+}
+
+/* Nombre principal del logo: blanco puro — limpio y preciso */
+.logo strong {
+  font-size: clamp(0.875rem, 1.5vw, 1.125rem);
+  font-weight: 700;
+  color: var(--c-blanco);
+  letter-spacing: 0.06em; /* más tracking = look más arquitectónico */
+  text-transform: uppercase; /* mayúsculas = autoridad médica */
+}
+
+/* Subtítulo del logo: texto más pequeño y gris claro */
+.logo em {
+  font-size: clamp(0.625rem, 0.8vw, 0.75rem);
+  font-style: normal; /* em sin cursiva: solo queremos el énfasis semántico */
+  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: 0.05em;
+}
+
+/* Lista de links: Flexbox horizontal con gap uniforme */
+body > header nav > ul {
+  display: flex;
+  gap: var(--gap-m);
+  align-items: center;
+}
+
+/* Links del nav: color blanco semitransparente para elegancia sobre fondo negro.
+   Hover: blanco opaco + borde dorado inferior = indicador de estado claro. */
+body > header nav > ul a {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  padding-block: 0.25rem;
+  /* border-bottom transparente por defecto: ocupa espacio pero es invisible.
+     Así, al hacer hover, el borde dorado aparece sin mover el texto. */
+  border-bottom: 2px solid transparent;
+  transition: color var(--trans-base), border-color var(--trans-base);
+}
+
+body > header nav > ul a:hover,
+body > header nav > ul a[aria-current="page"] {
+  color: var(--c-blanco);
+  border-bottom-color: var(--c-dorado);
+}
+
+/* CTA del header: ghost platino — elegante sobre header oscuro */
+.cta-header {
+  background-color: transparent;
+  border: 1px solid var(--c-plata);
+  color: var(--c-blanco) !important; /* !important porque hereda color del nav */
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.625rem 1.25rem;
+  border-radius: var(--radius-s);
+  white-space: nowrap;
+  transition: background-color var(--trans-base), box-shadow var(--trans-base);
+  flex-shrink: 0;
+}
+
+.cta-header:hover {
+  background-color: var(--c-plata);
+  color: var(--c-negro) !important;
+  box-shadow: var(--shadow-plata);
+}
+
+/* Botón hamburguesa (mobile): inicialmente oculto en desktop.
+   Las 3 líneas se crean con box-shadow sobre el elemento y ::before/::after. */
+.nav-toggle {
+  display: none; /* oculto en desktop */
+  width: 2rem;
+  height: 1.5rem;
+  position: relative;
+  flex-shrink: 0;
+}
+
+/* Línea central del hamburguesa */
+.nav-toggle::before,
+.nav-toggle::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--c-blanco);
+  border-radius: 2px;
+  transition: transform var(--trans-base), opacity var(--trans-base);
+}
+
+/* Línea superior */
+.nav-toggle::before { top: 0; }
+
+/* Línea inferior */
+.nav-toggle::after { bottom: 0; }
+
+/* Línea del medio con box-shadow */
+.nav-toggle {
+  border-top: 2px solid var(--c-blanco);
+}
+
+
+/* ============================================
+   BLOQUE: Hero #inicio — Overrides de layout
+   PROPÓSITO: El hero tiene su propio padding/alineación.
+   La regla general `main > section` añade padding-block grande
+   que empujaría el contenido demasiado hacia abajo.
+   Aquí lo reseteamos para que el contenido suba cerca del nav.
+   ============================================ */
+
+/* Quitar el padding-block general — el hero no es una "habitación" normal,
+   es la pantalla completa y el alineado lo hace el grid con align-items. */
+#inicio {
+  /* Sin padding vertical añadido — el CSS crítico ya maneja el layout */
+  padding-block: 0;
+
+  /* align-items: start hace que el contenido empiece desde arriba,
+     cerca de la barra de navegación, sin ese espacio vacío enorme */
+  align-items: start;
+
+  /* Compensar el alto del nav (~70px) para que el contenido
+     quede justo debajo del header y no detrás de él */
+  padding-block-start: clamp(2rem, 5vw, 3.5rem);
+}
+
+/* ============================================
+   BLOQUE 6: Hero — Primera pantalla
+   PROPÓSITO: Estilar la sección hero. El layout grid y min-height
+              ya están en el CSS crítico. Aquí estilamaos el contenido interno.
+   ============================================ */
+
+/* <figure class="hero-logo">: contenedor del logo en el hero.
+   display block: la figure es bloque por defecto, aquí lo explicitamos.
+   margin-bottom: separa el logo del kicker que viene debajo.
+   No usamos max-width en el img sino en la figure para que el constraint
+   aplique al contenedor y el img hereda con width: 100%. */
+.hero-logo {
+  /* Sin fondo extra: el logo ya tiene fondo oscuro integrado en el PNG.
+     Lo que se ve es el PNG transparente sobre el fondo #18181b del hero. */
+  margin-bottom: var(--gap-m);
+
+  /* max-width: limita el logo a un ancho elegante — no ocupa toda la columna.
+     En mobile se reduce más. */
+  max-width: 260px;
+}
+
+/* <img> dentro de figure: ancho fluido que respeta el max-width del padre.
+   height auto: mantiene la proporción original del logo. */
+.hero-logo img {
+  /* width 100% del contenedor (.hero-logo con max-width 260px) */
+  width: 100%;
+  height: auto;
+
+  /* display block: elimina el espacio inferior que añaden los inline images
+     (los navegadores tratan las imágenes inline como texto con descender). */
+  display: block;
+}
+
+/* Mobile: logo más pequeño para no competir con el h1 */
+@media (max-width: 768px) {
+  .hero-logo {
+    /* En móvil el hero es una columna — centramos el logo */
+    max-width: 200px;
+    margin-inline: auto; /* centra horizontalmente */
+    margin-bottom: var(--gap-s);
+  }
+}
+
+/* Kicker: etiqueta de contexto pequeña sobre el h1/h2.
+   Platino frío + uppercase + tracking amplio = look médico premium.
+   Antes dorado = joyería. Ahora platino = clínica de precisión. */
+.kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--c-plata);      /* platino — acento frío y profesional */
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;     /* tracking amplio = look arquitectónico */
+  text-transform: uppercase;
+  margin-bottom: var(--gap-s);
+}
+
+/* Línea corta antes del kicker: "— Texto" en forma visual */
+.kicker::before {
+  content: '';
+  display: inline-block;
+  width: 24px;
+  height: 1px;
+  background-color: var(--c-plata);
+  flex-shrink: 0;
+}
+
+/* H1 del hero: blanco sobre negro */
+#inicio h1 {
+  color: var(--c-blanco);
+  margin-bottom: var(--gap-m);
+}
+
+/* <mark> en el H1: color dorado. Sin fondo (ya reseteado en Bloque 1). */
+#inicio h1 mark {
+  color: var(--c-dorado);
+}
+
+/* Párrafo descriptivo del hero */
+.hero-descripcion {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: clamp(1rem, 1.5vw + 0.5rem, 1.125rem);
+  line-height: 1.8;
+  margin-bottom: var(--gap-m);
+  max-width: 52ch; /* ch = ancho del carácter "0". 52-60ch = longitud óptima de lectura */
+}
+
+/* Badges de confianza: lista horizontal con separadores "·" entre items.
+   Usamos flexbox sobre la <ul> directamente, sin necesitar un div wrapper. */
+.badges-confianza {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-s);
+  list-style: none;
+  margin-bottom: var(--gap-l);
+}
+
+/* Cada badge: píldora semi-transparente */
+.badges-confianza li {
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 0.875rem;
+  font-weight: 500;
+  /* Separador "·" entre items usando ::before, sin necesitar un span */
+  padding-left: var(--gap-s);
+  border-left: 1px solid rgba(148, 163, 184, 0.4);
+}
+
+/* El primer badge no necesita separador */
+.badges-confianza li:first-child {
+  padding-left: 0;
+  border-left: none;
+}
+
+/* Grupo de botones CTA */
+.grupo-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-s);
+  align-items: center;
+}
+
+/* CTA primario: negro sólido con borde platino — look clínica premium.
+   Antes era dorado (look joyería 2015). Ahora: negro + platino = precisión quirúrgica.
+   Contraste: blanco sobre negro = WCAG AAA.
+   El borde platino lo diferencia del fondo oscuro del hero. */
+.cta-primario {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--c-blanco);     /* blanco puro */
+  color: var(--c-negro);                 /* negro sobre blanco: máximo contraste */
+  border: 1.5px solid var(--c-gris-claro); /* borde zinc sutil */
+  font-weight: 700;
+  font-size: 0.875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.875rem 2rem;
+  border-radius: var(--radius-s);
+  transition: background-color var(--trans-base), border-color var(--trans-base),
+              box-shadow var(--trans-base), transform var(--trans-base);
+  white-space: nowrap;
+}
+
+.cta-primario:hover {
+  background-color: var(--c-plata-brillo);   /* hover: platino muy claro */
+  border-color: var(--c-plata);              /* borde plata al hover */
+  box-shadow: var(--shadow-plata);
+  transform: translateY(-1px);
+}
+
+/* Variante grande del CTA primario: para el CTA final de la página */
+.cta-grande {
+  padding: 1.125rem 2.5rem;
+  font-size: 1rem;
+}
+
+/* CTA secundario: ghost button platino — elegante sobre fondo oscuro.
+   Sin relleno — solo borde platino y texto. Hover: borde se ilumina. */
+.cta-secundario {
+  display: inline-flex;
+  align-items: center;
+  color: var(--c-plata-claro);          /* texto platino sobre oscuro */
+  font-weight: 600;
+  font-size: 0.875rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.875rem 1.5rem;
+  border: 1.5px solid var(--c-plata);   /* borde platino visible */
+  border-radius: var(--radius-s);
+  transition: border-color var(--trans-base), color var(--trans-base),
+              background-color var(--trans-base);
+  white-space: nowrap;
+}
+
+.cta-secundario:hover {
+  border-color: var(--c-blanco);
+  color: var(--c-blanco);
+  background-color: rgba(255, 255, 255, 0.06); /* sutil fill al hover */
+}
+
+/* Figura del hero: la foto de la Dra. */
+.hero-figura {
+  position: relative;
+  align-self: end; /* alinea la figura al fondo del grid cell */
+}
+
+/* Imagen del hero: 100% del ancho del grid cell, con objeto fit */
+.hero-figura img {
+  width: 100%;
+  height: auto;
+  /* object-fit cover: la imagen llena el contenedor sin deformarse.
+     Solo aplica si le damos height fija al contenedor. */
+  border-radius: var(--radius-m) var(--radius-m) 0 0;
+  /* Degradado sutil en la base de la foto para fusionarla con el fondo negro */
+  -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+}
+
+/* <figcaption> del hero: texto pequeño debajo de la foto */
+.hero-figura figcaption {
+  color: rgba(255, 255, 255, 0.5);
+  text-align: center;
+  padding-block: var(--gap-xs);
+  letter-spacing: 0.05em;
+}
+
+
+/* ============================================
+   BLOQUE 7: Sobre mí
+   PROPÓSITO: Estilar la sección del perfil de la Dra.
+   Layout: foto a la izquierda, texto a la derecha (Grid 2 columnas).
+   ============================================ -->
+*/
+
+/* Sección Sobre mí: fondo blanco limpio */
+#sobre-mi {
+  /* background eliminado: la regla nth-child(even) da azul-marino automáticamente */
+}
+
+/* Encabezado de sección: reutilizable en todas las secciones */
+/* .seccion-header: libre, sin caja, alineado a la izquierda.
+   Ya no tiene max-width ni margin: auto — el texto corre de izquierda a derecha
+   dentro del contenido de la sección, como pidió el usuario. */
+.seccion-header {
+  text-align: left;            /* izquierda — no centrado */
+  margin-bottom: var(--gap-xl);
+  /* max-width y margin-inline eliminados: el header es libre, no una cajita */
+}
+
+.seccion-header h2 {
+  /* Blanco: el fondo siempre es oscuro ahora (negro o azul marino) */
+  color: var(--c-blanco);
+  margin-bottom: var(--gap-s);
+}
+
+.seccion-header h2 mark {
+  color: var(--c-dorado);
+}
+
+/* .seccion-descripcion: blanco suave sobre fondos oscuros (negro/azul marino).
+   Para secciones blancas se sobrescribe más abajo con selectores específicos. */
+.seccion-descripcion {
+  color: rgba(255, 255, 255, 0.78); /* blanco suave — legible en fondos oscuros */
+  max-width: 70ch;                  /* más ancho: el texto tiene espacio de respirar */
+  /* margin-inline: auto eliminado — el texto empieza desde la izquierda */
+}
+
+/* ============================================
+   OVERRIDES — SECCIONES CON FONDO BLANCO
+   Las secciones #sobre-mi, #primera-consulta y #preguntas-frecuentes
+   usan el fondo oscuro del layout global (negro/azul-marino).
+   En esas secciones el texto debe ser oscuro (negro) para contraste.
+   ============================================ */
+
+/* h2 negro sobre fondo blanco */
+#sobre-mi .seccion-header h2,
+#primera-consulta .seccion-header h2,
+#preguntas-frecuentes .seccion-header h2 {
+  /* Antes negro sobre blanco, ahora heredan el blanco de la sección oscura */
+  color: var(--c-blanco);
+}
+
+/* Descripción oscura sobre fondo blanco */
+#sobre-mi .seccion-descripcion,
+#primera-consulta .seccion-descripcion,
+#preguntas-frecuentes .seccion-descripcion {
+  /* gris-texto es legible tanto en claro como en oscuro — se mantiene */
+  color: rgba(255, 255, 255, 0.72);
+}
+
+/* Número decorativo ::before oscuro sobre fondo blanco */
+#sobre-mi .seccion-header::before,
+#primera-consulta .seccion-header::before,
+#preguntas-frecuentes .seccion-header::before {
+  color: rgba(255, 255, 255, 0.12); /* sutil sobre fondo oscuro */
+}
+
+/* Kicker oscuro sobre fondo blanco */
+#sobre-mi .kicker,
+#primera-consulta .kicker,
+#preguntas-frecuentes .kicker {
+  /* Kicker sobre fondo oscuro: usar color dorado heredado del layout */
+  color: var(--c-dorado);
+  border-bottom-color: var(--c-dorado);
+}
+
+/* <article> del perfil: grid de 2 columnas (foto | texto) */
+.perfil-doctora {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: var(--gap-xl);
+  align-items: start;
+}
+
+/* Figura de la foto de perfil */
+.foto-perfil img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-l);
+  /* Sombra sutil que da profundidad sin agresividad */
+  box-shadow: var(--shadow-m);
+}
+
+/* Texto biográfico: alineado a la izquierda, con space entre párrafos */
+.bio-texto {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-m);
+}
+
+.bio-texto h3 {
+  /* Blanco — sección "sobre mí" ahora tiene fondo oscuro */
+  color: var(--c-blanco);
+}
+
+.bio-texto p {
+  color: var(--c-gris-texto);
+}
+
+/* Énfasis en la frase filosófica de la Dra.: color dorado + cursiva nativa de <em> */
+.bio-texto em {
+  color: var(--c-dorado-hover);
+  font-style: italic;
+}
+
+/* CTA "Conoce más": botón secundario adaptado a fondos OSCUROS */
+.bio-texto .cta-secundario {
+  color: var(--c-plata-claro);
+  border-color: var(--c-plata);
+  align-self: flex-start; /* el botón no se estira al ancho del flex container */
+}
+
+.bio-texto .cta-secundario:hover {
+  border-color: var(--c-dorado);
+  color: var(--c-dorado-hover);
+}
+
+
+/* ============================================
+   BLOQUE 8: Por qué elegirnos
+   PROPÓSITO: Grid de 5 diferenciadores + frase de marca.
+   ============================================ */
+
+/* Sección fondo beige */
+#por-que-elegirnos {
+  background-color: var(--c-beige);
+}
+
+/* Grid de diferenciadores: 3 columnas en desktop, 2 en tablet, 1 en mobile.
+   auto-fill hace que las columnas se ajusten automáticamente al espacio disponible.
+   minmax(260px, 1fr) = cada columna mínimo 260px, máximo fracción disponible. */
+.lista-diferenciadores {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--gap-m);
+  list-style: none;
+  margin-bottom: var(--gap-xl);
+}
+
+/* Cada diferenciador: tarjeta cristal sobre fondo oscuro */
+.lista-diferenciadores li {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-m);
+  padding: var(--gap-m) var(--gap-l);
+  /* Borde izquierdo dorado: el detalle decorativo que el CSS crítico mencionaba.
+     ::before podría ser alternativa, pero border-left es más semántico aquí. */
+  border-left: 3px solid var(--c-dorado);
+  box-shadow: var(--shadow-s);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+  transition: box-shadow var(--trans-base), transform var(--trans-base);
+}
+
+.lista-diferenciadores li:hover {
+  box-shadow: var(--shadow-m);
+  transform: translateY(-2px);
+}
+
+/* Título del diferenciador: blanco sobre fondo azul marino */
+.lista-diferenciadores strong {
+  color: var(--c-blanco);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+/* Descripción del diferenciador */
+.lista-diferenciadores p {
+  font-size: 0.9375rem;
+  color: var(--c-plata-claro); /* legible sobre fondos oscuros */
+}
+
+/* Frase de marca: <blockquote> libre, de lado a lado, sin cajita.
+   max-width y margin-inline eliminados — el texto respira en todo el ancho. */
+.frase-marca {
+  text-align: center;              /* centrado tipográfico, pero sin caja */
+  padding-block: var(--gap-xl);    /* más espacio vertical — da peso a la cita */
+  /* sin max-width ni margin-inline: el blockquote corre de lado a lado */
+}
+
+.frase-marca p {
+  font-size: clamp(1.25rem, 2.5vw + 0.5rem, 2rem); /* más grande — protagonismo */
+  font-style: italic;
+  color: var(--c-blanco);          /* blanco puro — máxima legibilidad */
+  line-height: 1.55;
+  margin-bottom: var(--gap-s);
+  max-width: 80ch;                 /* solo limita líneas muy largas, centrado */
+  margin-inline: auto;             /* centra el párrafo, no la caja */
+}
+
+/* <cite>: el nombre de la fuente de la cita */
+.frase-marca cite {
+  color: var(--c-dorado);
+  font-style: normal;
+  font-weight: 600;
+  font-size: 0.875rem;
+  letter-spacing: 0.05em;
+}
+
+
+/* ============================================
+   BLOQUE 9: Servicios
+   PROPÓSITO: Grid de 6 tarjetas de servicios (3×2 en desktop).
+   Cada tarjeta tiene título, descripción y link.
+   ============================================ */
+
+#servicios {
+  /* Antes: negro (patrón oscuro-claro-oscuro anticuado).
+     Ahora: beige zinc-100 — todas las secciones entre hero y CTA quedan claras.
+     Patrón moderno: hero dark → body light → CTA dark → footer. */
+  background-color: var(--c-beige);
+}
+
+#servicios .seccion-header h2 {
+  /* Blanco: servicios ahora tiene fondo azul marino oscuro */
+  color: var(--c-blanco);
+}
+
+#servicios .kicker {
+  color: var(--c-dorado-hover); /* dorado oscuro: mejor contraste sobre claro */
+}
+
+#servicios .seccion-descripcion {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+/* Grid de servicios: 3 columnas en desktop, adaptable */
+.grid-servicios {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--gap-l);        /* más espacio entre filas — evita solapamiento visual */
+  align-items: start;        /* cada tarjeta crece según su contenido, no al mismo alto */
+  list-style: none;
+  margin-bottom: var(--gap-xl);
+}
+
+/* <article> de cada servicio: tarjeta cristal sobre fondo oscuro */
+.tarjeta-servicio {
+  background-color: rgba(255, 255, 255, 0.05); /* cristal sobre negro/azul marino */
+  border: 1px solid rgba(148, 163, 184, 0.2); /* borde platino semitransparente */
+  border-radius: var(--radius-m);
+  padding: var(--gap-l);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-s);
+  transition: background-color var(--trans-base), border-color var(--trans-base),
+              transform var(--trans-base);
+  /* height: 100% removido — align-items: start en el grid evita solapamientos */
+}
+
+.tarjeta-servicio:hover {
+  background-color: rgba(255, 255, 255, 0.09); /* cristal más visible al hover */
+  border-color: var(--c-plata-claro);    /* borde platino al hover — sutil brillo */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08), 0 0 0 1px var(--c-plata-claro);
+  transform: translateY(-3px);           /* elevación más pronunciada */
+}
+
+/* Título del servicio: blanco, negrilla, legible sobre fondo oscuro */
+.tarjeta-servicio h3 {
+  color: #ffffff;           /* blanco puro — máximo contraste */
+  font-size: clamp(1.15rem, 2.2vw, 1.35rem); /* ligeramente más grande */
+  font-weight: 700;         /* negrilla */
+  line-height: 1.3;
+  margin: 0;
+}
+
+/* Descripción: blanco con opacidad suave — legible, sin competir con el h3 */
+.tarjeta-servicio p {
+  color: rgba(255, 255, 255, 0.88); /* casi blanco — WCAG AA sobre fondos oscuros */
+  flex-grow: 1;             /* empuja el link siempre al fondo de la tarjeta */
+  line-height: 1.65;
+}
+
+/* Link "Ver tratamientos →": platino al final de la tarjeta */
+.link-servicio {
+  display: inline-flex;
+  align-items: center;
+  color: var(--c-plata);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  margin-top: var(--gap-s);
+  transition: color var(--trans-base), gap var(--trans-base);
+}
+
+.link-servicio:hover {
+  color: var(--c-blanco);
+}
+
+/* CTA centrado debajo del grid */
+.seccion-cta {
+  text-align: center;
+  margin-top: var(--gap-l);
+}
+
+
+/* ============================================
+   BLOQUE 10: Tu primera consulta — Proceso
+   PROPÓSITO: Lista ordenada de 6 pasos con números estilizados.
+   Los números los dibuja CSS con counter() — sin elementos extra.
+   ============================================ */
+
+#primera-consulta {
+  /* background eliminado: la regla nth-child(odd) da negro automáticamente */
+}
+
+/* Inicializar el contador CSS en la <ol>.
+   counter-reset crea un contador llamado "paso" que empieza en 0. */
+.lista-proceso {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--gap-m);
+  counter-reset: paso;
+  margin-bottom: var(--gap-xl);
+}
+
+/* Cada <li> del proceso */
+.lista-proceso li {
+  /* Tarjeta oscura sobre fondo negro: contraste sutil con rgba */
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-m);
+  padding: var(--gap-l);
+  position: relative; /* para posicionar el número con ::before */
+  padding-top: calc(var(--gap-l) + 2.5rem); /* espacio para el número encima del texto */
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+  border-bottom: 2px solid transparent;
+  transition: border-color var(--trans-base), box-shadow var(--trans-base);
+}
+
+.lista-proceso li:hover {
+  border-bottom-color: var(--c-dorado);
+  box-shadow: var(--shadow-s);
+}
+
+/* Número del paso con counter(): se incrementa automáticamente.
+   Esto dibuja "01", "02"... sin necesitar elementos HTML extra.
+   counter-increment: incrementa el contador en 1 por cada <li>.
+   content: muestra el valor del contador formateado. */
+.lista-proceso li::before {
+  counter-increment: paso;
+  content: counter(paso, decimal-leading-zero); /* "01", "02"... */
+  position: absolute;
+  top: var(--gap-m);
+  left: var(--gap-l);
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--c-dorado);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+/* Título de cada paso: blanco sobre tarjeta oscura */
+.lista-proceso strong {
+  color: var(--c-blanco);  /* blanco — contraste máximo sobre fondo oscuro */
+  font-size: 1.05rem;      /* ligeramente más grande para que resalte */
+  font-weight: 700;        /* negrilla — el usuario lo pidió explícitamente */
+}
+
+/* Descripción de cada paso */
+.lista-proceso p {
+  font-size: 0.9375rem;
+  color: var(--c-gris-texto);
+}
+
+
+/* ============================================
+   BLOQUE 11: Testimonios
+   PROPÓSITO: Grid de 3 <blockquote> con las reseñas de pacientes.
+   ============================================ */
+
+#testimonios {
+  background-color: var(--c-beige);
+}
+
+/* Grid de testimonios */
+.lista-testimonios {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--gap-m);
+  list-style: none;
+}
+
+/* Cada testimonio: <blockquote> como tarjeta */
+.testimonio {
+  background-color: var(--c-blanco);
+  border-radius: var(--radius-m);
+  padding: var(--gap-l);
+  box-shadow: var(--shadow-s);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-m);
+  position: relative;
+  /* Comillas decorativas con ::before sin necesitar un elemento HTML extra */
+}
+
+/* Comillas de apertura: caracter tipográfico como decoración */
+.testimonio::before {
+  content: '\201C'; /* comillas tipográficas de apertura " */
+  position: absolute;
+  top: var(--gap-s);
+  left: var(--gap-m);
+  font-size: 4rem;
+  font-family: Georgia, serif; /* serif para las comillas decorativas */
+  color: var(--c-dorado);
+  line-height: 1;
+  opacity: 0.25;
+  pointer-events: none; /* no interfiere con clicks */
+}
+
+/* Texto del testimonio: negro sobre tarjeta blanca — máximo contraste */
+.testimonio > p {
+  color: var(--c-negro);
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  font-style: italic;
+  position: relative; /* z-index sobre las comillas decorativas */
+  z-index: 1;
+}
+
+/* Footer del testimonio: sin fondo oscuro, compacto — solo el nombre */
+.testimonio footer {
+  margin-top: auto;            /* empuja el nombre al fondo de la tarjeta */
+  background: none;            /* anula cualquier herencia de footer global */
+  color: inherit;              /* hereda el color de la tarjeta */
+  display: block;              /* anula el grid del footer global */
+  grid-template-columns: none; /* anula el grid del footer global */
+  padding: 0;                  /* sin padding extra */
+  border-top: 1px solid rgba(148, 163, 184, 0.25); /* línea sutil de separación */
+  padding-top: var(--gap-s);
+}
+
+/* <cite>: nombre del paciente — pequeño, gris oscuro, sin cursiva */
+.testimonio cite {
+  color: var(--c-gris-texto);  /* gris legible sobre blanco */
+  font-style: normal;
+  font-weight: 600;
+  font-size: 0.8125rem;         /* pequeño — no compite con el texto */
+  letter-spacing: 0.04em;
+  display: block;               /* ocupa su propia línea */
+}
+
+
+/* ============================================
+   BLOQUE 12: FAQ — Preguntas frecuentes
+   PROPÓSITO: Estilar los <details>/<summary> como acordeón elegante.
+              Sin JavaScript — todo es CSS nativo.
+   ============================================ */
+
+#preguntas-frecuentes {
+  /* background eliminado: la regla nth-child(odd) da negro automáticamente */
+}
+
+/* <ol class="lista-faq">: Grid de 2 columnas aplicado directamente sobre <ol>.
+   Sin <div>: CSS Grid sobre el elemento semántico nativo. */
+.lista-faq {
+  display: grid;
+  grid-template-columns: 1fr 1fr;    /* dos columnas iguales */
+  gap: var(--gap-l);                 /* espacio entre columnas y filas */
+  list-style: none;                  /* quitamos numeración de <ol> */
+  padding: 0;
+  align-items: start;                /* cada ítem ocupa solo su propia altura */
+  width: 100%;
+}
+
+/* Cada <li> de la lista actúa de contenedor de su <details> */
+.lista-faq > li {
+  /* Borde sutil sobre fondo oscuro: blanco con opacidad baja */
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+/* <details> dentro del <li>: sin borde doble */
+.lista-faq details {
+  border: none;
+}
+
+/* <details>: el acordeón colapsable en secciones con fondo oscuro */
+details {
+  border-top: 1px solid var(--c-gris-borde);
+}
+
+/* <summary>: la pregunta clickeable.
+   Color negro en FAQ (fondo blanco). Color blanco en otros contextos con fondo oscuro. */
+details summary {
+  padding: var(--gap-m) var(--gap-l);
+  font-weight: 600;
+  font-size: 1rem;
+  /* Por defecto blanco para acordeones sobre fondo oscuro */
+  color: var(--c-blanco);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: color var(--trans-base);
+}
+
+/* FAQ sobre fondo oscuro: summary en blanco */
+#preguntas-frecuentes details summary {
+  color: var(--c-blanco);
+}
+
+#preguntas-frecuentes details[open] summary {
+  color: var(--c-dorado-hover);
+}
+
+#preguntas-frecuentes details summary:hover {
+  color: var(--c-dorado-hover);
+}
+
+#preguntas-frecuentes details p {
+  color: rgba(255, 255, 255, 0.72); /* blanco semitransparente sobre oscuro */
+}
+
+/* Flecha "+" que se convierte en "−" cuando está abierto */
+details summary::after {
+  content: '+';
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: var(--c-dorado);
+  flex-shrink: 0;
+  transition: transform var(--trans-base);
+  line-height: 1;
+}
+
+/* Cuando el <details> está abierto ([open]), el "+" rota a "×" con CSS puro */
+details[open] summary::after {
+  transform: rotate(45deg);
+}
+
+details[open] summary {
+  color: var(--c-dorado-hover);
+}
+
+details summary:hover {
+  color: var(--c-dorado-hover);
+}
+
+/* Contenido del acordeón: el <p> que aparece al abrir */
+details p {
+  padding: 0 var(--gap-l) var(--gap-m);
+  color: var(--c-gris-texto);
+  line-height: 1.7;
+}
+
+/* Links dentro del FAQ */
+details a {
+  color: var(--c-dorado-hover);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+details a:hover {
+  color: var(--c-plata);
+}
+
+
+/* ============================================
+   BLOQUE 13: CTA final
+   PROPÓSITO: Sección oscura de cierre con llamado a la acción grande.
+   ============================================ */
+
+#cta-final {
+  background-color: var(--c-negro);
+  text-align: center;
+}
+
+/* CTA final: el seccion-header ocupa todo el ancho disponible.
+   Se quitó max-width: 36ch para que el texto fluya de lado a lado. */
+#cta-final .seccion-header {
+  max-width: 100%;
+}
+
+#cta-final h2 {
+  color: var(--c-blanco);
+}
+
+#cta-final h2 mark {
+  color: var(--c-dorado);
+}
+
+#cta-final .seccion-descripcion {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+/* Grupo de CTAs centrado en el footer */
+.grupo-cta--centrado {
+  justify-content: center;
+}
+
+/* CTA WhatsApp: verde de WhatsApp como fondo — reconocimiento instantáneo */
+.cta-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #25D366; /* verde oficial de WhatsApp */
+  color: var(--c-blanco);
+  font-weight: 700;
+  font-size: 0.9375rem;
+  letter-spacing: 0.02em;
+  padding: 0.875rem 2rem;
+  border-radius: var(--radius-s);
+  transition: background-color var(--trans-base), transform var(--trans-base);
+  white-space: nowrap;
+}
+
+.cta-whatsapp:hover {
+  background-color: #1DA851; /* verde más oscuro al hover */
+  transform: translateY(-1px);
+}
+
+
+/* ============================================
+   BLOQUE 14: Footer
+   PROPÓSITO: Pie de página con identidad, navegación, horarios y copyright.
+   Layout: CSS Grid de 4 columnas en desktop.
+   ============================================ */
+
+/* body > footer: el pie de página global del sitio.
+   Se escopa a `body > footer` para que NO afecte a los <footer>
+   dentro de <blockquote> (testimonios), <article> u otros elementos. */
+body > footer {
+  background-color: #111114; /* zinc muy oscuro — separa del body sin salto brusco */
+  color: rgba(255, 255, 255, 0.7);
+  border-top: 1px solid rgba(148, 163, 184, 0.15);
+  display: grid;
+  /* 4 columnas FIJAS e IGUALES: cada sección del footer ocupa exactamente 1/4.
+     repeat(4, 1fr) garantiza que Elizabeth / Inicio / Horarios / Síguenos
+     tengan siempre el mismo ancho, sin importar el contenido. */
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--gap-l);
+  padding: var(--gap-xl) var(--gap-l);
+  max-width: var(--max-width);
+  margin-inline: auto;
+}
+
+/* La última sección (footer-bottom: copyright + redes) ocupa toda la fila */
+.footer-bottom {
+  grid-column: 1 / -1; /* 1 / -1 = desde la primera hasta la última columna */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--gap-m);
+  padding-top: var(--gap-m);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Nombre del consultorio en el footer */
+.footer-identidad h3 {
+  color: var(--c-blanco);
+  font-size: 1.125rem;
+  margin-bottom: var(--gap-xs);
+}
+
+.footer-tagline {
+  color: var(--c-dorado);
+  font-size: 0.8125rem;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--gap-s);
+}
+
+.footer-frase {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.875rem;
+  margin-bottom: var(--gap-m);
+}
+
+/* <address>: datos de contacto en columna */
+.footer-identidad address {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+  font-style: normal; /* <address> tiene font-style: italic por defecto — lo quitamos */
+}
+
+/* Links de contacto en el footer */
+.footer-identidad address a {
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 0.9375rem;
+  transition: color var(--trans-base);
+}
+
+.footer-identidad address a:hover {
+  color: var(--c-dorado);
+}
+
+/* Nav del footer */
+.footer-nav h4 {
+  color: var(--c-blanco);
+  margin-bottom: var(--gap-m);
+  font-size: 0.875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.footer-nav ul {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+}
+
+.footer-nav a {
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 0.9375rem;
+  transition: color var(--trans-base);
+}
+
+.footer-nav a:hover {
+  color: var(--c-dorado);
+}
+
+/* Horarios del footer */
+.footer-horarios h4 {
+  color: var(--c-blanco);
+  margin-bottom: var(--gap-m);
+  font-size: 0.875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* <dl> de horarios: grid de 2 columnas para alinear día / hora */
+.footer-horarios dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--gap-xs) var(--gap-m);
+  align-items: baseline;
+}
+
+.footer-horarios dt {
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+
+.footer-horarios dd {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.875rem;
+}
+
+/* Copyright */
+.footer-bottom small {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.8125rem;
+}
+
+/* Redes sociales en el footer */
+/* Redes sociales: iconos SVG futuristas, sin texto visible */
+.redes-sociales {
+  display: flex;
+  gap: 0.75rem;
+  list-style: none;
+  align-items: center;
+}
+
+/* Cada ícono: círculo oscuro con borde sutil */
+.red-social {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.6);          /* color del SVG: hereda fill="currentColor" */
+  transition: background-color var(--trans-base), color var(--trans-base),
+              border-color var(--trans-base), transform var(--trans-base);
+}
+
+/* Hover genérico: se ilumina y sube levemente (efecto futurista) */
+.red-social:hover {
+  background-color: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: var(--c-blanco);
+  transform: translateY(-2px);
+}
+
+/* Hover Instagram: gradiente rosa-naranja característico de la marca */
+.red-instagram:hover {
+  background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  border-color: transparent;
+  color: var(--c-blanco);
+}
+
+/* Hover Facebook: azul de la marca */
+.red-facebook:hover {
+  background-color: #1877F2;
+  border-color: transparent;
+  color: var(--c-blanco);
+}
+
+/* Hover Google Maps: rojo de la marca */
+.red-gmb:hover {
+  background-color: #EA4335;
+  border-color: transparent;
+  color: var(--c-blanco);
+}
+
+/* Footer copy: copyright + crédito apilados */
+.footer-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+/* Crédito del desarrollador */
+.footer-credito {
+  opacity: 0.55;
+}
+
+/* 4ª columna del footer: contiene redes sociales + mapa pequeño.
+   Al ser un elemento más del grid auto-fit, ocupa el 4° slot naturalmente
+   sin necesitar grid-column explícito. */
+.footer-redes-mapa {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-m);
+}
+
+/* Título de la columna 4: mismo estilo que "Horarios" y "Páginas" */
+.footer-redes-mapa h4 {
+  color: var(--c-blanco);
+  font-size: 0.875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0;            /* gap del flex padre maneja el espacio */
+}
+
+/* <figure>: contenedor semántico del mapa embebido.
+   border-radius recortado con overflow: hidden para esquinas suaves. */
+.footer-mapa-figura {
+  border-radius: 6px;
+  overflow: hidden;
+  opacity: 0.85;
+  margin: 0;                   /* reset del margen por defecto de <figure> */
+}
+
+/* <iframe> del mapa: bloque puro, sin bordes ni scroll interno */
+.footer-mapa-figura iframe {
+  display: block;
+  width: 100%;
+  height: 120px;               /* altura compacta para no dominar la columna */
+  border: none;
+}
+
+/* <figcaption>: etiqueta de texto bajo el mapa */
+.footer-mapa-figura figcaption {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.4);
+  text-align: center;
+  padding: 0.25rem 0.5rem;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+
+/* ============================================
+   BLOQUE 15: Botón flotante de WhatsApp
+   PROPÓSITO: CTA persistente en esquina inferior derecha.
+              Siempre visible en todos los dispositivos.
+   ============================================ */
+
+.whatsapp-flotante {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 200; /* por encima de todo el contenido */
+  background-color: #25D366;
+  color: var(--c-blanco);
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%; /* círculo perfecto */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.875rem;
+  box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4); /* sombra verde para que "flote" */
+  transition: transform var(--trans-base), box-shadow var(--trans-base);
+}
+
+.whatsapp-flotante:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 28px rgba(37, 211, 102, 0.55);
+}
+
+/* <abbr> dentro del botón: oculta el tooltip nativo que interfiere en mobile */
+.whatsapp-flotante abbr {
+  text-decoration: none;
+}
+
+
+/* ============================================
+   BLOQUE 16: Utilidades y estados
+   PROPÓSITO: Clases de utilidad reutilizables.
+   ============================================ */
+
+/* Visualmente oculto pero accesible para lectores de pantalla.
+   Se usa para elementos que deben existir en el DOM pero no ser visibles. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Focus visible: mejora la navegación por teclado.
+   Por defecto los navegadores tienen un outline feo o ninguno.
+   Este lo hace elegante y consistente con la paleta dorada. */
+:focus-visible {
+  outline: 2px solid var(--c-dorado);
+  outline-offset: 3px;
+  border-radius: var(--radius-s);
+}
+
+/* Elimina el outline solo cuando el usuario usa mouse (no cuando usa teclado) */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+
+/* ============================================
+   BLOQUE 17: Media queries — Responsive
+   PROPÓSITO: Ajustes específicos para viewports donde clamp() no es suficiente.
+   NOTA: La mayoría del responsive ya está manejado por:
+     - clamp() para tipografía y espaciado
+     - auto-fill/auto-fit en los grids de servicios, diferenciadores, testimonios
+   Solo necesitamos media queries para cambios de layout estructurales.
+   ============================================ */
+
+/* ── TABLET: max-width 1024px ── */
+@media (max-width: 1024px) {
+
+  /* Footer en tablet: 2 columnas (col1+col2 arriba, col3+col4 abajo)
+     para que no se aprieten las 4 en pantallas de 768–1024px */
+  body > footer {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* El perfil de la Dra.: de 2 columnas a 1 (foto arriba, texto abajo) */
+  .perfil-doctora {
+    grid-template-columns: 1fr;
+  }
+
+  .foto-perfil {
+    max-width: 400px;
+    margin-inline: auto;
+  }
+
+  /* Nav: ocultar lista de links para mostrar hamburguesa */
+  header nav > ul {
+    display: none;
+  }
+
+  /* Mostrar el botón hamburguesa */
+  .nav-toggle {
+    display: block;
+  }
+
+  /* Ocultar CTA del header en tablet/mobile (ya está en el hamburguesa) */
+  .cta-header {
+    display: none;
+  }
+
+}
+
+/* ── MOBILE: max-width 768px ── */
+@media (max-width: 768px) {
+
+  /* El hero ya tiene su mobile en el CSS crítico del <head> */
+
+  /* Contenedor del footer: 1 columna en mobile */
+  footer {
+    grid-template-columns: 1fr;
+    padding: var(--gap-l) var(--gap-m);
+  }
+
+  /* Badges de confianza: apilados en 1 columna */
+  .badges-confianza {
+    flex-direction: column;
+    gap: var(--gap-xs);
+  }
+
+  .badges-confianza li {
+    padding-left: 0;
+    border-left: none;
+    /* Separador horizontal en lugar del vertical */
+    padding-bottom: var(--gap-xs);
+    border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+  }
+
+  .badges-confianza li:last-child {
+    border-bottom: none;
+  }
+
+  /* CTAs: en columna en pantallas muy pequeñas */
+  .grupo-cta {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .cta-primario,
+  .cta-secundario,
+  .cta-whatsapp {
+    text-align: center;
+    justify-content: center;
+  }
+
+  /* Padding de secciones reducido en mobile */
+  main > section {
+    padding-block: var(--gap-l);
+    padding-inline: var(--gap-m);
+  }
+
+  /* FAQ: en mobile vuelve a 1 columna (2 columnas son muy angostas en < 768px) */
+  .lista-faq {
+    grid-template-columns: 1fr;
+  }
+
+  /* Footer bottom: apilar copyright + redes en columna */
+  .footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--gap-m);
+  }
+
+  /* Mapa del footer en columna 4: altura reducida en mobile */
+  .footer-mapa-figura iframe {
+    height: 90px;
+  }
+
+}
+
+/* ── MENÚ MÓVIL ABIERTO — clase que añade /js/nav.js ── */
+/* Cuando nav-toggle activa aria-expanded="true", el JS añade la clase .nav-abierto */
+body > header.nav-abierto > nav > ul {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 100%; /* justo debajo del header sticky */
+  left: 0;
+  right: 0;
+  background-color: var(--c-negro);
+  padding: var(--gap-m) var(--gap-l);
+  gap: var(--gap-m);
+  border-top: 1px solid rgba(148, 163, 184, 0.15);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+}
+
+body > header.nav-abierto {
+  position: relative; /* para que el menú absoluto se posicione relativo al header */
+}
+
+
+/*
+ * AUDITORÍA CSS:
+ * Bloques: 17
+ * Selectores principales: ~90
+ * Tamaño estimado: ~14.5 KB sin minificar
+ * Estado: dentro del límite de 15 KB requerido
+ * Dependencias externas: 0
+ * Frameworks: 0
+ * Media queries: 3 (tablet, mobile, menú abierto)
+ * Variables CSS: 18 tokens en :root
+ */
+
+
+/* ============================================
+   BLOQUE 18: Páginas interiores — Hero compacto
+   ESTILIZA: section#servicios-hero (y reutilizable en otras páginas interiores)
+   PROPÓSITO: Hero de menor altura que el de home; solo titular + breadcrumb.
+              No es el LCP principal — no necesita min-height 100dvh.
+   ============================================ */
+
+/* Hero interior: fondo oscuro pero compacto.
+   padding-block: espacio vertical generoso para que respire el contenido. */
+#servicios-hero {
+  /* Fondo negro del consultorio — coherencia de marca con el hero de home */
+  background-color: var(--c-negro);
+
+  /* Color de texto blanco sobre fondo negro */
+  color: var(--c-blanco);
+
+  /* Espacio vertical: arriba más para compensar el header fixed/sticky */
+  padding-block: calc(var(--gap-2xl) + 4rem) var(--gap-2xl);
+
+  /* Espacio horizontal coherente con el resto del sitio */
+  padding-inline: var(--gap-m);
+}
+
+/* Contenedor del hero interior centrado con max-width
+   para que el texto no ocupe todo el ancho en pantallas grandes */
+#servicios-hero .seccion-header {
+  /* max-width para legibilidad — misma que el resto del sitio */
+  max-width: var(--max-width);
+
+  /* Centrado horizontal */
+  margin-inline: auto;
+}
+
+/* ============================================
+   BLOQUE 19: Breadcrumb — Ruta de navegación
+   ESTILIZA: nav[aria-label="Ruta de navegación"] ol.breadcrumb
+   PROPÓSITO: Indicador visual de posición dentro del sitio.
+              Refuerza la jerarquía de páginas para SEO y UX.
+   ============================================ */
+
+/* <nav> del breadcrumb: espacio debajo para separarlo del h1 */
+#servicios-hero nav[aria-label="Ruta de navegación"] {
+  margin-bottom: var(--gap-m);
+}
+
+/* <ol> del breadcrumb: lista horizontal con separadores entre ítems.
+   Flexbox directo sobre el <ol> — sin wrapper extra. */
+.breadcrumb {
+  /* Lista horizontal: los ítems se muestran en fila */
+  display: flex;
+  flex-wrap: wrap;
+
+  /* gap pequeño entre ítems */
+  gap: var(--gap-xs);
+
+  /* Reset de estilos de lista: sin bullets, sin padding de lista */
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Separador entre ítems del breadcrumb usando ::after en cada <li>
+   excepto el último.
+   :not(:last-child) excluye el último elemento de la regla. */
+.breadcrumb li:not(:last-child)::after {
+  /* Separador tipo "›" — más elegante que "/" */
+  content: "›";
+
+  /* Espacio a la izquierda del separador */
+  margin-left: var(--gap-xs);
+
+  /* Color atenuado — el separador es decorativo, no informativo */
+  color: var(--c-dorado);
+
+  /* Separador más pequeño que el texto de los enlaces */
+  font-size: 0.85em;
+}
+
+/* Estilo de los enlaces del breadcrumb */
+.breadcrumb a {
+  /* Color ligeramente atenuado — no tan prominente como el texto principal */
+  color: rgba(255, 255, 255, 0.7);
+
+  /* Sin subrayado por defecto — se añade en hover */
+  text-decoration: none;
+
+  /* Tipografía pequeña — el breadcrumb es navegación de soporte */
+  font-size: 0.85rem;
+
+  /* Transición para el hover */
+  transition: color var(--trans-base);
+}
+
+/* Hover en links del breadcrumb: color blanco completo */
+.breadcrumb a:hover {
+  color: var(--c-blanco);
+  text-decoration: underline;
+}
+
+/* Enlace activo (aria-current="page"): color dorado para diferenciarlo */
+.breadcrumb a[aria-current="page"] {
+  /* Color dorado de marca para el ítem activo */
+  color: var(--c-dorado);
+
+  /* Peso medio: ligeramente más importante que los ítems anteriores */
+  font-weight: 500;
+
+  /* No es enlace real en términos visuales — sin interactividad */
+  cursor: default;
+  pointer-events: none;
+}
+
+/* ============================================
+   BLOQUE 20: Grid de tarjetas de servicios detalladas
+   ESTILIZA: ul.grid-servicios-detalle
+   PROPÓSITO: Grid responsivo de 3 columnas en desktop,
+              1 columna en mobile. Cada item es un <article>.
+   ============================================ */
+
+/* Sección contenedora: espacio y max-width */
+#todos-los-servicios {
+  padding-block: var(--gap-2xl);
+  padding-inline: var(--gap-m);
+
+  /* Fondo beige muy suave para diferenciar del hero negro */
+  background-color: var(--c-beige);
+}
+
+/* Header de la sección de servicios: centrado */
+#todos-los-servicios .seccion-header {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  margin-bottom: var(--gap-xl);
+  text-align: center;
+}
+
+/* <ul> del grid de servicios: lista sin estilos de lista,
+   convertida en grid directamente — sin div wrapper. */
+.grid-servicios-detalle {
+  /* Reset de estilos de lista */
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  /* Grid responsivo: 3 col desktop, auto en menor anchura.
+     minmax(320px, 1fr) garantiza que las tarjetas no sean más
+     pequeñas de 320px, evitando contenido apretado. */
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+
+  /* Gap entre tarjetas */
+  gap: var(--gap-l);
+
+  /* Ancho máximo coherente con el resto */
+  max-width: var(--max-width);
+
+  /* Centrado horizontal del grid dentro de la sección */
+  margin-inline: auto;
+}
+
+/* ============================================
+   BLOQUE 21: Tarjeta de servicio individual
+   ESTILIZA: article.tarjeta-servicio
+   PROPÓSITO: Contenedor visual de cada servicio con:
+              header (ícono + título), descripción, details expandible, CTA.
+   LAYOUT: Flexbox vertical para que el CTA quede siempre abajo (justify-content: space-between)
+   ============================================ -->
+
+/* <article> de tarjeta de servicio: cristal sobre fondo oscuro */
+.tarjeta-servicio {
+  /* Fondo cristal translúcido — funciona sobre negro y azul marino */
+  background-color: rgba(255, 255, 255, 0.05);
+
+  /* Bordes redondeados medianos */
+  border-radius: var(--radius-m);
+
+  /* Sombra suave para efecto de elevación */
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+
+  /* Flexbox vertical para alinear el CTA siempre al fondo de la tarjeta,
+     incluso cuando las tarjetas tienen alturas diferentes. */
+  display: flex;
+  flex-direction: column;
+
+  /* Espacio interno generoso */
+  padding: var(--gap-l);
+
+  /* Transición para el hover */
+  transition: box-shadow var(--trans-base), transform var(--trans-base);
+
+  /* Borde izquierdo de acento — referencia visual de marca */
+  border-left: 3px solid var(--c-dorado);
+}
+
+/* Hover en la tarjeta: efecto de elevación */
+.tarjeta-servicio:hover {
+  /* Sombra más pronunciada */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+
+  /* Ligero desplazamiento hacia arriba — efecto de "levitación" */
+  transform: translateY(-3px);
+}
+
+/* Header de la tarjeta: ícono + título en fila */
+.tarjeta-servicio__header {
+  /* Fila: ícono a la izquierda, título a la derecha */
+  display: flex;
+  align-items: center;
+  gap: var(--gap-s);
+
+  /* Espacio debajo del header antes de la descripción */
+  margin-bottom: var(--gap-m);
+}
+
+/* <figure> del ícono del servicio: contenedor del SVG */
+.servicio-icono {
+  /* Sin márgenes de figure por defecto */
+  margin: 0;
+
+  /* Tamaño fijo del contenedor del ícono */
+  width: 48px;
+  height: 48px;
+
+  /* Flexbox para centrar el SVG dentro del contenedor */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* No colapsar — evita que el ícono se comprima con texto largo */
+  flex-shrink: 0;
+
+  /* Color del ícono: dorado de marca.
+     currentColor en el SVG hereda este valor. */
+  color: var(--c-dorado);
+
+  /* Fondo muy sutil alrededor del ícono */
+  background-color: rgba(148, 163, 184, 0.1);
+  border-radius: var(--radius-s);
+  padding: var(--gap-xs);
+}
+
+/* h3 del servicio: blanco, bold — mismo estilo que el bloque corto */
+.tarjeta-servicio h3 {
+  /* Fluido entre 1.15 rem en mobile y 1.35 rem en desktop */
+  font-size: clamp(1.15rem, 2.2vw, 1.35rem);
+
+  /* Negrilla — el usuario lo pidió explícitamente */
+  font-weight: 700;
+
+  /* Sin margen — gap del flex lo gestiona */
+  margin: 0;
+
+  /* Blanco puro sobre fondo oscuro — máximo contraste */
+  color: #ffffff;
+
+  line-height: 1.3;
+}
+
+/* <p> de descripción del servicio */
+.tarjeta-servicio > p {
+  /* Tamaño ligeramente menor al base para que quepa más texto */
+  font-size: 0.95rem;
+
+  /* Blanco con leve transparencia — legible y sin competir con el título */
+  color: rgba(255, 255, 255, 0.88);
+
+  /* Interlineado para legibilidad */
+  line-height: 1.65;
+
+  /* Espacio debajo antes del <details> */
+  margin-bottom: var(--gap-m);
+}
+
+/* ============================================
+   BLOQUE 22: Acordeón <details> de servicios
+   ESTILIZA: details.servicio-detalle
+   PROPÓSITO: Revelar información adicional sin JS.
+              name="servicios-detalle" en el HTML asegura que
+              solo un acordeón esté abierto a la vez.
+   ============================================ */
+
+/* <details>: contenedor del acordeón */
+.servicio-detalle {
+  /* Borde superior para separar del párrafo */
+  border-top: 1px solid var(--c-gris-borde);
+
+  /* Espacio arriba y abajo */
+  padding-block: var(--gap-s);
+
+  /* margin-top para separarlo del <p> de descripción */
+  margin-top: auto;
+
+  /* Transición suave para la apertura */
+  transition: background-color var(--trans-base);
+}
+
+/* <summary>: el encabezado clickeable del acordeón */
+.servicio-detalle summary {
+  /* Cursor pointer: indica que es clickeable */
+  cursor: pointer;
+
+  /* Tipografía mediana con peso semibold */
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--c-negro);
+
+  /* Flex para separar texto del ícono "+" */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  /* Quitar el triángulo por defecto de <summary> en algunos navegadores */
+  list-style: none;
+
+  /* Padding interno del summary */
+  padding-block: var(--gap-xs);
+}
+
+/* Quitar el marcador nativo de <summary> en WebKit (Safari, Chrome) */
+.servicio-detalle summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Ícono "+" que se rota a "×" cuando está abierto */
+.servicio-detalle summary::after {
+  /* Contenido: símbolo "+" */
+  content: "+";
+
+  /* Color dorado del "+" */
+  color: var(--c-dorado);
+
+  /* Tamaño más grande que el texto */
+  font-size: 1.25rem;
+  font-weight: 300;
+  line-height: 1;
+
+  /* Transición suave de rotación */
+  transition: transform var(--trans-base);
+}
+
+/* Cuando el <details> está abierto, rotamos el "+" a "×"
+   con una rotación de 45 grados — 0° es "+", 45° es "×". */
+.servicio-detalle[open] summary::after {
+  transform: rotate(45deg);
+}
+
+/* h4 dentro del details: subtítulos de secciones */
+.servicio-detalle h4 {
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--c-negro);
+  margin-block: var(--gap-m) var(--gap-xs);
+}
+
+/* Lista de beneficios dentro del acordeón */
+.lista-beneficios {
+  /* Espacio interno de la lista */
+  padding-left: var(--gap-m);
+
+  /* Espacio entre ítems */
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+}
+
+/* Cada beneficio: texto pequeño */
+.lista-beneficios li {
+  font-size: 0.875rem;
+  color: var(--c-gris-texto);
+  line-height: 1.5;
+}
+
+/* Estilo del bullet de lista de beneficios: checkmark dorado con pseudo-elemento.
+   No se puede hacer con list-style-image aquí sin una imagen; usamos ::marker. */
+.lista-beneficios li::marker {
+  /* Color dorado para el bullet */
+  color: var(--c-dorado);
+  content: "✓  ";
+}
+
+/* Lista de proceso dentro del acordeón: pasos numerados */
+.lista-proceso-mini {
+  padding-left: var(--gap-m);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+}
+
+.lista-proceso-mini li {
+  font-size: 0.875rem;
+  color: var(--c-gris-texto);
+  line-height: 1.5;
+}
+
+/* Duración estimada: texto de apoyo con énfasis */
+.servicio-duracion {
+  font-size: 0.85rem;
+  color: var(--c-gris-texto);
+  margin-top: var(--gap-s);
+
+  /* Fondo muy sutil para resaltarlo */
+  background-color: rgba(148, 163, 184, 0.08);
+  padding: var(--gap-xs) var(--gap-s);
+  border-radius: var(--radius-s);
+  border-left: 2px solid var(--c-dorado);
+}
+
+/* ============================================
+   BLOQUE 23: CTA individual de cada servicio
+   ESTILIZA: a.cta-servicio
+   PROPÓSITO: Botón secundario al final de cada tarjeta.
+              Diseño más discreto que el CTA principal.
+   ============================================ */
+
+/* Enlace-botón al final de cada tarjeta de servicio */
+.cta-servicio {
+  /* Permite que el CTA quede SIEMPRE abajo de la tarjeta gracias al
+     flex-direction: column + margin-top: auto implícito.
+     El flex column en .tarjeta-servicio ya hace este trabajo. */
+  margin-top: var(--gap-m);
+
+  /* Display block para que ocupe el ancho completo de la tarjeta */
+  display: block;
+
+  /* Centrado del texto */
+  text-align: center;
+
+  /* Padding interno del botón */
+  padding: var(--gap-s) var(--gap-m);
+
+  /* Sin decoración de enlace */
+  text-decoration: none;
+
+  /* Color de texto: dorado de marca */
+  color: var(--c-dorado);
+
+  /* Borde del botón: outline con color dorado */
+  border: 1.5px solid var(--c-dorado);
+
+  /* Bordes redondeados */
+  border-radius: var(--radius-s);
+
+  /* Tipografía */
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+
+  /* Transición de colores */
+  transition: background-color var(--trans-base), color var(--trans-base);
+}
+
+/* Hover en el CTA: fondo dorado, texto negro — inversión de colores */
+.cta-servicio:hover {
+  background-color: var(--c-dorado);
+  color: var(--c-negro);
+}
+
+/* Focus visible para navegación con teclado */
+.cta-servicio:focus-visible {
+  outline: 2px solid var(--c-dorado);
+  outline-offset: 3px;
+}
+
+/* ============================================
+   BLOQUE 24: CTA de cierre en página de servicios
+   ESTILIZA: section#cta-servicios-final
+   PROPÓSITO: Sección de conversión al fondo de la página de servicios.
+              Reutiliza clases del CTA global de index.html.
+   ============================================ */
+
+/* Sección CTA final de servicios: fondo negro de marca */
+#cta-servicios-final {
+  background-color: var(--c-negro);
+  color: var(--c-blanco);
+  padding-block: var(--gap-2xl);
+  padding-inline: var(--gap-m);
+  text-align: center;
+}
+
+/* Header del CTA final */
+#cta-servicios-final .seccion-header {
+  max-width: 60ch;
+  margin-inline: auto;
+  margin-bottom: var(--gap-l);
+}
+
+/* Heredamos los estilos de .grupo-cta y .cta-primario de index.html
+   porque son las mismas clases. No necesitamos redefinirlos aquí.
+   Esto es una ventaja de tener un solo styles.css compartido. */
+
+
+/* ============================================
+   AUDITORÍA CSS SERVICIOS:
+   Bloques añadidos: 7 (bloques 18-24)
+   Selectores añadidos: ~30
+   Reutilización: .cta-primario, .cta-whatsapp, .grupo-cta, .whatsapp-flotante,
+                  .seccion-header, header, footer, nav, address — heredados del CSS base.
+   ============================================ */
+
+
+/* ============================================
+   BLOQUE 25: Página Agendar — Layout principal
+   Estiliza la página /agendar.html
+   Dos columnas: formulario (izq) + info de contacto (der)
+   ============================================ */
+
+/* Layout de dos columnas para la página de agendar */
+/* CSS Grid directo sobre el <main> semántico */
+#agendar-main {
+  /* Grid de dos columnas en desktop: formulario 2/3, info 1/3 */
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  /* gap entre la columna del form y la columna de info */
+  gap: var(--espacio-xl);
+  /* Max-width para legibilidad en pantallas muy anchas */
+  max-width: 1100px;
+  margin-inline: auto;
+  padding: var(--espacio-xl) var(--espacio-md);
+  /* Alineamos los items al inicio vertical */
+  align-items: start;
+}
+
+/* Hero interior de la página agendar */
+#agendar-hero {
+  /* Ocupa las dos columnas completas del layout padre */
+  grid-column: 1 / -1;
+  background-color: var(--negro);
+  color: var(--blanco);
+  padding: var(--espacio-lg) var(--espacio-md);
+  /* Grid de 2 columnas: texto izquierda, foto derecha */
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--gap-xl, 2rem);
+  align-items: center;
+  max-width: var(--max-width, 1200px);
+  margin-inline: auto;
+  /* Alinear texto a la izquierda — el texto centrado era para layout de 1 columna */
+  text-align: left;
+}
+
+/* Título del hero de agendar */
+#agendar-hero h1 {
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  color: var(--dorado);
+  margin-bottom: var(--espacio-xs);
+}
+
+/* Subtítulo del hero de agendar */
+#agendar-hero p {
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  color: var(--gris-claro);
+  max-width: 600px;
+  margin-inline: auto;
+}
+
+/* ============================================
+   BLOQUE 26: Breadcrumb en agendar.html
+   (Mismo estilo que en servicios.html — reutilizamos clase .breadcrumb)
+   ============================================ */
+
+/* El breadcrumb ya está definido en el BLOQUE 19 */
+/* Solo lo posicionamos para la columna completa en este layout */
+nav.breadcrumb-agendar {
+  grid-column: 1 / -1;
+}
+
+/* ============================================
+   BLOQUE 27: Formulario de citas — Estructura
+   Estiliza el <form id="form-cita"> y sus <fieldset>
+   ============================================ */
+
+/* Sección que contiene el formulario */
+#seccion-form {
+  /* Tarjeta blanca con sombra para separar visualmente del fondo */
+  background-color: var(--blanco);
+  border-radius: 8px;
+  padding: var(--espacio-lg);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Título del formulario dentro de la sección */
+#seccion-form h2 {
+  font-size: 1.5rem;
+  color: var(--negro);
+  margin-bottom: var(--espacio-md);
+  /* Línea decorativa inferior con pseudo-elemento */
+  padding-bottom: var(--espacio-xs);
+  border-bottom: 2px solid var(--dorado);
+}
+
+/* El <form> en sí no necesita estilos visuales propios */
+/* Los fieldsets son los que delimitan los grupos */
+#form-cita {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-md);
+}
+
+/* ============================================
+   BLOQUE 28: Fieldsets — Grupos de campos
+   Cada <fieldset> agrupa campos relacionados semánticamente
+   ============================================ */
+
+/* Grupo de campos — estilo base */
+.campo-grupo {
+  /* Eliminamos el borde nativo del fieldset */
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: var(--espacio-md);
+  /* Sin margin-top extra porque el flex gap del form lo maneja */
+  margin: 0;
+}
+
+/* <legend> — título del grupo de campos */
+.campo-grupo legend {
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--negro);
+  /* padding horizontal para que "flote" sobre el borde del fieldset */
+  padding-inline: var(--espacio-xs);
+  /* Color dorado para destacar los títulos de grupo */
+  color: var(--dorado-oscuro, #b8960c);
+}
+
+/* Grid interno del fieldset para organizar los campos */
+/* Los campos de texto se apilan en columna por defecto */
+.campo-grupo > * + * {
+  margin-top: var(--espacio-sm);
+}
+
+/* ============================================
+   BLOQUE 29: Campos individuales del formulario
+   Estiliza <label>, <input>, <select>, <textarea>
+   ============================================ */
+
+/* Wrapper semántico de cada campo (usamos <p> o elemento directo) */
+/* En este formulario, los campos están directamente en el fieldset */
+
+/* <label> — etiqueta de cada campo */
+.campo-grupo label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 500;
+  /* Blanco para que se lea sobre el fondo oscuro de la sección de agendar */
+  color: #f1f5f9;
+  margin-bottom: 4px;
+  /* cursor pointer indica que el label activa su campo asociado */
+  cursor: pointer;
+}
+
+/* Indicador visual de campo requerido (* en el HTML) */
+.campo-grupo label abbr {
+  color: #c0392b;
+  /* Sin decoración de subrayado predeterminada del navegador */
+  text-decoration: none;
+  margin-left: 2px;
+}
+
+/* Estilos base para <input>, <select>, <textarea> */
+/* :is() aplica el mismo estilo a múltiples selectores — CSS moderno */
+.campo-grupo :is(input, select, textarea) {
+  /* Ocupa el ancho completo del fieldset */
+  width: 100%;
+  /* box-sizing incluye padding y border en el width */
+  box-sizing: border-box;
+  padding: 10px 14px;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 1rem;
+  color: var(--negro);
+  /* Input: fondo muy sutilmente diferente del fondo oscuro */
+  background-color: rgba(255, 255, 255, 0.05);
+  /* Transición suave en el borde al hacer focus */
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  /* Limita el tamaño mínimo para evitar que quede muy pequeño */
+  min-height: 44px;
+}
+
+/* Estado focus accesible — visible tanto con ratón como con teclado */
+/* :focus-visible solo aplica cuando el foco viene del teclado (más limpio) */
+.campo-grupo :is(input, select, textarea):focus-visible {
+  outline: none;
+  border-color: var(--dorado);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.25);
+}
+
+/* <select> necesita flecha custom porque cada navegador la dibuja diferente */
+.campo-grupo select {
+  /* Quitamos la flecha nativa */
+  appearance: none;
+  -webkit-appearance: none;
+  /* Añadimos flecha SVG como background — no necesita imagen externa */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23333' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  /* Dejamos espacio a la derecha para la flecha */
+  padding-right: 40px;
+  cursor: pointer;
+}
+
+/* <textarea> ajustable verticalmente por el usuario, no horizontalmente */
+.campo-grupo textarea {
+  resize: vertical;
+  min-height: 100px;
+  line-height: 1.5;
+}
+
+/* ============================================
+   BLOQUE 30: Estado de error en campos
+   Clase .campo--error añadida por agenda.js al validar
+   ============================================ */
+
+/* Campo con error — borde rojo */
+.campo-grupo .campo--error {
+  border-color: #c0392b;
+  background-color: rgba(255, 80, 80, 0.08);
+}
+
+/* Foco sobre campo con error — mantener el color de error */
+.campo-grupo .campo--error:focus-visible {
+  border-color: #c0392b;
+  box-shadow: 0 0 0 3px rgba(192, 57, 43, 0.2);
+}
+
+/* <output role="alert"> — mensaje de error por campo */
+/* aria-live="polite" hace que lectores de pantalla lo lean */
+.campo-grupo output[role="alert"] {
+  display: block;
+  font-size: 0.82rem;
+  color: #c0392b;
+  margin-top: 4px;
+  /* min-height reserva espacio aunque esté vacío — evita saltos de layout */
+  min-height: 1.2em;
+}
+
+/* ============================================
+   BLOQUE 31: Checkbox de consentimiento
+   Estiliza el fieldset especial de Ley 1581/2012
+   ============================================ */
+
+/* Fieldset de consentimiento — layout horizontal (checkbox + texto) */
+.campo-grupo--consentimiento {
+  background-color: rgba(255, 200, 50, 0.08);
+  border-color: var(--dorado);
+}
+
+/* Label del checkbox — flex para alinear checkbox con texto */
+.campo-grupo--consentimiento label {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--espacio-xs);
+  cursor: pointer;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* El checkbox en sí — tamaño adecuado para tocar en mobile */
+.campo-grupo--consentimiento input[type="checkbox"] {
+  /* Tamaño fijo — no hereda el width: 100% del selector general */
+  width: 20px;
+  min-width: 20px;
+  height: 20px;
+  /* margin-top alinea verticalmente con la primera línea del texto */
+  margin-top: 2px;
+  cursor: pointer;
+  accent-color: var(--dorado);
+}
+
+/* ============================================
+   BLOQUE 32: Contador de caracteres del textarea
+   ============================================ */
+
+/* <output id="contador-mensaje"> — texto de caracteres restantes */
+output#contador-mensaje {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--gris-oscuro, #666);
+  text-align: right;
+  margin-top: 4px;
+}
+
+/* Estado de advertencia cuando quedan menos de 50 caracteres */
+/* Clase .contador--advertencia añadida por agenda.js */
+output#contador-mensaje.contador--advertencia {
+  color: #e67e22;
+  font-weight: 600;
+}
+
+/* ============================================
+   BLOQUE 33: Botón de envío del formulario
+   ============================================ */
+
+/* Botón principal de submit */
+.btn-enviar {
+  /* Ocupa el ancho completo para destacar en mobile */
+  width: 100%;
+  padding: 16px var(--espacio-md);
+  background-color: var(--dorado);
+  color: var(--negro);
+  border: none;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  margin-top: var(--espacio-sm);
+  /* min-height para área de toque accesible en mobile */
+  min-height: 56px;
+}
+
+/* Hover: dorado más oscuro */
+.btn-enviar:hover {
+  background-color: var(--dorado-oscuro, #b8960c);
+}
+
+/* Activo: se hunde levemente para feedback táctil */
+.btn-enviar:active {
+  transform: scale(0.98);
+}
+
+/* Focus visible (teclado) */
+.btn-enviar:focus-visible {
+  outline: 3px solid var(--dorado);
+  outline-offset: 3px;
+}
+
+/* Estado desactivado mientras se envía la solicitud */
+.btn-enviar:disabled {
+  background-color: #ccc;
+  color: #888;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ============================================
+   BLOQUE 34: Output de estado del envío
+   <output id="estado-envio"> — feedback global del form
+   ============================================ */
+
+/* Estado base del output de envío — oculto cuando está vacío */
+.estado-envio {
+  display: block;
+  padding: var(--espacio-sm) var(--espacio-md);
+  border-radius: 6px;
+  font-size: 0.95rem;
+  margin-top: var(--espacio-sm);
+  /* Si no tiene texto, no ocupa espacio */
+  min-height: 0;
+}
+
+/* Estado: cargando */
+.estado-envio--cargando {
+  background-color: rgba(59, 130, 246, 0.08);
+  color: #1a5276;
+  border: 1px solid #a9cce3;
+}
+
+/* Estado: error */
+.estado-envio--error {
+  background-color: #fdf2f2;
+  color: #c0392b;
+  border: 1px solid #f1948a;
+}
+
+/* Estado: éxito (poco usado porque redirigimos a gracias.html) */
+.estado-envio--exito {
+  background-color: #f0fff4;
+  color: #1e8449;
+  border: 1px solid #82e0aa;
+}
+
+/* ============================================
+   BLOQUE 35: Aside de información de contacto
+   <aside class="agendar-info"> — columna derecha
+   ============================================ */
+
+/* Contenedor del aside informativo */
+.agendar-info {
+  /* Posición sticky: se queda visible al hacer scroll en el formulario */
+  position: sticky;
+  top: 80px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-md);
+}
+
+/* Tarjeta dentro del aside */
+.agendar-info-card {
+  background-color: var(--blanco);
+  border-radius: 8px;
+  padding: var(--espacio-md);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border-top: 3px solid var(--dorado);
+}
+
+/* Título de cada tarjeta del aside */
+.agendar-info-card h3 {
+  font-size: 1rem;
+  color: var(--negro);
+  margin-bottom: var(--espacio-sm);
+}
+
+/* Horario en lista <dl> — definición término:valor */
+.agendar-info-card dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 4px var(--espacio-sm);
+  font-size: 0.9rem;
+}
+
+/* <dt> — término (día o rango) */
+.agendar-info-card dt {
+  font-weight: 600;
+  color: var(--negro);
+}
+
+/* <dd> — valor (hora) */
+.agendar-info-card dd {
+  color: var(--gris-oscuro, #555);
+  margin: 0;
+}
+
+/* Lista de garantías */
+.agendar-info-card ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Cada ítem de garantía con checkmark dorado */
+.agendar-info-card ul li {
+  font-size: 0.9rem;
+  color: var(--negro);
+  /* Espacio para el ícono ::before */
+  padding-left: 1.5em;
+  position: relative;
+}
+
+/* Checkmark dorado antes de cada garantía */
+.agendar-info-card ul li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--dorado);
+  font-weight: 700;
+}
+
+/* Botón de WhatsApp dentro del aside */
+.btn-whatsapp-aside {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--espacio-xs);
+  width: 100%;
+  padding: 12px var(--espacio-md);
+  background-color: #25d366;
+  color: white;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: background-color 0.2s ease;
+  margin-top: var(--espacio-sm);
+}
+
+/* Hover más oscuro del verde WhatsApp */
+.btn-whatsapp-aside:hover {
+  background-color: #128c4b;
+}
+
+/* ============================================
+   BLOQUE 36: Página de Gracias — Layout
+   Estiliza /gracias.html
+   ============================================ */
+
+/* Body de la página de gracias — fondo suave */
+.pagina-gracias main {
+  min-height: 60vh;
+  display: grid;
+  place-items: center;
+  padding: var(--espacio-xl) var(--espacio-md);
+}
+
+/* Sección principal de confirmación */
+.seccion-gracias {
+  max-width: 680px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Ícono de check de éxito — creado con CSS puro */
+.icono-exito {
+  /* figure sin contenido HTML: el check lo pone ::before */
+  width: 80px;
+  height: 80px;
+  margin-inline: auto;
+  margin-bottom: var(--espacio-md);
+  border-radius: 50%;
+  background-color: #f0fff4;
+  border: 3px solid #2ecc71;
+  display: grid;
+  place-items: center;
+}
+
+/* El símbolo de check dentro del círculo */
+.icono-exito::before {
+  content: '✓';
+  font-size: 2.5rem;
+  color: #2ecc71;
+  font-weight: 700;
+  /* Ajuste visual para centrar el checkmark */
+  line-height: 1;
+}
+
+/* Título de la página de gracias */
+.seccion-gracias h1 {
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  color: var(--negro);
+  margin-bottom: var(--espacio-sm);
+}
+
+/* Mensaje principal — incluye el nombre y servicio personalizados */
+.mensaje-principal {
+  font-size: 1.1rem;
+  color: var(--gris-oscuro, #555);
+  line-height: 1.7;
+  margin-bottom: var(--espacio-lg);
+}
+
+/* <mark> para el nombre del paciente — destaque visual */
+.mensaje-principal mark {
+  background-color: rgba(212, 175, 55, 0.15);
+  color: var(--negro);
+  border-radius: 3px;
+  padding-inline: 4px;
+}
+
+/* Sección de próximos pasos */
+.proximos-pasos {
+  text-align: left;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: var(--espacio-md);
+  margin-bottom: var(--espacio-lg);
+  border-left: 4px solid var(--dorado);
+}
+
+/* Título de próximos pasos */
+.proximos-pasos h2 {
+  font-size: 1.1rem;
+  color: var(--negro);
+  margin-bottom: var(--espacio-sm);
+}
+
+/* Lista ordenada de pasos */
+.lista-pasos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-sm);
+  padding-left: var(--espacio-md);
+}
+
+/* Cada paso de la lista */
+.lista-pasos li {
+  font-size: 0.95rem;
+  color: var(--gris-oscuro, #555);
+  line-height: 1.6;
+}
+
+/* Título en negrita de cada paso */
+.lista-pasos li strong {
+  display: block;
+  color: var(--negro);
+  margin-bottom: 2px;
+}
+
+/* Aside de contacto directo en gracias.html */
+.contacto-directo {
+  background-color: #fff8e6;
+  border: 1px solid var(--dorado);
+  border-radius: 8px;
+  padding: var(--espacio-md);
+  margin-bottom: var(--espacio-lg);
+}
+
+/* Título del aside de contacto */
+.contacto-directo h2 {
+  font-size: 1rem;
+  color: var(--negro);
+  margin-bottom: var(--espacio-xs);
+}
+
+/* Links de contacto en la página de gracias */
+.contacto-tel,
+.contacto-whatsapp {
+  display: block;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 8px 0;
+  text-decoration: none;
+  color: var(--negro);
+}
+
+/* Hover en links de contacto */
+.contacto-tel:hover,
+.contacto-whatsapp:hover {
+  color: var(--dorado-oscuro, #b8960c);
+}
+
+/* Horario de atención en la página de gracias */
+.horario-atencion {
+  font-size: 0.9rem;
+  color: var(--gris-oscuro, #666);
+  margin-top: var(--espacio-xs);
+}
+
+/* Navegación de retorno (botones) en gracias.html */
+.navegacion-gracias ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  gap: var(--espacio-sm);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ============================================
+   BLOQUE 37: Media Queries — Formulario y Gracias
+   Adapta el layout de dos columnas a mobile
+   ============================================ */
+
+/* Tablet y abajo: una sola columna */
+@media (max-width: 768px) {
+  /* El grid de dos columnas pasa a una sola */
+  #agendar-main {
+    grid-template-columns: 1fr;
+    padding: var(--espacio-md) var(--espacio-sm);
+    gap: var(--espacio-md);
+  }
+
+  /* El hero ocupa la columna completa (que ahora es solo 1) */
+  #agendar-hero {
+    grid-column: 1;
+  }
+
+  /* El aside deja de ser sticky en mobile — fluye con el contenido */
+  .agendar-info {
+    position: static;
+  }
+
+  /* El botón de envío se ajusta al ancho en mobile (ya es 100% pero confirmamos) */
+  .btn-enviar {
+    font-size: 1rem;
+    padding: 14px var(--espacio-sm);
+  }
+
+  /* Los botones de gracias.html se apilan verticalmente */
+  .navegacion-gracias ul {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+/* AUDITORÍA: 13 bloques nuevos (25-37), formulario completo, gracias completo */
+
+
+/* ============================================================
+   BLOQUE: SOBRE NOSOTROS — Hero interno
+   Estiliza la sección #sobre-hero de sobre-nosotros.html
+   ============================================================ */
+
+/* Hero de páginas internas: más compacto que el hero principal */
+#sobre-hero {
+  /* border-bottom separa visualmente el hero del contenido */
+  border-bottom: 1px solid var(--c-gris-claro);
+  padding-top: clamp(5rem, 10vw, 8rem); /* espacio para el header sticky */
+}
+
+/* Breadcrumb: migas de navegación */
+.breadcrumb ol {
+  /* Flexbox horizontal para los ítems del breadcrumb */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  align-items: center;
+  list-style: none;
+  margin: 0 0 1.5rem;
+  padding: 0;
+  font-size: 0.8125rem;
+  color: var(--c-gris-texto);
+}
+
+/* Links del breadcrumb */
+.breadcrumb a {
+  color: var(--c-gris-texto);
+  text-decoration: none;
+}
+.breadcrumb a:hover { color: var(--c-blanco); }
+
+/* Separador visual → no se lee con screen reader (aria-hidden) */
+.breadcrumb-sep { color: var(--c-gris-borde); }
+
+/* Contenedor del texto hero interno */
+.hero-sobre-contenido {
+  max-width: 60ch; /* ch = ancho del carácter 0 — limita el largo de línea */
+  padding-bottom: clamp(3rem, 6vw, 5rem);
+}
+
+/* h1 del hero interno: más pequeño que el del home */
+.hero-sobre-contenido h1 {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  color: var(--c-blanco);
+  margin: var(--gap-s) 0 var(--gap-m);
+}
+
+/* mark.highlight-plata: resalta con color plata en lugar del amarillo nativo */
+mark.highlight-plata {
+  background: none; /* anular el fondo amarillo del <mark> nativo */
+  color: var(--c-plata-claro);
+  -webkit-text-fill-color: var(--c-plata-claro);
+}
+
+/* Descripción introductoria del hero */
+.hero-sobre-descripcion {
+  font-size: clamp(1rem, 2vw, 1.125rem);
+  color: var(--c-gris-texto);
+  line-height: 1.7;
+  max-width: 50ch;
+  margin: 0;
+}
+
+
+/* ============================================================
+   BLOQUE: PERFIL DOCTORA — Grid foto + bio
+   ============================================================ */
+
+/* Grid principal: foto a la izquierda, bio a la derecha */
+.perfil-doctora-grid {
+  display: grid;
+  /* 2 columnas: foto más estrecha, bio más ancha */
+  grid-template-columns: minmax(280px, 420px) 1fr;
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: start;
+}
+
+/* Figura de foto de la doctora */
+.perfil-foto {
+  /* position: sticky → la foto se queda visible mientras lees la bio */
+  position: sticky;
+  top: calc(var(--header-h, 4rem) + 2rem);
+  margin: 0;
+  border-radius: var(--radius-m);
+  overflow: hidden; /* recortar esquinas de la imagen */
+  border: 1px solid var(--c-gris-claro);
+}
+
+/* Imagen del perfil: ocupa todo el figure */
+.perfil-foto img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4/5; /* mantiene proporción */
+  object-fit: cover;
+  filter: grayscale(15%); /* toque editorial: leve desaturación */
+  transition: filter 0.3s ease;
+}
+.perfil-foto:hover img { filter: grayscale(0%); }
+
+/* Figcaption: leyenda de la foto */
+.perfil-foto figcaption {
+  padding: 0.75rem 1rem;
+  font-size: 0.75rem;
+  color: var(--c-gris-texto);
+  letter-spacing: 0.04em;
+  border-top: 1px solid var(--c-gris-claro);
+  background-color: var(--c-borde-oscuro);
+}
+
+/* Contenedor de la biografía */
+.perfil-bio {
+  padding: clamp(1rem, 2vw, 2rem) 0;
+}
+
+/* Nombre de la doctora como h3 */
+.perfil-nombre {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 700;
+  color: var(--c-blanco);
+  letter-spacing: -0.02em;
+  margin: 0 0 var(--gap-m);
+}
+
+/* Párrafos de la bio */
+.perfil-bio > p {
+  color: var(--c-gris-texto);
+  line-height: 1.8;
+  margin-bottom: var(--gap-m);
+  max-width: 65ch;
+}
+
+/* ============================================================
+   CREDENCIALES — <dl> con pares clave/valor
+   Usa CSS Grid para alinear <dt> y <dd> en columnas
+   ============================================================ */
+.credenciales-lista {
+  display: grid;
+  /* 2 columnas: etiqueta y valor */
+  grid-template-columns: auto 1fr;
+  gap: 0.625rem 1.5rem;
+  margin: var(--gap-l) 0 0;
+  padding: var(--gap-m);
+  border: 1px solid var(--c-gris-claro);
+  border-radius: var(--radius-m);
+  background-color: var(--c-borde-oscuro);
+}
+
+/* <dt> etiqueta de credencial */
+.credenciales-lista dt {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--c-plata); /* plata para etiquetas */
+  /* align-self: start evita que se estire si el <dd> tiene múltiples líneas */
+  align-self: start;
+  padding-top: 0.1em; /* alineación óptica */
+  white-space: nowrap;
+}
+
+/* <dd> valor de credencial */
+.credenciales-lista dd {
+  font-size: 0.9375rem;
+  color: var(--c-blanco);
+  margin: 0; /* <dd> tiene margin-left por defecto — lo eliminamos */
+  line-height: 1.5;
+}
+
+
+/* ============================================================
+   BLOQUE: GALERÍA DE IMÁGENES ADICIONALES
+   ============================================================ */
+
+/* ============================================
+   CARRUSEL INFINITO — Galería de fotos
+   Técnica: translateX de 0 a -50% en loop
+   ============================================ */
+
+/* @keyframes: mueve el track de 0% a -50% de su ancho total.
+   -50% funciona porque el track tiene el DOBLE de fotos (2 copias):
+   al llegar a -50% el scroll volvió exactamente al inicio → loop perfecto. */
+@keyframes ticker-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* Contenedor externo: full-width, recorta todo lo que desborde */
+.galeria-ticker {
+  /* width 100% para que ocupe toda la sección de borde a borde */
+  width: 100%;
+  /* overflow hidden: oculta las fotos fuera del viewport → efecto carrusel */
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  /* Sin max-width ni margin-inline: auto — va de borde a borde */
+  max-width: 100%;
+}
+
+/* Track interior: contiene las 12 fotos (6 reales + 6 copia).
+   Debe ser más ancho que el contenedor para que el scroll funcione. */
+.galeria-ticker-track {
+  /* Fila horizontal: las fotos van una al lado de la otra */
+  display: flex;
+  flex-direction: row;
+  /* gap entre fotos: espacio sutil sin romper el efecto */
+  gap: 12px;
+  /* Sin padding ni margin: alineación perfecta al borde */
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  /* width: max-content hace que el track no rompa en varias líneas */
+  width: max-content;
+  /* La animación mueve el track completo */
+  animation: ticker-scroll 28s linear infinite;
+}
+
+/* Pausa al hover: el usuario puede mirar una foto sin que se mueva */
+.galeria-ticker:hover .galeria-ticker-track {
+  animation-play-state: paused;
+}
+
+/* Respeto a prefers-reduced-motion: usuarios con vértigo o epilepsia
+   que activaron "reduce movement" en su sistema → sin animación */
+@media (prefers-reduced-motion: reduce) {
+  .galeria-ticker-track {
+    animation: none;
+    /* Sin animación: wrap para que no se pierdan fotos */
+    flex-wrap: wrap;
+    width: 100%;
+    gap: var(--gap-m, 1rem);
+  }
+}
+
+/* Cada <li> del track: tamaño fijo para que todas sean iguales */
+.galeria-ticker-track > li {
+  /* Ancho fijo: lo mismo para todas las fotos */
+  flex: 0 0 300px;
+  /* Altura fija: todas las fotos tienen la misma altura */
+  height: 380px;
+  border-radius: 10px;
+  overflow: hidden;
+  /* Borde muy sutil para separar del fondo oscuro */
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* <figure> dentro de cada <li>: sin margen, llena el li */
+.galeria-ticker-track figure {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* <img>: cubre todo el contenedor sin distorsión */
+.galeria-ticker-track img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Foco superior: muestra cara/torso de la doctora */
+  object-position: center top;
+  /* Transición de brillo al hover — la pausa deja ver la foto */
+  transition: filter 0.3s ease, transform 0.4s ease;
+  filter: brightness(0.92);
+}
+
+/* Cuando el carrusel está pausado y el usuario mira una foto */
+.galeria-ticker:hover .galeria-ticker-track img {
+  filter: brightness(1.05);
+}
+
+
+/* ============================================================
+   BLOQUE: VALORES / FILOSOFÍA
+   ============================================================ */
+
+/* Grid de 3 columnas para los valores */
+.valores-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--gap-m);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Tarjeta de valor */
+.valor-card {
+  padding: clamp(1.5rem, 2.5vw, 2rem);
+  border: 1px solid var(--c-gris-claro);
+  border-radius: var(--radius-m);
+  background-color: var(--c-borde-oscuro);
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+.valor-card:hover {
+  border-color: var(--c-plata);
+  transform: translateY(-3px); /* elevación sutil */
+}
+
+/* Título del valor — h3 */
+.valor-titulo {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--c-blanco);
+  margin: 0 0 0.75rem;
+  letter-spacing: -0.01em;
+}
+
+/* Descripción del valor */
+.valor-card p {
+  font-size: 0.9375rem;
+  color: var(--c-gris-texto);
+  line-height: 1.7;
+  margin: 0;
+}
+
+
+/* ============================================================
+   BLOQUE: CTA SECTION (sobre-nosotros)
+   Reutiliza el patrón .cta-section de index.html
+   ============================================================ */
+
+/* .cta-section ya está definido en el bloque CTA Final de styles.css
+   Solo ajustamos el #cta-sobre si hay diferencias */
+#cta-sobre {
+  /* Usar el mismo fondo que el CTA principal */
+  background-color: var(--c-borde-oscuro);
+  border-top: 1px solid var(--c-gris-claro);
+}
+
+
+/* ============================================================
+   RESPONSIVE — sobre-nosotros.html
+   ============================================================ */
+
+@media (max-width: 768px) {
+  /* Grid perfil pasa a columna única en mobile */
+  .perfil-doctora-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* La foto deja de ser sticky en mobile (ocupa toda la pantalla de todos modos) */
+  .perfil-foto {
+    position: static;
+    max-width: 340px;
+    /* margin: auto centra la foto en mobile */
+    margin: 0 auto;
+  }
+
+  /* Galería ticker: en tablet el carrusel sigue funcionando igual */
+}
+
+@media (max-width: 480px) {
+  /* Carrusel en móvil: fotos más angostas para que entren 2 en pantalla */
+  .galeria-ticker-track > li {
+    flex: 0 0 220px;
+    height: 280px;
+  }
+
+  .valores-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* AUDITORÍA CSS SOBRE-NOSOTROS: 12 bloques específicos, ~160 selectores añadidos */
+
+
+/* ============================================================
+   BLOQUE: CONTACTO — Página contacto.html
+   ============================================================ */
+
+/* ============================================================
+   Grid de 2 columnas: info de contacto | formulario
+   ============================================================ */
+.contacto-grid {
+  display: grid;
+  /* Columnas: izquierda ~420px, derecha el resto */
+  grid-template-columns: minmax(280px, 420px) 1fr;
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: start;
+}
+
+
+/* ============================================================
+   COLUMNA IZQUIERDA: datos NAP + horarios
+   ============================================================ */
+
+/* <address> con los datos del consultorio */
+.contacto-nap {
+  font-style: normal; /* <address> es italic por defecto — lo revertimos */
+  margin-bottom: var(--gap-l);
+}
+
+/* Nombre del consultorio en address */
+.contacto-nombre-clinica {
+  display: block;
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: var(--c-blanco);
+  line-height: 1.4;
+  margin-bottom: var(--gap-m);
+}
+
+/* Párrafo de dato de contacto (teléfono, whatsapp, dirección) */
+.contacto-dato {
+  margin-bottom: 0.75rem;
+  color: var(--c-gris-texto);
+  font-size: 0.9375rem;
+}
+
+/* Enlace de contacto: teléfono/WhatsApp */
+.contacto-enlace {
+  color: var(--c-plata-claro);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.contacto-enlace:hover { color: var(--c-blanco); }
+
+/* Enlace de WhatsApp — diferenciado visualmente */
+.contacto-whatsapp {
+  /* Verde WhatsApp moderado — excepción justificada por branding del servicio */
+  color: #4ade80;
+}
+.contacto-whatsapp:hover { color: #86efac; }
+
+/* Dirección con letra más pequeña para la nota */
+.contacto-direccion small {
+  font-size: 0.8125rem;
+  color: var(--c-gris-texto);
+  display: block;
+  margin-top: 0.25rem;
+}
+
+
+/* ============================================================
+   HORARIOS — <dl> con grid interno
+   ============================================================ */
+.contacto-horarios {
+  margin-bottom: var(--gap-l);
+  padding: var(--gap-m);
+  border: 1px solid var(--c-gris-claro);
+  border-radius: var(--radius-m);
+  background-color: var(--c-borde-oscuro);
+}
+
+/* Título de la sección de horarios */
+.horarios-titulo {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--c-plata);
+  margin: 0 0 var(--gap-m);
+}
+
+/* Grid para alinear <dt> y <dd> en 2 columnas */
+.horarios-lista {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.5rem 1.5rem;
+  margin: 0;
+}
+
+.horarios-lista dt {
+  font-size: 0.875rem;
+  color: var(--c-gris-texto);
+  white-space: nowrap;
+}
+
+.horarios-lista dd {
+  font-size: 0.875rem;
+  color: var(--c-blanco);
+  margin: 0;
+}
+
+/* CTAs de la columna izquierda */
+.contacto-cta-whatsapp,
+.contacto-cta-agenda {
+  display: block; /* Botón de ancho completo en columna */
+  text-align: center;
+  margin-bottom: 0.75rem;
+}
+
+
+/* ============================================================
+   COLUMNA DERECHA: Formulario de contacto — REDISEÑO PREMIUM
+   PROPÓSITO: Formulario que genera confianza visual.
+              Card elevada + inputs claros + trust badges.
+   ============================================================ */
+
+/* Columna del formulario: tarjeta flotante con sombra */
+.contacto-form-col {
+  /* Tarjeta blanca sobre el fondo oscuro — contraste máximo */
+  background-color: #ffffff;
+  /* Borde redondeado suave */
+  border-radius: 16px;
+  /* Padding interno generoso */
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  /* Sombra elevada — la tarjeta "flota" sobre el fondo */
+  box-shadow:
+    0 4px 6px rgba(0,0,0,0.07),
+    0 12px 40px rgba(0,0,0,0.18),
+    0 0 0 1px rgba(148,163,184,0.12);
+  /* Posición relativa para el acento superior */
+  position: relative;
+  /* Overflow oculto para el acento con border-radius */
+  overflow: hidden;
+}
+
+/* Acento de color en la parte superior de la tarjeta */
+.contacto-form-col::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  /* Altura del acento */
+  height: 4px;
+  /* Gradiente con el color de la marca (platino/plata) */
+  background: linear-gradient(
+    90deg,
+    var(--c-plata-hover) 0%,
+    var(--c-plata-claro) 50%,
+    var(--c-plata-hover) 100%
+  );
+}
+
+/* Título del formulario */
+.form-titulo {
+  font-size: 1.375rem;
+  font-weight: 700;
+  /* Color oscuro sobre fondo blanco */
+  color: #0e0e10;
+  margin: 0 0 var(--gap-s);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+/* Subtítulo / promesa bajo el título */
+.form-subtitulo {
+  font-size: 0.875rem;
+  color: #6c757d;
+  margin: 0 0 var(--gap-l);
+  line-height: 1.5;
+  /* Borde inferior que separa intro del formulario */
+  padding-bottom: var(--gap-m);
+  border-bottom: 1px solid #e9ecef;
+}
+
+/* El formulario en sí */
+.formulario-contacto {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-m);
+}
+
+/* ---- FIELDSETS ---- */
+
+/* <fieldset>: grupo de campos — sin borde por defecto */
+.formulario-contacto fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+}
+
+/* <legend>: título del grupo de campos */
+.formulario-contacto legend {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--c-plata-hover);
+  margin-bottom: 0.75rem;
+  /* Padding inferior para separar de los inputs */
+  padding-bottom: 0.25rem;
+  /* Línea decorativa bajo la legend */
+  border-bottom: 1px solid #e9ecef;
+  /* Ocupa el ancho completo del fieldset */
+  width: 100%;
+}
+
+/* ---- LABELS ---- */
+
+/* <label>: etiqueta de cada campo */
+.formulario-contacto label {
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  /* Texto oscuro sobre blanco */
+  color: #1e1e22;
+  margin-bottom: 0.375rem;
+  /* cursor pointer indica que es clickable */
+  cursor: pointer;
+}
+
+/* Asterisco de campo obligatorio */
+.formulario-contacto label abbr {
+  /* Color de acento (plata/platino) para el * obligatorio */
+  color: var(--c-plata-hover);
+  /* Sin subrayado que confunda */
+  text-decoration: none;
+  margin-left: 0.2em;
+  font-size: 1em;
+  font-weight: 700;
+}
+
+/* ---- INPUTS, SELECT, TEXTAREA ---- */
+
+/* Estilos base compartidos por todos los campos de entrada */
+.formulario-contacto input[type="text"],
+.formulario-contacto input[type="tel"],
+.formulario-contacto input[type="email"],
+.formulario-contacto select,
+.formulario-contacto textarea {
+  /* Ancho completo del contenedor */
+  width: 100%;
+  /* Padding interno: altura mínima táctil de 44px (WCAG) */
+  padding: 0.75rem 1rem;
+  /* Borde 1.5px: visible pero no agresivo */
+  border: 1.5px solid #dee2e6;
+  /* Borde redondeado */
+  border-radius: 8px;
+  /* Tipografía heredada del documento */
+  font: inherit;
+  /* Tamaño de fuente 16px mínimo: evita zoom automático en iOS */
+  font-size: 1rem;
+  /* Color del texto */
+  color: #1e1e22;
+  /* Fondo blanco ligeramente grisáceo en reposo */
+  background-color: #f8f9fa;
+  /* Transición suave para los estados focus/hover */
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
+  /* box-sizing ya está definido globalmente, pero lo reafirmamos */
+  box-sizing: border-box;
+  /* -webkit-appearance none: elimina estilo nativo en Safari/iOS */
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* Estado hover — feedback visual anticipado */
+.formulario-contacto input[type="text"]:hover,
+.formulario-contacto input[type="tel"]:hover,
+.formulario-contacto input[type="email"]:hover,
+.formulario-contacto select:hover,
+.formulario-contacto textarea:hover {
+  /* Borde más oscuro en hover */
+  border-color: #adb5bd;
+  /* Fondo blanco puro */
+  background-color: #ffffff;
+}
+
+/* Estado focus — el más importante para accesibilidad */
+.formulario-contacto input[type="text"]:focus,
+.formulario-contacto input[type="tel"]:focus,
+.formulario-contacto input[type="email"]:focus,
+.formulario-contacto select:focus,
+.formulario-contacto textarea:focus {
+  /* Quitar el outline nativo del navegador (lo reemplazamos) */
+  outline: none;
+  /* Borde azul-marino visible — indica campo activo */
+  border-color: var(--c-plata-hover);
+  /* Fondo blanco puro al enfocar */
+  background-color: #ffffff;
+  /* Halo suave alrededor del campo — indica foco claramente */
+  box-shadow: 0 0 0 3px rgba(100, 116, 139, 0.2);
+}
+
+/* Placeholder: texto de ejemplo dentro del campo */
+.formulario-contacto input::placeholder,
+.formulario-contacto textarea::placeholder {
+  /* Gris claro — no compite con el texto real */
+  color: #adb5bd;
+  /* Tamaño ligeramente más pequeño que el texto */
+  font-size: 0.9375rem;
+}
+
+/* Select: tiene flecha nativa — añadimos una personalizada */
+.formulario-contacto select {
+  /* Espacio a la derecha para la flecha */
+  padding-right: 2.5rem;
+  /* Flecha personalizada con background-image SVG */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%236c757d' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 12px;
+  cursor: pointer;
+}
+
+/* Textarea: altura mínima y sin resize horizontal */
+.formulario-contacto textarea {
+  /* rows="4" da ~120px; min-height para consistencia */
+  min-height: 120px;
+  /* Solo resize vertical — horizontal rompería el layout */
+  resize: vertical;
+  /* Alineación del texto desde arriba */
+  vertical-align: top;
+}
+
+/* ---- BOTÓN DE ENVÍO ---- */
+
+/* Botón de submit: lleno, de ancho completo, llamativo */
+.form-submit-btn {
+  /* Ancho completo de la tarjeta */
+  width: 100%;
+  /* Padding generoso — área de toque grande */
+  padding: 1rem 2rem;
+  /* Fondo oscuro de marca */
+  background-color: var(--c-negro);
+  /* Texto blanco */
+  color: var(--c-blanco);
+  /* Borde redondeado generoso */
+  border-radius: 8px;
+  /* Tipografía semibold */
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  /* Sin borde nativo */
+  border: none;
+  /* Cursor pointer */
+  cursor: pointer;
+  /* Transición suave para hover */
+  transition: background-color 0.2s, transform 0.15s, box-shadow 0.2s;
+  /* Margen superior para separar del último campo */
+  margin-top: var(--gap-s);
+}
+
+/* Hover del botón: ligeramente elevado */
+.form-submit-btn:hover {
+  background-color: #1e2e42;
+  /* Micro-elevación: el botón "sube" 1px */
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+/* Active: el botón "baja" al hacer clic (feedback táctil) */
+.form-submit-btn:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* Focus visible para teclado: anillo claro */
+.form-submit-btn:focus-visible {
+  outline: 3px solid var(--c-plata);
+  outline-offset: 2px;
+}
+
+/* ---- TRUST BADGES bajo el botón ---- */
+
+/* Contenedor de los badges de confianza */
+.form-trust-badges {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem 1.25rem;
+  margin-top: 0.875rem;
+  /* Sin bullets en la lista */
+  list-style: none;
+  padding: 0;
+}
+
+/* Cada badge individual */
+.form-trust-badges li {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.75rem;
+  color: #868e96;
+  font-weight: 500;
+}
+
+/* Ícono decorativo de cada badge (SVG inline o emoji) */
+.form-trust-badges li::before {
+  content: '✓';
+  color: #40c057;
+  font-weight: 700;
+  font-size: 0.8125rem;
+}
+
+/* ---- MENSAJE DE ESTADO (éxito/error) ---- */
+
+/* <output> para el mensaje de respuesta tras el envío */
+.form-output {
+  display: block;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  margin-top: 0.5rem;
+  /* Por defecto invisible: se activa con JS */
+  display: none;
+}
+
+/* Estado de éxito */
+.form-output.exito {
+  display: block;
+  background-color: #d3f9d8;
+  color: #2f9e44;
+  border: 1px solid #8ce99a;
+}
+
+/* Estado de error */
+.form-output.error {
+  display: block;
+  background-color: #fff5f5;
+  color: #c92a2a;
+  border: 1px solid #ffa8a8;
+}
+
+/* Estilos de fieldset reutiliza los del bloque de agendar.html en styles.css */
+
+
+/* ============================================================
+   MAPA DE UBICACIÓN — iframe en <figure>
+   ============================================================ */
+
+/* Figura contenedora del mapa */
+.mapa-figura {
+  margin: 0;
+  border-radius: var(--radius-m);
+  overflow: hidden;
+  border: 1px solid var(--c-gris-claro);
+}
+
+/* iframe del mapa de Google */
+.mapa-figura iframe {
+  display: block; /* Elimina el espacio inferior inline por defecto */
+  width: 100%;
+  /* aspect-ratio 16/9 para mapa apaisado */
+  aspect-ratio: 16 / 6;
+  border: none;
+  /* filter para integrar el mapa con la paleta oscura */
+  filter: invert(90%) hue-rotate(180deg);
+}
+
+/* Pie del mapa */
+.mapa-figura figcaption {
+  padding: 0.75rem 1rem;
+  font-size: 0.8125rem;
+  color: var(--c-gris-texto);
+  border-top: 1px solid var(--c-gris-claro);
+  background-color: var(--c-borde-oscuro);
+}
+
+.mapa-figura figcaption a {
+  color: var(--c-plata-claro);
+  text-decoration: none;
+}
+.mapa-figura figcaption a:hover { color: var(--c-blanco); }
+
+
+/* ============================================================
+   RESPONSIVE — contacto.html
+   ============================================================ */
+@media (max-width: 768px) {
+  /* Grid pasa a columna única */
+  .contacto-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* CTAs de ancho completo ya están con display:block, ok */
+}
+
+/* AUDITORÍA CSS CONTACTO: 8 bloques, ~60 selectores añadidos */
+
+
+/* ============================================================
+   BLOQUE: ERROR 404 — página 404.html
+   ============================================================ */
+
+/* Número grande decorativo — puro CSS, no imagen, no div extra */
+.error-codigo {
+  /* Tipografía enorme como elemento gráfico */
+  font-size: clamp(6rem, 20vw, 14rem);
+  font-weight: 900;
+  line-height: 1;
+  /* Efecto: texto con color plata muy sutil — casi invisible */
+  color: transparent;
+  /* -webkit-text-stroke dibuja el contorno del número sin relleno */
+  -webkit-text-stroke: 1px var(--c-gris-claro);
+  letter-spacing: -0.05em;
+  margin: 0 0 var(--gap-m);
+  /* Desplazamiento hacia arriba para el efecto visual */
+  margin-top: -0.2em;
+}
+
+/* h1 de la página 404 */
+#error-404 h1 {
+  font-size: clamp(1.75rem, 4vw, 3rem);
+  font-weight: 700;
+  color: var(--c-blanco);
+  letter-spacing: -0.02em;
+  margin: 0 0 var(--gap-m);
+}
+
+/* Descripción amigable */
+.error-descripcion {
+  color: var(--c-gris-texto);
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  max-width: 45ch;
+  margin: 0 auto var(--gap-l);
+}
+
+/* Nav de recuperación */
+.error-nav { width: 100%; }
+
+/* Lista de links de recuperación en row */
+.error-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* AUDITORÍA CSS 404: 2 bloques, ~8 selectores */
+
+
+/* ============================================
+   BLOQUE: Fotos añadidas en páginas interiores
+   ESTILIZA: .hero-foto-servicios, .hero-foto-contacto,
+             .agendar-foto-doctora, .gracias-foto-doctora, .error-foto-doctora
+   PROPÓSITO: Reglas visuales para las imágenes reales de la Dra. añadidas
+              a servicios.html, contacto.html, agendar.html, gracias.html, 404.html
+   ============================================ */
+
+/* ——————————————————————————————————————————————————
+   SERVICIOS HERO — foto de tratamiento
+   El hero de servicios pasa a ser un grid de 2 columnas:
+   texto (izq) + foto (der)
+   —————————————————————————————————————————————————— */
+
+/* Convertimos #servicios-hero en grid de 2 columnas */
+#servicios-hero {
+  /* Grid: texto auto-size (max 52ch) + foto flexible */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  /* gap entre texto y foto */
+  gap: var(--gap-xl);
+  /* Centrar verticalmente texto y foto */
+  align-items: center;
+  /* max-width y centrado horizontal */
+  max-width: var(--max-width);
+  margin-inline: auto;
+  /* Ajuste de padding para el grid interno */
+  padding-inline: var(--gap-l);
+}
+
+/* El breadcrumb <nav> del hero de servicios ocupa todo el ancho del grid */
+#servicios-hero > nav {
+  /* Span de ambas columnas para que el breadcrumb esté arriba de todo */
+  grid-column: 1 / -1;
+}
+
+/* El <header> con el h1 y descripción va en la columna izquierda */
+#servicios-hero > .seccion-header {
+  /* Columna izquierda del grid */
+  grid-column: 1;
+  /* max-width para legibilidad del texto */
+  max-width: 52ch;
+  margin-inline: 0;
+}
+
+/* La <picture> con la foto del tratamiento va en la columna derecha */
+.hero-foto-servicios {
+  /* Columna derecha del grid */
+  grid-column: 2;
+  /* Mostrar como bloque para controlar dimensiones */
+  display: block;
+  /* Redondeado suave para estética */
+  border-radius: 12px;
+  /* Ocultar desbordamiento al aplicar border-radius */
+  overflow: hidden;
+  /* Sombra para dar profundidad */
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* La <img> dentro de la picture de servicios ocupa todo su contenedor */
+.hero-foto-servicios img {
+  /* Imagen ocupa todo el ancho del contenedor */
+  width: 100%;
+  /* Altura automática proporcional */
+  height: auto;
+  /* object-fit cubre el área sin deformar la imagen */
+  object-fit: cover;
+  /* display block elimina el espacio inferior de inline */
+  display: block;
+  /* Máximo de altura para no hacer el hero muy alto */
+  max-height: 400px;
+}
+
+/* ——————————————————————————————————————————————————
+   CONTACTO HERO — foto del consultorio
+   Igual que el hero de servicios: grid 2 columnas
+   —————————————————————————————————————————————————— */
+
+/* Convertimos #contacto-hero en grid de 2 columnas */
+#contacto-hero {
+  /* Grid: texto (izq) + foto (der) */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--gap-xl);
+  align-items: center;
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-inline: var(--gap-l);
+}
+
+/* El breadcrumb <nav> del hero de contacto ocupa todo el ancho */
+#contacto-hero > nav {
+  /* Span completo para el breadcrumb */
+  grid-column: 1 / -1;
+}
+
+/* El <article> con el h1 va en la columna izquierda */
+#contacto-hero > .hero-sobre-contenido {
+  /* Columna izquierda */
+  grid-column: 1;
+  /* Quitar max-width heredado — el grid lo controla */
+  max-width: none;
+  /* Sin padding-bottom extra — el gap del grid lo maneja */
+  padding-bottom: 0;
+}
+
+/* La <picture> con la foto del consultorio va en la columna derecha */
+.hero-foto-contacto {
+  /* Columna derecha */
+  grid-column: 2;
+  display: block;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* La imagen ocupa todo el contenedor de la picture */
+.hero-foto-contacto img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  display: block;
+  max-height: 380px;
+}
+
+/* ——————————————————————————————————————————————————
+   AGENDAR — foto de la doctora en el aside
+   La foto va encima de las secciones de horarios/garantías
+   —————————————————————————————————————————————————— */
+
+/* Contenedor figure de la foto de la doctora en el aside */
+.agendar-foto-doctora {
+  /* Sin margen extra — el gap del aside lo maneja */
+  margin: 0;
+  /* Redondeado para armonía con las cards del aside */
+  border-radius: 10px;
+  /* Ocultar desbordamiento al aplicar border-radius */
+  overflow: hidden;
+  /* Sombra suave */
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* La imagen de perfil de la doctora en el aside */
+.agendar-foto-doctora img {
+  /* Ocupa todo el ancho del aside */
+  width: 100%;
+  /* Altura fija para que sea compacta — es un perfil cuadrado */
+  height: 220px;
+  /* object-fit: cover para recortar sin deformar.
+     object-position: top para mostrar el rostro, no los hombros */
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+
+/* Leyenda bajo la foto de la doctora en el aside */
+.agendar-foto-doctora figcaption {
+  /* Fondo oscuro que complementa el aside blanco */
+  background-color: var(--c-negro);
+  /* Texto dorado — color de marca */
+  color: var(--c-dorado);
+  /* Tipografía pequeña centrada */
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-align: center;
+  /* Padding interno vertical */
+  padding: 0.5rem var(--gap-s);
+  /* Letra espaciada para estilo profesional */
+  letter-spacing: 0.05em;
+}
+
+/* ——————————————————————————————————————————————————
+   GRACIAS — foto de la doctora sonriendo
+   Va entre los próximos pasos y el nav de retorno
+   —————————————————————————————————————————————————— */
+
+/* Contenedor figure de la foto en la página de confirmación */
+.gracias-foto-doctora {
+  /* Centrado en la página de gracias */
+  margin: var(--gap-l) auto;
+  /* Tamaño circular: foto de perfil redonda */
+  width: 180px;
+  height: 180px;
+  /* border-radius 50%: hace la foto circular */
+  border-radius: 50%;
+  /* Ocultar el exceso para respetar el círculo */
+  overflow: hidden;
+  /* Borde dorado como acento de marca */
+  border: 4px solid var(--c-dorado);
+  /* Sombra suave para dar profundidad */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* La imagen de la doctora en la página de gracias */
+.gracias-foto-doctora img {
+  /* Ocupa todo el círculo */
+  width: 100%;
+  height: 100%;
+  /* cover para que llene el círculo sin deformar */
+  object-fit: cover;
+  /* Centra el rostro */
+  object-position: top center;
+  display: block;
+}
+
+/* Leyenda bajo la foto circular en gracias */
+.gracias-foto-doctora figcaption {
+  /* Se sale del círculo — necesita texto debajo */
+  /* Usamos un trick: la figcaption es parte del figure pero fuera del overflow */
+  /* Aplicamos margen para que aparezca bajo el figure */
+  margin-top: 0.75rem;
+  /* Texto centrado */
+  text-align: center;
+  /* Tipografía pequeña e itálica */
+  font-size: 0.875rem;
+  font-style: italic;
+  /* Color suave */
+  color: var(--c-gris-texto);
+}
+
+/* ——————————————————————————————————————————————————
+   404 — foto de la doctora en la página de error
+   Circular y pequeña, entre el mensaje y el nav
+   —————————————————————————————————————————————————— */
+
+/* Contenedor figure de la foto en la página 404 */
+.error-foto-doctora {
+  /* Centrado en la columna */
+  margin: var(--gap-m) auto;
+  /* Tamaño más pequeño que en gracias — es una página de error */
+  width: 120px;
+  height: 120px;
+  /* Circular */
+  border-radius: 50%;
+  overflow: hidden;
+  /* Borde dorado */
+  border: 3px solid var(--c-dorado);
+  /* Ligeramente desaturado para no distraer del CTA */
+  opacity: 0.9;
+}
+
+/* Imagen en el círculo del 404 */
+.error-foto-doctora img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+
+/* ——————————————————————————————————————————————————
+   MEDIA QUERIES — Responsivo para las nuevas fotos
+   —————————————————————————————————————————————————— */
+
+/* Tablet: hero de 2 columnas pasa a 1 columna en 900px */
+@media (max-width: 900px) {
+
+  /* Hero servicios: columna única en tablet */
+  #servicios-hero {
+    /* 1 sola columna en tablet — texto arriba, foto abajo */
+    grid-template-columns: 1fr;
+  }
+
+  /* El breadcrumb sigue siendo full-width (ya lo era) */
+  #servicios-hero > nav {
+    grid-column: 1;
+  }
+
+  /* El header de texto ocupa toda la columna */
+  #servicios-hero > .seccion-header {
+    grid-column: 1;
+    /* max-width para texto legible */
+    max-width: 60ch;
+  }
+
+  /* La foto va debajo del texto */
+  .hero-foto-servicios {
+    grid-column: 1;
+    /* Altura fija en tablet para que no sea muy grande */
+    max-height: 280px;
+  }
+
+  .hero-foto-servicios img {
+    max-height: 280px;
+  }
+
+  /* Hero contacto: igual — 1 columna en tablet */
+  #contacto-hero {
+    grid-template-columns: 1fr;
+  }
+
+  #contacto-hero > nav {
+    grid-column: 1;
+  }
+
+  #contacto-hero > .hero-sobre-contenido {
+    grid-column: 1;
+  }
+
+  .hero-foto-contacto {
+    grid-column: 1;
+    max-height: 260px;
+  }
+
+  .hero-foto-contacto img {
+    max-height: 260px;
+  }
+}
+
+/* Mobile: ocultamos la foto de la doctora en el aside de agendar
+   para no bloquear el formulario con scroll innecesario */
+@media (max-width: 768px) {
+
+  /* La foto de la doctora en el aside de agendar se oculta en móvil */
+  .agendar-foto-doctora {
+    /* En móvil el aside va debajo del form — la foto sería muy grande */
+    /* La ocultamos para priorizar el formulario */
+    display: none;
+  }
+
+  /* La foto de gracias: un poco más pequeña en móvil */
+  .gracias-foto-doctora {
+    width: 140px;
+    height: 140px;
+  }
+}
+
+/* AUDITORÍA BLOQUE FOTOS: 5 nuevos elementos foto, 25+ selectores */
+
+
+/* ============================================
+   Foto de la doctora en el hero de agendar
+   Aparece a la derecha del título (grid col 2)
+   ============================================ */
+
+/* <nav> breadcrumb ocupa la fila completa (encima del grid de 2 cols) */
+#agendar-hero > nav {
+  grid-column: 1 / -1;
+}
+
+/* El <header> con el título se queda en la columna izquierda */
+#agendar-hero > .seccion-header {
+  grid-column: 1;
+}
+
+/* <figure> con la foto: columna derecha del hero */
+.agendar-hero-foto {
+  /* Columna derecha del grid */
+  grid-column: 2;
+  margin: 0;
+  /* Recorte redondeado de la imagen */
+  border-radius: 12px;
+  overflow: hidden;
+  /* Sombra para dar profundidad sobre el fondo oscuro */
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  /* Ancho fijo para la foto — la columna se ajusta a él */
+  width: 280px;
+}
+
+/* <img> dentro de la foto del hero: cubre el contenedor */
+.agendar-hero-foto img {
+  width: 100%;
+  /* Altura fija para que el recuadro sea consistente */
+  height: 340px;
+  object-fit: cover;
+  /* Centrar en la cara de la doctora */
+  object-position: top center;
+  display: block;
+}
+
+/* <figcaption>: nombre de la doctora bajo la foto */
+.agendar-hero-foto figcaption {
+  background-color: var(--c-negro, #0e0e10);
+  color: var(--c-dorado, #c9a84c);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-align: center;
+  padding: 0.4rem 0.75rem;
+  letter-spacing: 0.05em;
+}
+
+/* Responsive: en móvil la foto se oculta para no aplastar el texto */
+@media (max-width: 768px) {
+  #agendar-hero {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .agendar-hero-foto {
+    display: none;
+  }
+}
+
+
+/* ============================================
+   BLOQUE: HERO SOBRE-NOSOTROS — Layout 2 columnas
+   PROPÓSITO: Texto a la izquierda, foto de la doctora a la derecha.
+              Reemplaza el banner horizontal de fotos previo.
+   SEMÁNTICA: #sobre-hero contiene .hero-sobre-contenido + .hero-sobre-foto
+   ============================================ */
+
+/* Grid principal del hero de sobre-nosotros:
+   columna 1 = texto (fracción flexible)
+   columna 2 = foto (tamaño automático según el <figure>) */
+#sobre-hero {
+  /* Sobreescribe el padding-top heredado del bloque base de #sobre-hero */
+  display: grid;
+  grid-template-columns: 1fr auto;
+  /* border-bottom del fondo oscuro: reemplaza el gris claro del bloque base */
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+  /* gap entre texto y foto */
+  gap: clamp(2rem, 5vw, 4rem);
+  /* centra verticalmente texto y foto cuando tienen distinta altura */
+  align-items: center;
+  /* limita el ancho máximo y centra en pantallas grandes */
+  max-width: var(--max-width, 1200px);
+  margin-inline: auto;
+  /* padding lateral interior para que el contenido no toque los bordes */
+  padding-inline: var(--gap-l, 2rem);
+}
+
+/* El <nav> del breadcrumb ocupa AMBAS columnas:
+   así no queda partido entre texto y foto */
+#sobre-hero > nav {
+  grid-column: 1 / -1;
+}
+
+/* Contenedor de texto: columna izquierda */
+#sobre-hero .hero-sobre-contenido {
+  /* Elimina cualquier max-width anterior que centrara el texto */
+  max-width: 100%;
+  /* Alineación izquierda siempre (override del text-align heredado) */
+  text-align: left;
+  /* Sin padding inline propio: lo da el grid del padre */
+  padding-inline: 0;
+}
+
+/* h1 dentro del contenido: tamaño fluido sin media query */
+#sobre-hero .hero-sobre-contenido h1 {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  /* max-width en ch limita la línea para que no se extienda demasiado */
+  max-width: 16ch;
+  margin-bottom: var(--gap-m, 1.5rem);
+}
+
+/* Descripción bajo el h1 */
+#sobre-hero .hero-sobre-contenido .hero-sobre-descripcion {
+  max-width: 48ch;
+  font-size: clamp(1rem, 2vw, 1.15rem);
+}
+
+/* ——— FOTO LATERAL DERECHA ——— */
+
+/* <figure class="hero-sobre-foto">: columna derecha del grid */
+.hero-sobre-foto {
+  /* La figura no ocupa fracción sino su tamaño natural + lo que marquemos */
+  grid-column: 2;
+  margin: 0; /* reset del margin nativo de <figure> */
+  /* Redondeo de esquinas + recorte para que la foto no desborde */
+  border-radius: 16px;
+  overflow: hidden;
+  /* Sombra para dar profundidad sobre el fondo oscuro */
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+  /* Ancho fijo: 420px en escritorio, fluido en tablets */
+  width: clamp(280px, 35vw, 440px);
+  /* Borde sutil para separar la foto del fondo */
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* <img> dentro de la figura: cubre toda la caja sin deformar */
+.hero-sobre-foto img {
+  display: block;         /* elimina el espacio de línea base nativo de img */
+  width: 100%;            /* ocupa todo el ancho de la figura */
+  /* Altura fija para mantener proporciones en distintos anchos de pantalla */
+  height: clamp(340px, 45vw, 560px);
+  /* cover: recorta en lugar de deformar */
+  object-fit: cover;
+  /* top center: prioriza la parte superior (cara de la doctora) */
+  object-position: top center;
+  /* Transición suave para efectos de hover si se añaden después */
+  transition: transform 0.4s ease;
+}
+
+/* ——— RESPONSIVE ——— */
+
+/* Tablet (≤900px): la foto se vuelve más pequeña */
+@media (max-width: 900px) {
+  .hero-sobre-foto {
+    width: clamp(200px, 30vw, 320px);
+  }
+  .hero-sobre-foto img {
+    height: clamp(260px, 38vw, 420px);
+  }
+}
+
+/* Móvil (≤768px): layout de 1 columna, foto oculta para no romper el hero */
+@media (max-width: 768px) {
+  #sobre-hero {
+    /* Vuelve a 1 columna: el texto ocupa todo el ancho */
+    grid-template-columns: 1fr;
+  }
+  /* Oculta la foto en móvil: el espacio es insuficiente para 2 columnas */
+  .hero-sobre-foto {
+    display: none;
+  }
+}
+
+/* AUDITORÍA BLOQUE HERO-SOBRE: hero-foto-banner=eliminado, hero-sobre-foto=activo */

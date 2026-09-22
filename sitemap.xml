@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  SITEMAP.XML — Dra. Elizabeth Guzmán Odontología Estética y Especializada
+  PROPÓSITO: Decirle a Google y Bing exactamente qué URLs tiene el sitio,
+             su frecuencia de cambio y su prioridad relativa.
+  STANDARD: https://www.sitemaps.org/protocol.html
+  NOTA: Actualizar <lastmod> cada vez que se modifica una página.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+          http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
+  <!-- HOME — máxima prioridad, cambia con frecuencia -->
+  <url>
+    <loc>https://elizabethguzman.com/</loc>
+    <!-- lastmod: fecha de última modificación (ISO 8601) -->
+    <lastmod>2026-09-21</lastmod>
+    <!-- changefreq: con qué frecuencia cambia esta página -->
+    <changefreq>weekly</changefreq>
+    <!-- priority: importancia relativa 0.0-1.0 (default 0.5) -->
+    <priority>1.0</priority>
+  </url>
+
+  <!-- SERVICIOS — alta prioridad, contenido principal -->
+  <url>
+    <loc>https://elizabethguzman.com/servicios.html</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- SOBRE NOSOTROS — confianza y autoridad -->
+  <url>
+    <loc>https://elizabethguzman.com/sobre-nosotros.html</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- CONTACTO — alta prioridad para conversión local -->
+  <url>
+    <loc>https://elizabethguzman.com/contacto.html</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- AGENDAR — CTA principal, máxima conversión -->
+  <url>
+    <loc>https://elizabethguzman.com/agendar.html</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- GRACIAS — baja prioridad, no indexar (ver robots.txt) -->
+  <!-- Dejamos la URL pero con prioridad mínima — si el server la sirve,
+       Google la puede visitar pero no añade valor SEO -->
+  <url>
+    <loc>https://elizabethguzman.com/gracias.html</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.1</priority>
+  </url>
+
+</urlset>
