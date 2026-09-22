@@ -1879,6 +1879,8 @@ body > header.nav-abierto > nav > ul {
   gap: var(--gap-m);
   border-top: 1px solid rgba(148, 163, 184, 0.15);
   border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+  /* z-index: el dropdown debe quedar encima del contenido de la página */
+  z-index: 99;
 }
 
 body > header.nav-abierto {
@@ -4765,3 +4767,99 @@ body > header.nav-abierto .nav-toggle::after {
 
 /* AUDITORÍA BLOQUE RESPONSIVE GLOBAL: div=0, span=0
    Bloques: hamburguesa-X, hero-foto, 480px, 360px, overflow-guard */
+
+/* ============================================
+   BLOQUE: FIX NAV MÓVIL — Menú hamburguesa correcto
+   PROBLEMA: La regla base `body > header nav > ul { display: flex }`
+   tiene especificidad 0,0,4. El override anterior `header nav > ul`
+   solo tiene 0,0,3 y PIERDE la cascada → los links siempre visibles.
+   SOLUCIÓN: Usar el MISMO selector base para que la cascada (último gana)
+   funcione correctamente.
+   ============================================ */
+
+@media (max-width: 1024px) {
+
+  /* FIX ESPECIFICIDAD: Mismo selector que la regla base.
+     En cascada, si tienen la misma especificidad, gana el último declarado.
+     Este bloque está al final del archivo → gana. */
+  body > header nav > ul {
+    /* Ocultar links: en móvil solo se ven dentro del menú desplegable */
+    display: none;
+  }
+
+  /* Mostrar el botón hamburguesa */
+  .nav-toggle {
+    display: block;
+  }
+
+  /* ─── CAMBIO CLAVE: Mostrar "Agendar cita" en el nav móvil ───
+     El usuario quiere: [Logo] [Agendar cita] [hamburguesa]
+     Antes estaba display:none en el bloque anterior — lo reactivamos aquí */
+  .cta-header {
+    /* Reactivar: visible en móvil como botón compacto */
+    display: block;
+    /* Tamaño reducido para que quepa en el nav estrecho */
+    font-size: 0.7rem;
+    /* Menos padding para que no ocupe demasiado espacio */
+    padding: 0.45rem 0.75rem;
+    /* Menos letter-spacing para que el texto "Agendar cita" entre cómodo */
+    letter-spacing: 0.02em;
+    /* white-space nowrap: evita que "Agendar cita" se rompa en 2 líneas */
+    white-space: nowrap;
+  }
+
+  /* ─── LOGO MÓVIL: ocultar subtítulo, truncar nombre ───
+     En móvil, el subtítulo "Odontología Estética y Especializada"
+     ocupa demasiado espacio y empuja al CTA y la hamburguesa.
+     Solución: ocultar el subtítulo, dejar solo el nombre. */
+  .logo em {
+    /* Subtítulo oculto en móvil: se ve en desktop donde hay espacio */
+    display: none;
+  }
+
+  /* El logo puede encogerse si el viewport es muy estrecho,
+     pero no puede empujar al CTA y al hamburguesa fuera de la pantalla */
+  .logo {
+    /* flex-shrink: 1 permite que el logo se encoja si hay falta de espacio */
+    flex-shrink: 1;
+    /* min-width: 0 necesario para que flexbox permita el encogimiento */
+    min-width: 0;
+    /* overflow hidden + text-overflow ellipsis para truncar si es largo */
+    overflow: hidden;
+  }
+
+  /* Nombre del logo: truncar con ... si no entra */
+  .logo strong {
+    /* text-overflow: ellipsis → "Elizabeth Guzmán..." si el viewport es muy estrecho */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* Limita el ancho para que el CTA + hamburguesa siempre quepan */
+    max-width: 45vw;
+    /* display block necesario para que overflow/text-overflow funcionen */
+    display: block;
+  }
+
+  /* Nav: ajustar padding y gap para los 3 elementos: [logo][cta][hamburguesa] */
+  body > header > nav {
+    /* Menos padding lateral en móvil: más espacio para los 3 elementos */
+    padding-inline: var(--gap-m);
+    /* gap más pequeño entre logo → cta → hamburguesa */
+    gap: var(--gap-s);
+  }
+
+}
+
+/* ─── MENÚ ABIERTO: anular el display:none anterior ───
+   Cuando nav.js añade .nav-abierto al header, la ul DEBE mostrarse.
+   `display: flex !important` anula el display:none de la media query. */
+@media (max-width: 1024px) {
+  body > header.nav-abierto > nav > ul {
+    /* Anula el display:none: muestra el dropdown vertical */
+    display: flex !important;
+    /* Ya tiene flex-direction:column, position:absolute, etc.
+       en el bloque .nav-abierto existente — no duplicamos esas reglas */
+  }
+}
+
+/* AUDITORÍA BLOQUE FIX-NAV-MÓVIL: especificidad corregida, CTA visible en móvil */
