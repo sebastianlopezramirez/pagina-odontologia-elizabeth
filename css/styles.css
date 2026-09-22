@@ -4532,3 +4532,236 @@ mark.highlight-plata {
 }
 
 /* AUDITORÍA BLOQUE HERO-SOBRE: hero-foto-banner=eliminado, hero-sobre-foto=activo */
+
+/* ============================================
+   BLOQUE RESPONSIVE GLOBAL — Mejoras móvil
+   Cubre: hamburguesa→X, fotos hero, grids,
+   pantallas muy pequeñas (320–480px), botón nav
+   ============================================ */
+
+/* ------------------------------------------
+   1. BOTÓN HAMBURGUESA: estilos base necesarios
+      que faltan para que se vea y comporte bien
+   ------------------------------------------ */
+
+/* Asegura que el botón no tenga estilos UA que
+   interfieran: sin fondo, sin borde, con cursor pointer */
+.nav-toggle {
+  /* Elimina estilos por defecto del <button> */
+  background: none;
+  /* Sin borde del UA */
+  border: none;
+  /* Cursor de puntero: indica que es clickeable */
+  cursor: pointer;
+  /* Padding cero para que el área visual coincida con el tamaño declarado */
+  padding: 0;
+}
+
+/* ------------------------------------------
+   2. ANIMACIÓN HAMBURGUESA → X cuando nav abierto
+      .nav-abierto se añade al <header> por nav.js
+   ------------------------------------------ */
+
+/* Línea superior (::before): rota 45° hacia el centro */
+body > header.nav-abierto .nav-toggle::before {
+  /* transform-origin center: gira desde el centro de la línea */
+  transform-origin: center;
+  /* Translada hacia el centro vertical + rota para formar diagonal */
+  transform: translateY(9px) rotate(45deg);
+}
+
+/* Línea del medio (border-top del propio elemento): desaparece */
+body > header.nav-abierto .nav-toggle {
+  /* Hace transparente el borde del medio para que solo queden 2 líneas */
+  border-top-color: transparent;
+}
+
+/* Línea inferior (::after): rota -45° hacia el centro */
+body > header.nav-abierto .nav-toggle::after {
+  transform-origin: center;
+  /* Sube hacia el centro + rota para completar la X */
+  transform: translateY(-9px) rotate(-45deg);
+}
+
+/* ------------------------------------------
+   3. FOTO HERO HOME: limitar altura en móvil
+      La <figure class="hero-figura"> con la foto
+      de la doctora puede ser muy alta en 1 columna
+   ------------------------------------------ */
+
+@media (max-width: 768px) {
+  /* La figura se apila debajo del texto en 1 columna.
+     Limitamos su altura para que no domine la pantalla */
+  .hero-figura {
+    /* Máximo 50% del viewport height: siempre cabe el texto arriba */
+    max-height: 50vh;
+    /* overflow hidden para que la imagen no se desborde */
+    overflow: hidden;
+    /* Centra la figura en el flujo 1 columna */
+    margin-inline: auto;
+    /* Ancho completo del contenedor */
+    width: 100%;
+  }
+
+  /* La imagen dentro de la figura: cubre el área sin distorsión */
+  .hero-figura img {
+    width: 100%;
+    /* object-fit cover: recorta la imagen para llenar el contenedor */
+    object-fit: cover;
+    /* object-position top: prioriza la cara de la doctora */
+    object-position: top center;
+    /* Altura coincide con el max-height de la figura */
+    height: 100%;
+    /* Quita max-width que pudiera restringir el ancho */
+    max-width: none;
+  }
+}
+
+/* ------------------------------------------
+   4. PANTALLAS MUY PEQUEÑAS: 480px y menos
+      Ajustes de tipografía, padding y grids
+      para dispositivos como iPhone SE (375px)
+      o teléfonos antiguos (320px)
+   ------------------------------------------ */
+
+@media (max-width: 480px) {
+
+  /* Padding global reducido: más espacio para contenido */
+  main > section,
+  main > article {
+    /* Padding inline más ajustado en pantallas pequeñas */
+    padding-inline: var(--gap-s, 0.75rem);
+  }
+
+  /* Encabezados: escala más agresiva con clamp en pantallas pequeñas */
+  h1 {
+    /* Mínimo 1.6rem para legibilidad, sin pasar de 2rem en 480px */
+    font-size: clamp(1.6rem, 7vw, 2rem);
+  }
+
+  h2 {
+    font-size: clamp(1.3rem, 6vw, 1.7rem);
+  }
+
+  h3 {
+    font-size: clamp(1rem, 5vw, 1.3rem);
+  }
+
+  /* CTA principal: que el texto no se corte */
+  .cta-principal,
+  .cta-secundario,
+  [class*="cta"] {
+    /* Texto más pequeño en móvil muy pequeño */
+    font-size: clamp(0.85rem, 4vw, 1rem);
+    /* Padding ajustado */
+    padding-block: 0.6rem;
+    padding-inline: 1rem;
+  }
+
+  /* Grids de servicios: asegurar 1 columna en pantallas muy pequeñas */
+  .servicios-grid,
+  .grid-servicios,
+  [class*="grid"] {
+    /* Forzar 1 columna absoluta para evitar scroll horizontal */
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Cards de servicios: sin ancho mínimo que cause overflow */
+  .servicio-card,
+  article[class*="servicio"],
+  [class*="card"] {
+    /* min-width: 0 previene que el contenido empuje el grid más allá del viewport */
+    min-width: 0;
+    width: 100%;
+  }
+
+  /* Formulario agendar: campos full-width sin overflow */
+  input,
+  select,
+  textarea {
+    /* box-sizing border-box: el padding no suma al ancho */
+    box-sizing: border-box;
+    /* Ancho 100% del contenedor */
+    width: 100%;
+    /* Tamaño de fuente mínimo 16px: evita el zoom automático en iOS */
+    font-size: max(16px, 1rem);
+  }
+
+  /* Tabla de precios (si existe): scroll horizontal en contenedor */
+  figure:has(table),
+  section:has(table) {
+    /* Permite scroll horizontal SOLO en el contenedor de la tabla */
+    overflow-x: auto;
+    /* Scroll suave en iOS */
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* ------------------------------------------
+   5. PANTALLA MUY ESTRECHA: 360px y menos
+      Para teléfonos de gama baja o muy antiguos
+   ------------------------------------------ */
+
+@media (max-width: 360px) {
+
+  /* Logo del consultorio: reducir si es muy ancho */
+  header img[class*="logo"],
+  header [class*="logo"] img {
+    /* Máximo 140px para que quepa con el botón hamburguesa */
+    max-width: 140px;
+  }
+
+  /* Nav padding inline mínimo */
+  body > header > nav {
+    padding-inline: var(--gap-xs, 0.5rem);
+  }
+
+  /* El menú abierto tampoco necesita tanto padding lateral */
+  body > header.nav-abierto > nav > ul {
+    padding-inline: var(--gap-s, 0.75rem);
+  }
+
+  /* Botón WhatsApp flotante: moverlo para que no tape contenido */
+  .whatsapp-flotante {
+    /* Un poco más pegado al borde en pantallas muy pequeñas */
+    right: 0.75rem;
+    bottom: 0.75rem;
+  }
+}
+
+/* ------------------------------------------
+   6. PREVENIR SCROLL HORIZONTAL GLOBAL
+      Regla de seguridad para cualquier elemento
+      que pueda romper el layout en móvil
+   ------------------------------------------ */
+
+/* Asegura que ningún elemento hijo del body
+   se salga del ancho del viewport */
+@media (max-width: 768px) {
+  body {
+    /* overflow-x hidden en body: trapa cualquier elemento desbordado */
+    overflow-x: hidden;
+  }
+
+  /* Imágenes: nunca más anchas que su contenedor */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Videos e iframes (como el mapa de Google): responsive */
+  iframe {
+    max-width: 100%;
+  }
+
+  /* Secciones con grids de 2 columnas con minmax:
+     si el mínimo es mayor al viewport, causan scroll horizontal.
+     Restablecemos a 1 columna como fallback seguro */
+  section:has(> * + *) {
+    /* Permite que los hijos directos fluyan en 1 columna si el grid los desborda */
+    overflow: hidden;
+  }
+}
+
+/* AUDITORÍA BLOQUE RESPONSIVE GLOBAL: div=0, span=0
+   Bloques: hamburguesa-X, hero-foto, 480px, 360px, overflow-guard */
