@@ -30,6 +30,15 @@ html {
   overflow-x: hidden;
 }
 
+/* Fondo oscuro global: evita el flash blanco en TODAS las páginas.
+   Sin esto, el body tiene fondo blanco por defecto del navegador y
+   se ve en esquinas/bordes donde las secciones no cubren al 100%. */
+body {
+  margin: 0;
+  background-color: #0e0e10;
+  -webkit-font-smoothing: antialiased;
+}
+
 /* box-sizing: border-box en todos los elementos.
    Hace que padding y border se incluyan DENTRO del width declarado.
    Sin esto, padding-inline en elementos full-width causa overflow. */
@@ -1907,7 +1916,12 @@ body > header.nav-abierto {
   color: var(--c-blanco);
 
   /* Espacio vertical: arriba más para compensar el header fixed/sticky */
-  padding-block: calc(var(--gap-2xl) + 4rem) var(--gap-2xl);
+  /* padding-top reducido: solo compensa el header sticky (~70px)
+     Antes: calc(var(--gap-2xl) + 4rem) → hasta 136px de espacio
+     Ahora: clamp escalado entre 1.5rem y 2rem según viewport */
+  padding-top: clamp(1.5rem, 3vw, 2rem);
+  /* padding-bottom conserva respiro inferior del hero */
+  padding-bottom: var(--gap-2xl);
 
   /* Espacio horizontal coherente con el resto del sitio */
   padding-inline: var(--gap-m);
@@ -4018,17 +4032,22 @@ mark.highlight-plata {
 
 /* Convertimos #servicios-hero en grid de 2 columnas */
 #servicios-hero {
-  /* Grid: texto auto-size (max 52ch) + foto flexible */
+  /* Grid: texto (izq) + foto (der) en columnas iguales */
   display: grid;
   grid-template-columns: 1fr 1fr;
-  /* gap entre texto y foto */
-  gap: var(--gap-xl);
-  /* Centrar verticalmente texto y foto */
-  align-items: center;
-  /* max-width y centrado horizontal */
-  max-width: var(--max-width);
-  margin-inline: auto;
-  /* Ajuste de padding para el grid interno */
+  /* column-gap: espacio horizontal entre texto y foto.
+     SEPARAMOS gap en dos propiedades para no crear espacio
+     vertical gigante entre el breadcrumb y el contenido:
+     row-gap pequeño separa solo el breadcrumb del resto. */
+  column-gap: var(--gap-xl);
+  row-gap: 1rem;
+  /* align-items: start — texto y foto arrancan al mismo nivel superior.
+     'center' empujaba el texto hacia abajo cuando la foto era más alta. */
+  align-items: start;
+  /* QUITAMOS max-width + margin-inline: auto de la SECCION.
+     Antes, esto achicaba la section a 1200px y dejaba los lados blancos
+     (el body tiene fondo blanco por defecto). Ahora el fondo llena todo
+     el viewport y el padding-inline centra el contenido internamente. */
   padding-inline: var(--gap-l);
 }
 

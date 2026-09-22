@@ -180,6 +180,29 @@
        el hero interior es pequeño y no es el LCP principal de la página). -->
   <link rel="stylesheet" href="/css/styles.css">
 
+  <!--
+    ESTILO CRÍTICO ABOVE-THE-FOLD (inline, justificado):
+    CUBRE: body, header sticky y hero de servicios.
+    POR QUÉ inline: evita FOUC (flash of unstyled content) —
+    el CSS externo llega después del primer paint; sin esto el
+    body aparece blanco y el header salta de posición al cargar.
+    POR QUÉ viene DESPUÉS del <link>: en la cascada, el <style>
+    inline gana a cualquier regla conflictiva del CSS externo,
+    asegurando que el fondo oscuro y el sticky se apliquen antes
+    de que el usuario vea nada.
+  -->
+  <style>
+    /* Fondo negro del sitio: evita flash blanco mientras carga styles.css */
+    body { margin: 0; background-color: #0e0e10; -webkit-font-smoothing: antialiased; }
+    /* Header sticky: queda fijo arriba mientras se hace scroll */
+    body > header { position: sticky; top: 0; z-index: 100; }
+    /* Hero de servicios: fondo negro + padding mínimo que solo compensa el header */
+    #servicios-hero {
+      background-color: #0e0e10;
+      padding-top: clamp(1.5rem, 3vw, 2rem);
+    }
+  </style>
+
 </head>
 
 <body>
@@ -987,7 +1010,7 @@
        defer no es necesario aquí porque DOMContentLoaded se usa en el script. -->
   <script src="/js/nav.js"></script>
 
-  <!-- AUDITORÍA: div=0, span=0, style_inline=0 -->
+  <!-- AUDITORÍA: div=0, span=0, style_inline=1 (crítico justificado: FOUC body+header+hero) -->
 
 </body>
 </html>
