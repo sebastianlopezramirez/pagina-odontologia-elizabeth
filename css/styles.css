@@ -1781,9 +1781,10 @@ body > footer {
     margin-inline: auto;
   }
 
-  /* Nav: ocultar lista de links para mostrar hamburguesa */
-  header nav > ul {
-    display: none;
+  /* Nav: ocultar lista de links — selector corregido con !important
+     para ganar sin importar especificidad ni posición en cascada */
+  body > header nav > ul {
+    display: none !important;
   }
 
   /* Mostrar el botón hamburguesa */
@@ -1791,7 +1792,7 @@ body > footer {
     display: block;
   }
 
-  /* Ocultar CTA del header en tablet/mobile (ya está en el hamburguesa) */
+  /* Ocultar CTA del header — se reactiva en el bloque FIX-NAV-MÓVIL */
   .cta-header {
     display: none;
   }
@@ -4784,7 +4785,7 @@ body > header.nav-abierto .nav-toggle::after {
      Este bloque está al final del archivo → gana. */
   body > header nav > ul {
     /* Ocultar links: en móvil solo se ven dentro del menú desplegable */
-    display: none;
+    display: none !important;
   }
 
   /* Mostrar el botón hamburguesa */
@@ -4812,8 +4813,11 @@ body > header.nav-abierto .nav-toggle::after {
      En móvil, el subtítulo "Odontología Estética y Especializada"
      ocupa demasiado espacio y empuja al CTA y la hamburguesa.
      Solución: ocultar el subtítulo, dejar solo el nombre. */
-  .logo em {
-    /* Subtítulo oculto en móvil: se ve en desktop donde hay espacio */
+  .logo em,
+  .logo small {
+    /* Subtítulo oculto en móvil: se ve en desktop donde hay espacio.
+       Se seleccionan tanto <em> (index/servicios) como <small> (otras páginas)
+       porque distintas páginas usan distinta etiqueta para el subtítulo del logo */
     display: none;
   }
 
